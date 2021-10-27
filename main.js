@@ -1,21 +1,22 @@
 
-var button, button1, sprite;
+var button, button1, sprite, text, text1, spriteSheet, animation;
 
 function start() {
     console.log("start");
-    button = new Button("rhino.jpeg", 30, 30, 60, 45, 0, hello, [1, 2, 3, 4, 5]);
-    button1 = new Button("rhino.jpeg", 30, 60, 60, 45, 1, hello1);
+    button = new Button("rhino.jpeg", 30, 30, 60, 45, 0, startAnim);
+    button1 = new Button("rhino.jpeg", 30, 90, 60, 45, 1, stopAnim);
     sprite = new Sprite("rhino.jpeg", 0, 0, 720, 360, 2);
+    text = new RenderText("Let's Go!", GAME.WIDTH / 2, 40, "40px Arial", "red", "center", false, -1);
+    text = new RenderText("LLLLLLLLLL", GAME.WIDTH / 2 + 50, 40, "60px Arial", "black", "center", false, 1);
+    spriteSheet = new SpriteSheet("testSpriteSheet.png", 2, 4);
+    animation = new RenderAnimation(spriteSheet, 200, 150, 60, 60, 12, true, -2);
 }
 
 function update() {
     if(GAME.TICKS % 60 == 0) {
         console.log("One Second");
     }
-    if(GAME.TICKS % 120 == 0 && GAME.TICKS != 0) {
-       button1.sprite.setLayer(button1.sprite.layer * -1);
-    }
 }
 
-function hello(one, two, three, four, five) { console.log("Hello, " + one + " " + two + " " + five); }
-function hello1() { console.log("Hello 1"); }
+function stopAnim() { animation.stop(); }
+function startAnim() { animation.play(); }
