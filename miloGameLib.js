@@ -17,7 +17,9 @@
  * 
  *    All you have to do is slap this bad boy in the same folder
  *    as your main js script, then in your index.html make sure to
- *    add this as a script BELOW your main js script, and voila!
+ *    add this as a script BELOW your main js script, and also, add
+ *    the line <canvas id="canvas" width=720 height=360></canvas>
+ *    above your main js script and voila!
  * 
  * --------------------------------------------------------------------
  * 
