@@ -77,7 +77,7 @@ let religionAnts = {
 let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 
 // Resources and rates
-let workerAntRate = 0.5; // Worker ant rate in Sugar Grains per second
+let workerAntRate = 0.1; // Worker ant rate in Sugar Grains per second
 let sugarGrains = 0;     // Amount of sugar grains the player has
 let militaryPoints = 0;  // Amount of points for specialized ants...
 let sciencePoints = 0;
@@ -87,14 +87,14 @@ let religionPoints = 0;
 function initializeUIElements() {
     gameBackground = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
     lowerBackground = new Sprite("gray.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
-    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, gainWorkerAnts, [1]);
+    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
 
     // Text displays for game resources
     sugarGrainsDisplay = new RenderText("Sugar Grains: 0", GAME.WIDTH - 10, 20, "20px Comic Sans", "black", "right", false, 0);
-    militaryPointsDisplay = new RenderText("Military Points: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
-    sciencePointsDisplay = new RenderText("Science Points: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
-    religionPointsDisplay = new RenderText("Religion Points: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
+    militaryPointsDisplay = new RenderText("Military Ants: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
+    sciencePointsDisplay = new RenderText("Science Ants: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
+    religionPointsDisplay = new RenderText("Religion Ants: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
     workerAntsDisplay = new RenderText("Worker Ants: 0", 10, 20, "20px Comic Sans", "black", "left", false, 0);
     militaryAntsDisplay = new RenderText("Military Ants: 0", 10, 40, "20px Comic Sans", "black", "left", false, 0);
     scienceAntsDisplay = new RenderText("Science Ants: 0", 10, 60, "20px Comic Sans", "black", "left", false, 0);
@@ -179,6 +179,15 @@ function gainWorkerAnts(amount) {
     workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
 }
 
+// This function gives ants based on a random chance
+function chanceGainWorkerAnts(amount) {
+    var chance = Math.random();
+    if(chance < 0.1)
+        workerAnts.value += amount;
+    // Later we can add big number formatting here to simplify as like "5.5B"
+    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
+}
+
 // Gains sugar gains based on how many worker ants there are
 // Later we can add big number formatting here to simplify as like "5.5B"
 // can use regex or js methods for this ^
@@ -188,18 +197,18 @@ function gainSugarGrains() {
 }
 
 function gainMilitaryPoints() {
-    militaryPoints += workerAntRate * militaryAnts.value / 60;
-    militaryPointsDisplay.text = "Military Points: " + ~~militaryPoints;
+    //militaryPoints += workerAntRate * militaryAnts.value / 60;
+    militaryPointsDisplay.text = "Military Ants: " + ~~militaryAnts.value;
 }
 
 function gainSciencePoints() {
-    sciencePoints += workerAntRate * scienceAnts.value / 60;
-    sciencePointsDisplay.text = "Science Points: " + ~~sciencePoints;
+    //sciencePoints += workerAntRate * scienceAnts.value / 60;
+    sciencePointsDisplay.text = "Science Ants: " + ~~scienceAnts.value;
 }
 
 function gainReligionPoints() {
-    religionPoints += workerAntRate * religionAnts.value / 60;
-    religionPointsDisplay.text = "Religion Points: " + ~~religionPoints;
+    //religionPoints += workerAntRate * religionAnts.value / 60;
+    religionPointsDisplay.text = "Religion Ants: " + ~~religionAnts.value;
 }
 
 function showAntCap() {
