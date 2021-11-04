@@ -1,7 +1,7 @@
 {
     "Upgrades": [
         {
-            "Name": "A lil' more Sex",
+            "Name": "A lil' more mating",
             "Description": "Ants are more h*rny and bang more",
             "Field": "Population",
             "Cost": 20,
@@ -22,7 +22,7 @@
         },
 
         {
-            "Name": "Fertilizer",
+            "Name": "Better soil",
             "Description": "Faster, healthier growth!",
             "Field": "Farming",
             "Cost": 40,
