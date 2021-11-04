@@ -82,6 +82,27 @@
                 "sugarPerFarmer": 0.01
                 } 
             ]
+        },
+
+        {
+            "Name": "Scouts",
+            "Description": "Organize basic patrol groups",
+            "Field": "Military",
+            "Cost": 50,
+            "UnlockRequirements": [
+                {
+                "Farming": 0,
+                "Population": 50,
+                "Science": 0,
+                "Religion": 0,
+                "Military": 50
+                }
+            ],
+            "Effect": [ 
+                {
+                "populationCap": 100
+                } 
+            ]
         }
     ]
 }
