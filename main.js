@@ -110,8 +110,8 @@ let timePlayed;
 
 // Initializes all UI elements
 function initializeUIElements() {
-    gameBackground = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
-    lowerBackground = new Sprite("gray.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
+    gameBackground = new Sprite("BG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
+    lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
     clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
     purchasedList = [];
