@@ -36,6 +36,10 @@ let militaryUpgradesTabIcon;            // Military upgrades tab icon
 let scienceUpgradesTabIcon;             // Science upgrades tab icon
 let religionUpgradesTabIcon;            // Religion upgrades tab icon
 
+let infoTabButton;           // Info tab button
+let infoTabText;             // Info tab button text
+let infoTabBackground;       // Info tab background
+
 let allocationTabButton;     // Ant allocation tab button
 let allocationTabText;       // Allocation tab button text
 let allocationTabElements;   // Array holding allocation tab UI elements
@@ -100,11 +104,21 @@ function initializeUIElements() {
     scienceAntsDisplay = new RenderText("Science Ants: 0", 10, 60, "20px Comic Sans", "black", "left", false, 0);
     religionAntsDisplay = new RenderText("Religion Ants: 0", 10, 80, "20px Comic Sans", "black", "left", false, 0);
     antLimitDisplay = new RenderText("Ant Cap: 0/100", 10, 100, "20px Comic Sans", "black", "left", false, 0);
+
+    /**
+     * Info objects here:
+     */
+    infoTabButton = new Button("black.png", 390, 360, 180, 40, 0, showInfoTab);
+    infoTabButton.sprite.visible = false;
+    infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
+    infoTabBackground = new Sprite("infobackground.png", 30, 360, 540, 360, 80);
     
-    // Push the elements for the upgrades tab into its array for showing/hiding its functionality later
-    upgradesTabButton = new Button("black.png", 300, 360, 270, 40, 0, showUpgradesTab);
+    /**
+     * Upgrades objects here:
+     */
+    upgradesTabButton = new Button("black.png", 210, 360, 180, 40, 0, showUpgradesTab);
     upgradesTabButton.sprite.visible = false;
-    upgradesTabText = new RenderText("Upgrades", 380, 390, "30px Gothic", "black", "left", false, -1);
+    upgradesTabText = new RenderText("Upgrades", 250, 390, "26px Gothic", "black", "left", false, -1);
     upgradesTabBackground = new Sprite("upgradesbackground.png", 30, 360, 540, 360, 80);
 
     workerUpgradesTabElements = [];
@@ -131,10 +145,13 @@ function initializeUIElements() {
     scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 50, 420, 500, 280, 70));
     religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 50, 420, 500, 280, 70));
 
-    // Push the elements for the allocation tab into its array for showing/hiding its functionality later
-    allocationTabButton = new Button("black.png", 30, 360, 270, 40, 0, showAllocationTab);
+    /**
+     * Allocation objects here:
+     */
+    allocationTabButton = new Button("black.png", 30, 360, 180, 40, 0, showAllocationTab);
     allocationTabButton.sprite.visible = false;
-    allocationTabText = new RenderText("Allocation", 110, 390, "30px Gothic", "black", "left", false, -1);
+    allocationTabText = new RenderText("Allocation", 65, 390, "26px Gothic", "black", "left", false, -1);
+
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 30, 360, 540, 360, 80));
     allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['militaryAnts']));
@@ -216,9 +233,10 @@ function showAntCap() {
     antLimitDisplay.text = `Ant Cap: ${totalAnts} / ${antLimit}`;
 }
 
-// Shows all allocation tab elements, hiding all upgrades tab elements
+// Shows all allocation tab elements
 function showAllocationTab() {
     setTabActive(allocationTabElements, true);
+    infoTabBackground.visible = false;
     upgradesTabBackground.visible = false;
     workerUpgradesTabButton.enabled = false;
     militaryUpgradesTabButton.enabled = false;
@@ -234,9 +252,10 @@ function showAllocationTab() {
     setTabActive(religionUpgradesTabElements, false);
 }
 
-// Shows all upgrade tab elements, hiding all allocation tab elements
+// Shows all upgrade tab elements
 function showUpgradesTab() {
     setTabActive(allocationTabElements, false);
+    infoTabBackground.visible = false;
     upgradesTabBackground.visible = true;
     workerUpgradesTabButton.enabled = true;
     militaryUpgradesTabButton.enabled = true;
@@ -247,6 +266,25 @@ function showUpgradesTab() {
     scienceUpgradesTabIcon.visible = true;
     religionUpgradesTabIcon.visible = true;
     showWorkerTab();
+}
+
+// Shows all info tab elements
+function showInfoTab() {
+    setTabActive(allocationTabElements, false);
+    infoTabBackground.visible = true;
+    upgradesTabBackground.visible = false;
+    workerUpgradesTabButton.enabled = false;
+    militaryUpgradesTabButton.enabled = false;
+    scienceUpgradesTabButton.enabled = false;
+    religionUpgradesTabButton.enabled = false;
+    workerUpgradesTabIcon.visible = false;
+    militaryUpgradesTabIcon.visible = false;
+    scienceUpgradesTabIcon.visible = false;
+    religionUpgradesTabIcon.visible = false;
+    setTabActive(workerUpgradesTabElements, false);
+    setTabActive(militaryUpgradesTabElements, false);
+    setTabActive(scienceUpgradesTabElements, false);
+    setTabActive(religionUpgradesTabElements, false);
 }
 
 function showWorkerTab(){
@@ -320,4 +358,32 @@ function importUpgradesFromJson(filePath) {
         }
     }
     rawFile.send(null);
+}
+
+/**
+ * Increase passive worker ant generation
+ */
+function generalUpgradeEffect(percentIncrease){
+
+}
+
+/**
+ * Increase population cap
+ */
+function militaryUpgradeEffect(newCap) {
+
+}
+
+/**
+ * Upgrade cost reduction (reduce sugar cost)
+ */
+function scienceUpgradeEffect(percentReduced) {
+
+}
+
+/**
+ * Upgrade sugar generated per worker
+ */
+function religionUpgradeEffect(newAmountPerWorker) {
+
 }
