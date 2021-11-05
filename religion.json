@@ -1,0 +1,18 @@
+{
+    "Name": "Holy Tree",
+    "Description": "She's more than just a queen",
+    "Cost": 50,
+    "UnlockRequirements": [
+        {
+            "Population": 50,
+            "Science": 0,
+            "Religion": 50,
+            "Military": 0
+        }
+    ],
+    "Effect": [ 
+        {
+            "sugarPerFarmer": 0.01
+        } 
+    ]
+}

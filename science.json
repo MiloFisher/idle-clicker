@@ -1,0 +1,18 @@
+{
+    "Name": "Math",
+    "Description": "Ants found a use for pythagorean theorem..",
+    "Cost": 100,
+    "UnlockRequirements": [
+        {
+            "Population": 50,
+            "Science": 50,
+            "Religion": 0,
+            "Military": 0
+        }
+    ],
+    "Effect": [ 
+        {
+            "upgradeCostReudction": 5
+        } 
+    ]
+}
