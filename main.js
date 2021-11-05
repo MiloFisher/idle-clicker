@@ -16,6 +16,15 @@ let militaryPointsDisplay;
 let sciencePointsDisplay;
 let religionPointsDisplay;
 
+let resourcesBack1;             // Back sprite for resources
+let resourcesBack2;             // Back sprite for population
+let populationDisplayPrompt;    // Prompt for pouplation display
+let sugarGrainsIconDisplay;     // Icons showing sugar grains amount
+let workerAntsIconDisplay;      // Icons showing worker ants amount
+let militaryAntsIconDisplay;    // Icons showing military ants amount
+let scienceAntsIconDisplay;     // Icons showing science ants amount
+let religionAntsIconDisplay;    // Icons showing religion ants amount
+
 let upgradesTabButton;       // Upgrades tab button
 let upgradesTabText;         // Upgrades tab button text
 let upgradesTabElements;     // Array holding upgrade tab UI elements
@@ -126,15 +135,21 @@ function initializeUIElements() {
     purchasedList = [];
 
     // Text displays for game resources
-    sugarGrainsDisplay = new RenderText("Sugar Grains: 0", GAME.WIDTH - 10, 20, "20px Comic Sans", "black", "right", false, 0);
-    // militaryPointsDisplay = new RenderText("Military Ants: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
-    // sciencePointsDisplay = new RenderText("Science Ants: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
-    // religionPointsDisplay = new RenderText("Religion Ants: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
-    workerAntsDisplay = new RenderText("Worker Ants: 0", 10, 20, "20px Comic Sans", "black", "left", false, 0);
-    militaryAntsDisplay = new RenderText("Military Ants: 0", 10, 40, "20px Comic Sans", "black", "left", false, 0);
-    scienceAntsDisplay = new RenderText("Science Ants: 0", 10, 60, "20px Comic Sans", "black", "left", false, 0);
-    religionAntsDisplay = new RenderText("Religion Ants: 0", 10, 80, "20px Comic Sans", "black", "left", false, 0);
-    antLimitDisplay = new RenderText("Ant Cap: 0/100", 10, 100, "20px Comic Sans", "black", "left", false, 0);
+    resourcesBack1 = new Sprite("resourcesback1.png", 2, 2, 140, 260, 20);
+    workerAntsIconDisplay = new Sprite("workerant.png", 5, 10, 50, 50, 0);
+    workerAntsDisplay = new RenderText("0", 60, 40, "24px Gothic", "#2b3664", "left", false, 0);
+    militaryAntsIconDisplay = new Sprite("militaryant.png", 5, 60, 50, 50, 0);
+    militaryAntsDisplay = new RenderText("0", 60, 90, "24px Gothic", "#2e402a", "left", false, 0);
+    scienceAntsIconDisplay = new Sprite("scienceant.png", 5, 110, 50, 50, 0);
+    scienceAntsDisplay = new RenderText("0", 60, 140, "24px Gothic", "#6b471c", "left", false, 0);
+    religionAntsIconDisplay = new Sprite("religionant.png", 5, 160, 50, 50, 0);
+    religionAntsDisplay = new RenderText("0", 60, 190, "24px Gothic", "#662160", "left", false, 0);
+    sugarGrainsIconDisplay = new Sprite("SugarGrain.png", 0, 205, 60, 60, 0);
+    sugarGrainsDisplay = new RenderText("0", 60, 240, "24px Gothic", "white", "left", false, 0);
+
+    resourcesBack2 = new Sprite("resourcesback2.png", GAME.WIDTH - 182, 2, 180, 80, 20);
+    populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "24px Gothic", "black", "center", false, 0);
+    antLimitDisplay = new RenderText("0/100", GAME.WIDTH - 91, 65, "24px Gothic", "black", "center", false, 0);
 
     /**
      * Info objects here:
@@ -240,10 +255,11 @@ function start() {
         militaryAnts.value = 999999999999999;
         scienceAnts.value = 999999999999999;
         religionAnts.value = 999999999999999;
-        workerAntsDisplay.text = `${workerAnts.name}: ` + simplifyNumber(workerAnts.value);
-        militaryAntsDisplay.text = `${militaryAnts.name}: ` + simplifyNumber(militaryAnts.value);
-        scienceAntsDisplay.text = `${scienceAnts.name}: ` + simplifyNumber(scienceAnts.value);
-        religionAntsDisplay.text = `${religionAnts.name}: ` + simplifyNumber(religionAnts.value);
+        antLimit = 99999999999999999;
+        workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+        militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
+        scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
+        religionAntsDisplay.text = simplifyNumber(religionAnts.value);
     }
 
     timePlayed++;
@@ -266,7 +282,7 @@ function update() {
 function gainWorkerAnts(amount) {
     workerAnts.value += amount;
     // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
+    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
 }
 
 // This function gives ants based on a random chance
@@ -276,7 +292,7 @@ function chanceGainWorkerAnts(amount) {
         workerAnts.value += amount;
     }
     // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
+    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
 }
 
 // Gains sugar gains based on how many worker ants there are
@@ -284,27 +300,12 @@ function chanceGainWorkerAnts(amount) {
 // can use regex or js methods for this ^
 function gainSugarGrains() {
     sugarGrains += sugarGatherRate / 60;
-    sugarGrainsDisplay.text = "Sugar Grains: " + simplifyNumber(sugarGrains);
+    sugarGrainsDisplay.text = simplifyNumber(Math.trunc(sugarGrains));
 }
-
-// function gainMilitaryPoints() {
-//     //militaryPoints += workerAntRate * militaryAnts.value / 60;
-//     militaryPointsDisplay.text = "Military Ants: " + ~~militaryAnts.value;
-// }
-
-// function gainSciencePoints() {
-//     //sciencePoints += workerAntRate * scienceAnts.value / 60;
-//     sciencePointsDisplay.text = "Science Ants: " + ~~scienceAnts.value;
-// }
-
-// function gainReligionPoints() {
-//     //religionPoints += workerAntRate * religionAnts.value / 60;
-//     religionPointsDisplay.text = "Religion Ants: " + ~~religionAnts.value;
-// }
 
 function showAntCap() {
     totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
-    antLimitDisplay.text = `Ant Cap: ${simplifyNumber(totalAnts)} / ${simplifyNumber(antLimit)}`;
+    antLimitDisplay.text = simplifyNumber(totalAnts) + " / " + simplifyNumber(antLimit);
 }
 
 // Shows all allocation tab elements
@@ -405,7 +406,7 @@ function antsPlus(a) {
     // add in workerants distribution condition
     if (totalAnts < antLimit && workerAnts.value !== 0) {
         antTypes[a].value++;
-        antTypes[a].display.text = `${antTypes[a].name}: ` + antTypes[a].value;
+        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
         antsMinus('workerAnts');
     }
 }
@@ -415,7 +416,7 @@ function antsPlus(a) {
 function antsMinus(a) {
     if (antTypes[a].value > 0) {
         antTypes[a].value--;
-        antTypes[a].display.text = `${antTypes[a].name}: ` + antTypes[a].value;
+        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
     }
 }
 
