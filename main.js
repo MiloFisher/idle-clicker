@@ -81,11 +81,16 @@ let religionAnts = {
 let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 
 // Resources and rates
-let workerAntRate = 0.1; // Worker ant rate in Sugar Grains per second
+
 let sugarGrains = 0;     // Amount of sugar grains the player has
-let militaryPoints = 0;  // Amount of points for specialized ants...
-let sciencePoints = 0;
-let religionPoints = 0;
+let sugarGatherRate = 0.1; // Worker ant rate in Sugar Grains per second
+let sugarCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
+// let militaryPoints = 0;  // Amount of points for specialized ants...
+// let sciencePoints = 0;
+// let religionPoints = 0;
+
+// Variable for leaderboards
+let timePlayed;
 
 // Initializes all UI elements
 function initializeUIElements() {
@@ -96,9 +101,9 @@ function initializeUIElements() {
 
     // Text displays for game resources
     sugarGrainsDisplay = new RenderText("Sugar Grains: 0", GAME.WIDTH - 10, 20, "20px Comic Sans", "black", "right", false, 0);
-    militaryPointsDisplay = new RenderText("Military Ants: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
-    sciencePointsDisplay = new RenderText("Science Ants: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
-    religionPointsDisplay = new RenderText("Religion Ants: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
+    // militaryPointsDisplay = new RenderText("Military Ants: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
+    // sciencePointsDisplay = new RenderText("Science Ants: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
+    // religionPointsDisplay = new RenderText("Religion Ants: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
     workerAntsDisplay = new RenderText("Worker Ants: 0", 10, 20, "20px Comic Sans", "black", "left", false, 0);
     militaryAntsDisplay = new RenderText("Military Ants: 0", 10, 40, "20px Comic Sans", "black", "left", false, 0);
     scienceAntsDisplay = new RenderText("Science Ants: 0", 10, 60, "20px Comic Sans", "black", "left", false, 0);
@@ -169,6 +174,8 @@ function initializeUIElements() {
     militaryAnts.display = militaryAntsDisplay;
     scienceAnts.display = scienceAntsDisplay;
     religionAnts.display = religionAntsDisplay;
+
+    timePlayed = 0;
 }
 
 // Called at start of game, before update()
@@ -176,15 +183,19 @@ function start() {
     initializeUIElements();
     importUpgradesFromJson("upgrades.json");
     showAllocationTab(); // Start out with upgrades tab open
+
+    timePlayed++;
+    // end game trigger stops timePlayed counter...
+    // divide it by 60 at end because game updates at 60 ticks per second
 }
 
 // Called every game tick, 60 ticks in a second
 function update() {
     
     gainSugarGrains();
-    gainMilitaryPoints()
-    gainSciencePoints()
-    gainReligionPoints()
+    // gainMilitaryPoints()
+    // gainSciencePoints()
+    // gainReligionPoints()
     showAntCap();
 }
 
@@ -209,30 +220,31 @@ function chanceGainWorkerAnts(amount) {
 // Later we can add big number formatting here to simplify as like "5.5B"
 // can use regex or js methods for this ^
 function gainSugarGrains() {
-    sugarGrains += workerAntRate * workerAnts.value / 60;
+    sugarGrains += sugarGatherRate / 60;
     sugarGrainsDisplay.text = "Sugar Grains: " + ~~sugarGrains;
 }
 
-function gainMilitaryPoints() {
-    //militaryPoints += workerAntRate * militaryAnts.value / 60;
-    militaryPointsDisplay.text = "Military Ants: " + ~~militaryAnts.value;
-}
+// function gainMilitaryPoints() {
+//     //militaryPoints += workerAntRate * militaryAnts.value / 60;
+//     militaryPointsDisplay.text = "Military Ants: " + ~~militaryAnts.value;
+// }
 
-function gainSciencePoints() {
-    //sciencePoints += workerAntRate * scienceAnts.value / 60;
-    sciencePointsDisplay.text = "Science Ants: " + ~~scienceAnts.value;
-}
+// function gainSciencePoints() {
+//     //sciencePoints += workerAntRate * scienceAnts.value / 60;
+//     sciencePointsDisplay.text = "Science Ants: " + ~~scienceAnts.value;
+// }
 
-function gainReligionPoints() {
-    //religionPoints += workerAntRate * religionAnts.value / 60;
-    religionPointsDisplay.text = "Religion Ants: " + ~~religionAnts.value;
-}
+// function gainReligionPoints() {
+//     //religionPoints += workerAntRate * religionAnts.value / 60;
+//     religionPointsDisplay.text = "Religion Ants: " + ~~religionAnts.value;
+// }
 
 function showAntCap() {
     totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
     antLimitDisplay.text = `Ant Cap: ${totalAnts} / ${antLimit}`;
 }
 
+// why is this not using the 'map => {}' style?
 // Shows all allocation tab elements
 function showAllocationTab() {
     setTabActive(allocationTabElements, true);
@@ -252,6 +264,7 @@ function showAllocationTab() {
     setTabActive(religionUpgradesTabElements, false);
 }
 
+// why is this not using the 'map => {}' style?
 // Shows all upgrade tab elements
 function showUpgradesTab() {
     setTabActive(allocationTabElements, false);
@@ -268,6 +281,7 @@ function showUpgradesTab() {
     showWorkerTab();
 }
 
+// why is this not using the 'map => {}' style?
 // Shows all info tab elements
 function showInfoTab() {
     setTabActive(allocationTabElements, false);
@@ -364,26 +378,27 @@ function importUpgradesFromJson(filePath) {
  * Increase passive worker ant generation
  */
 function generalUpgradeEffect(percentIncrease){
-
+    workerAnts += ~~(workerAnts * percentIncrease); // maybe remove the ~~ ?
+    // not exactly sure on the math you want for it. a few ways we can go about it.
 }
 
 /**
  * Increase population cap
  */
 function militaryUpgradeEffect(newCap) {
-
+    antLimit = newCap;
 }
 
 /**
  * Upgrade cost reduction (reduce sugar cost)
  */
 function scienceUpgradeEffect(percentReduced) {
-
+    sugarCostReduction += percentReduced;
 }
 
 /**
  * Upgrade sugar generated per worker
  */
 function religionUpgradeEffect(newAmountPerWorker) {
-
+    sugarGatherRate = workerAnts.value * newAmountPerWorker;
 }

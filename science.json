@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.02
+                    "upgradecostreduction": 0.02
                 } 
             ]
         },
@@ -31,7 +31,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.03
+                    "upgradecostreduction": 0.03
                 } 
             ]
         },
@@ -49,7 +49,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.05
+                    "upgradecostreduction": 0.05
                 } 
             ]
         },
@@ -67,7 +67,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.05
+                    "upgradecostreduction": 0.05
                 } 
             ]
         },
@@ -85,7 +85,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.05
+                    "upgradecostreduction": 0.05
                 } 
             ]
         },
@@ -103,7 +103,7 @@
             ],
             "Effect": [ 
                 {
-                    "scienceUpgradeCostReudction": 0.1
+                    "scienceupgradecostreduction": 0.1
                 } 
             ]
         },
@@ -121,7 +121,7 @@
             ],
             "Effect": [ 
                 {
-                    "religionUpgradeCostReudction": 0.1
+                    "religionupgradecostreduction": 0.1
                 } 
             ]
         },
@@ -139,7 +139,7 @@
             ],
             "Effect": [ 
                 {
-                    "militaryUpgradeCostReudction": 0.1
+                    "militaryupgradecostreduction": 0.1
                 } 
             ]
         },
@@ -157,7 +157,7 @@
             ],
             "Effect": [ 
                 {
-                    "generalUpgradeCostReudction": 0.1
+                    "generalupgradecostreduction": 0.1
                 } 
             ]
         },
@@ -175,7 +175,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradeCostReudction": 0.2
+                    "upgradecostreduction": 0.2
                 } 
             ]
         }
