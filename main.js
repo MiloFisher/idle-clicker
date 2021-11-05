@@ -506,17 +506,20 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
+            var type;
             if (effects[0].militaryWin){
+                type = "win";
                 panelDisplayEffect.text = "-Total world domination!";
             }
             else {
+                type = "normal";
                 panelDisplayEffect.text = `-New Population Cap of ${simplifyNumber(effects[0].populationCap)}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, effects[0].populationCap];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, newPopulationCap) => {
+            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap) => {
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (militaryAnts.value < requirement || sugarGrains < cost) {
@@ -529,6 +532,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 });
                 if (!failedCheck) {
                     // Give effect to player
+
+                    // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedmilitary.png";
@@ -539,17 +544,48 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
+            var type;
+            var value;
             if (effects[0].scienceWin) {
+                type = "win";
+                value = undefined;
                 panelDisplayEffect.text = "-Live amongst the stars!";
             }
-            else {
-                panelDisplayEffect.text = `-Upgrade Costs -${simplifyNumber(effects[0].upgradecostreduction * 100)}%`;
+            // Universal reduction
+            else if (effects[0].upgradecostreduction) {
+                type = "universal";
+                value = effects[0].upgradecostreduction;
+                panelDisplayEffect.text = `-Upgrade Costs -${simplifyNumber(value * 100)}%`;
+            }
+            // General reduction
+            else if (effects[0].generalupgradecostreduction) {
+                type = "general";
+                value = effects[0].generalupgradecostreduction;
+                panelDisplayEffect.text = `-General Upgrade Costs -${simplifyNumber(value * 100)}%`;
+            }
+            // Military reduction
+            else if (effects[0].militaryupgradecostreduction) {
+                type = "military";
+                value = effects[0].militaryupgradecostreduction
+                panelDisplayEffect.text = `-Military Upgrade Costs -${simplifyNumber(value * 100)}%`;
+            }
+            // Science reduction
+            else if (effects[0].scienceupgradecostreduction) {
+                type = "science";
+                value = effects[0].scienceupgradecostreduction;
+                panelDisplayEffect.text = `-Science Upgrade Costs -${simplifyNumber(value * 100)}%`;
+            }
+            // Religion reduction
+            else if (effects[0].religionupgradecostreduction) {
+                type = "religion";
+                value = effects[0].religionupgradecostreduction;
+                panelDisplayEffect.text = `-Religion Upgrade Costs -${simplifyNumber(value * 100)}%`;
             }
             panelDisplayRequirement.text = `-Science Requirement: ${simplifyNumber(requirements[0].Science)}`;
             panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, effects[0].upgradecostreduction];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentReduced) => {
+            panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentReduced) => {
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (scienceAnts.value < requirement || sugarGrains < cost) {
@@ -562,6 +598,11 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 });
                 if (!failedCheck) {
                     // Give effect to player
+
+                    // type will be universal, general, military, science, or religion
+                    // percentReduced will be how much reduction is applied to the global reduction variable corresponding to the type
+
+                    // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
@@ -572,17 +613,20 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
+            var type;
             if (effects[0].religionWin) {
+                type = "win";
                 panelDisplayEffect.text = "-Cleanse from mortal sin!";
             }
             else {
+                type = "normal";
                 panelDisplayEffect.text = `-New Sugar Per Worker of ${simplifyNumber(effects[0].sugarPerAnt)}`;
             }
             panelDisplayRequirement.text = `-Religion Requirement: ${simplifyNumber(requirements[0].Religion)}`;
             panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, effects[0].sugarPerAnt];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, newAmountPerWorker) => {
+            panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newAmountPerWorker) => {
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (religionAnts.value < requirement || sugarGrains < cost) {
@@ -596,6 +640,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if(!failedCheck) {
                     // Give effect to player
                     
+                    // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
+
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedreligion.png";
                     purchasedList.push({ category: category, id: id });
