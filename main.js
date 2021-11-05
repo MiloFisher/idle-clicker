@@ -83,7 +83,7 @@ let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 // Resources and rates
 
 let sugarGrains = 0;     // Amount of sugar grains the player has
-let sugarGatherRate = 0.1; // Worker ant rate in Sugar Grains per second
+let sugarGatherRate = 0.25; // Worker ant rate in Sugar Grains per second
 let sugarCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
 // let militaryPoints = 0;  // Amount of points for specialized ants...
 // let sciencePoints = 0;
@@ -210,8 +210,9 @@ function gainWorkerAnts(amount) {
 // This function gives ants based on a random chance
 function chanceGainWorkerAnts(amount) {
     var chance = Math.random();
-    if(chance < 0.1)
+    if (chance < 0.25) {
         workerAnts.value += amount;
+    }
     // Later we can add big number formatting here to simplify as like "5.5B"
     workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
 }
