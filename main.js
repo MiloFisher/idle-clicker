@@ -158,9 +158,9 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "20px Gothic", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 475, 672, "20px Gothic", "red", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 475, 640, "20px Gothic", "black", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("white.png", 440, 647, 70, 35, -5));
+    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "20px Gothic", "red", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "20px Gothic", "black", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("white.png", 425, 647, 90, 35, -5));
 
     workerUpgradesTabElements = [];
     militaryUpgradesTabElements = [];
@@ -454,8 +454,21 @@ function readUpgradesFromJson(category, elementList){
  */
 function displayUpgrade(category, id, name, cost, description, requirements, effects) {
     setTabActive(upgradesInfoPanelElements, true);
+    var alreadyPurchased = false;
+    purchasedList.forEach(e => {
+        if (e.category == category && e.id == id) {
+            alreadyPurchased = true;
+        }
+    });
+    if(alreadyPurchased) {
+        panelDisplayBuyPrompt.text = "";
+        panelDisplayCost.text = "Purchased";
+    }
+    else {
+        panelDisplayBuyPrompt.text = "Buy For:";
+        panelDisplayCost.text = cost;
+    }
     panelDisplayName.text = name;
-    panelDisplayCost.text = cost;
     panelDisplayDescription.text = `*${description}*`;
 
     switch(category){
@@ -482,6 +495,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedgeneral.png";
                     purchasedList.push({ category: category, id: id });
+                    panelDisplayCost.text = "Purchased";
+                    panelDisplayBuyPrompt.text = "";
                 }
             };
             break;
@@ -513,6 +528,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedmilitary.png";
                     purchasedList.push({ category: category, id: id });
+                    panelDisplayCost.text = "Purchased";
+                    panelDisplayBuyPrompt.text = "";
                 }
             };
             break;
@@ -544,6 +561,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
                     purchasedList.push({ category: category, id: id });
+                    panelDisplayCost.text = "Purchased";
+                    panelDisplayBuyPrompt.text = "";
                 }
             };
             break;
@@ -575,6 +594,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedreligion.png";
                     purchasedList.push({ category: category, id: id });
+                    panelDisplayCost.text = "Purchased";
+                    panelDisplayBuyPrompt.text = "";
                 }
             };
             break;
