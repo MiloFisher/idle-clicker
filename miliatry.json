@@ -1,40 +1,186 @@
 {
-    "Upgrades" : [ {
-        "Name": "Scouts",
-        "Description": "Organize basic patrol groups",
-        "Cost": 50,
-        "UnlockRequirements": [
-            {
-            "Population": 50,
-            "Science": 0,
-            "Religion": 0,
-            "Military": 50
-            }
-        ],
-        "Effect": [ 
-            {
-            "populationCap": 100
-            } 
-        ]
-    },
+    "Upgrades" : 
+    [ 
+        {
+            "Name": "Scouts",
+            "Description": "Organize basic patrol groups",
+            "Cost": 50,
+            "UnlockRequirements": [
+                {
+                "Population": 50,
+                "Science": 0,
+                "Religion": 0,
+                "Military": 50
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 100
+                } 
+            ]
+        },
 
-    {
-        "Name": ,
-        "Description": ,
-        "Cost": ,
-        "UnlockRequirements": [
-            {
-                "Population": ,
-                "Science": ,
-                "Religion": ,
-                "Military": 
-            }
-        ],
-        "Effect": [ 
-            {
-                
-            } 
-        ]
-    }
+        {
+            "Name": "Sharpened antenna",
+            "Description": "Those antennae can do more than just communicate!",
+            "Cost": 100,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 250
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap":  500
+                } 
+            ]
+        },
 
-] }
+        {
+            "Name": "House invasion",
+            "Description": "Take over your human's house.",
+            "Cost": 650,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 1000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 3000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Ant armies",
+            "Description": "Organize large armies of ants",
+            "Cost": 2250,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 6500
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 10000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Advanced weaponry",
+            "Description": "Mini rifles, tanks, and more.",
+            "Cost": 10000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 30000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 55000
+                } 
+            ]
+        },
+
+        {
+            "Name": "City invasion",
+            "Description": "The infestation cannot be contained",
+            "Cost": 75000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 880000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 1100000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Ant AI",
+            "Description": "Killer ant robots, nice!",
+            "Cost": 900000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 6900000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 50000000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Domestic invasion",
+            "Description": "With such power you can overthrow a country",
+            "Cost": 150000000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 1350000000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 6200000000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Military hacking",
+            "Description": "You now have control over the human military's arsenal",
+            "Cost": 4700000000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 712000000000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 1500000000000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Global invasion",
+            "Description": "Become the new most advanced, dominant species on the planet.",
+            "Cost": 696969696969696,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 420420420420420
+                }
+            ],
+            "Effect": [ 
+                {
+                    "populationCap": 420694206942069420
+                } 
+            ]
+        }
+    ] 
+}
