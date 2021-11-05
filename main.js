@@ -359,3 +359,31 @@ function importUpgradesFromJson(filePath) {
     }
     rawFile.send(null);
 }
+
+/**
+ * Increase passive worker ant generation
+ */
+function generalUpgradeEffect(percentIncrease){
+
+}
+
+/**
+ * Increase population cap
+ */
+function militaryUpgradeEffect(newCap) {
+
+}
+
+/**
+ * Upgrade cost reduction (reduce sugar cost)
+ */
+function scienceUpgradeEffect(percentReduced) {
+
+}
+
+/**
+ * Upgrade sugar generated per worker
+ */
+function religionUpgradeEffect(newAmountPerWorker) {
+
+}
