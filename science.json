@@ -6,7 +6,6 @@
             "Cost": 50,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 10,
                     "Religion": 0,
                     "Military": 0
@@ -25,7 +24,6 @@
             "Cost": 200,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 50,
                     "Religion": 0,
                     "Military": 0
@@ -44,7 +42,6 @@
             "Cost": 1000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 150,
                     "Religion": 0,
                     "Military": 0
@@ -63,7 +60,6 @@
             "Cost": 4000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 500,
                     "Religion": 0,
                     "Military": 0
@@ -82,7 +78,6 @@
             "Cost": 15000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 1000,
                     "Religion": 0,
                     "Military": 0
@@ -101,7 +96,6 @@
             "Cost": 50000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 5000,
                     "Religion": 0,
                     "Military": 0
@@ -120,7 +114,6 @@
             "Cost": 100000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 10000,
                     "Religion": 0,
                     "Military": 0
@@ -139,7 +132,6 @@
             "Cost": 200000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 25000,
                     "Religion": 0,
                     "Military": 0
@@ -158,7 +150,6 @@
             "Cost": 500000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 50000,
                     "Religion": 0,
                     "Military": 0
@@ -177,7 +168,6 @@
             "Cost": 1000000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 100000,
                     "Religion": 0,
                     "Military": 0
