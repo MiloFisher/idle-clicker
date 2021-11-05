@@ -1,3 +1,5 @@
+let cheatMode = true;
+
 // UI Objects
 let gameBackground;          // Game Background sprite
 let lowerBackground;         // Allocation/Upgrades background sprite
@@ -214,6 +216,19 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
+    if(cheatMode)
+    {
+        sugarGrains = 999999999999999;
+        workerAnts.value = 999999999999999;
+        militaryAnts.value = 999999999999999;
+        scienceAnts.value = 999999999999999;
+        religionAnts.value = 999999999999999;
+        workerAntsDisplay.text = `${workerAnts.name}: ` + workerAnts.value;
+        militaryAntsDisplay.text = `${militaryAnts.name}: ` + militaryAnts.value;
+        scienceAntsDisplay.text = `${scienceAnts.name}: ` + scienceAnts.value;
+        religionAntsDisplay.text = `${religionAnts.name}: ` + religionAnts.value;
+    }
+
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
@@ -409,7 +424,7 @@ function readUpgradesFromJson(category, elementList){
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
-                elementList.push(new Button("unpurchasedupgrade.png", 115 + (i % 6) * 70, 430 + ~~(i/6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
+                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i/6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
             }
             setTabActive(elementList, false);
         }
@@ -453,7 +468,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     
                     // Update icon to that of purchased one and add to purchased list
-                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedupgrade.png";
+                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedgeneral.png";
                     purchasedList.push({ category: category, id: id });
                 }
             };
@@ -484,7 +499,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     
                     // Update icon to that of purchased one and add to purchased list
-                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedupgrade.png";
+                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedmilitary.png";
                     purchasedList.push({ category: category, id: id });
                 }
             };
@@ -515,7 +530,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     
                     // Update icon to that of purchased one and add to purchased list
-                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedupgrade.png";
+                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
                     purchasedList.push({ category: category, id: id });
                 }
             };
@@ -546,7 +561,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     
                     // Update icon to that of purchased one and add to purchased list
-                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedupgrade.png";
+                    elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedreligion.png";
                     purchasedList.push({ category: category, id: id });
                 }
             };
