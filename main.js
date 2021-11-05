@@ -49,6 +49,10 @@ let workerUpgradesTabIcon;              // Worker upgrades tab icon
 let militaryUpgradesTabIcon;            // Military upgrades tab icon
 let scienceUpgradesTabIcon;             // Science upgrades tab icon
 let religionUpgradesTabIcon;            // Religion upgrades tab icon
+let workerUpgradesPageButton;           // Worker upgrades page button
+let militaryUpgradesPageButton;         // Military upgrades page button
+let scienceUpgradesPageButton;          // Science upgrades page button
+let religionUpgradesPageButton;         // Religion upgrades page button
 
 let infoTabButton;           // Info tab button
 let infoTabText;             // Info tab button text
@@ -112,7 +116,7 @@ let timePlayed;
 
 // Initializes all UI elements
 function initializeUIElements() {
-    gameBackground = new Sprite("BG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
+    gameBackground = new Sprite("BG2.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
     lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
     clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
@@ -178,9 +182,17 @@ function initializeUIElements() {
     upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 50, 645, 40, 40, 0));
 
     workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 50, 420, 500, 280, 70));
+    workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
+    workerUpgradesPageButton.sprite.defaultVisibility = false;
     militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 50, 420, 500, 280, 70));
+    militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
+    militaryUpgradesPageButton.sprite.defaultVisibility = false;
     scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 50, 420, 500, 280, 70));
+    scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
+    scienceUpgradesPageButton.sprite.defaultVisibility = false;
     religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 50, 420, 500, 280, 70));
+    religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
+    religionUpgradesPageButton.sprite.defaultVisibility = false;
 
     /**
      * Allocation objects here:
