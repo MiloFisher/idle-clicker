@@ -1,18 +1,193 @@
 {
-    "Name": "Math",
-    "Description": "Ants found a use for pythagorean theorem..",
-    "Cost": 100,
-    "UnlockRequirements": [
+    "Upgrades": [
         {
-            "Population": 50,
-            "Science": 50,
-            "Religion": 0,
-            "Military": 0
+            "Name": "Math",
+            "Description": "Ants found a use for pythagorean theorem..",
+            "Cost": 50,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 10,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.02
+                } 
+            ]
+        },
+
+        {
+            "Name": "Logical reasoning",
+            "Description": "They're getting even smarter!",
+            "Cost": 200,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 50,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.03
+                } 
+            ]
+        },
+
+        {
+            "Name": "Basic construction",
+            "Description": "Ever seen ants build anything other than a hill?",
+            "Cost": 1000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 150,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.05
+                } 
+            ]
+        },
+
+        {
+            "Name": "Computing",
+            "Description": "Harness the power of technology..",
+            "Cost": 4000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 500,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.05
+                } 
+            ]
+        },
+
+        {
+            "Name": "Organized research",
+            "Description": "Ants now strive for better technology",
+            "Cost": 15000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 1000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.05
+                } 
+            ]
+        },
+
+        {
+            "Name": "Bug School of Engineering",
+            "Description": "BSOE, but with ants!",
+            "Cost": 50000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 5000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "scienceUpgradeCostReudction": 0.1
+                } 
+            ]
+        },
+
+        {
+            "Name": "AIT",
+            "Description": "Ant Institute of Technology",
+            "Cost": 100000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 10000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "religionUpgradeCostReudction": 0.1
+                } 
+            ]
+        },
+
+        {
+            "Name": "Aeronautics",
+            "Description": "Awesome, flying ants",
+            "Cost": 200000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 25000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "militaryUpgradeCostReudction": 0.1
+                } 
+            ]
+        },
+
+        {
+            "Name": "Space Research",
+            "Description": "To the stars!",
+            "Cost": 500000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 50000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "generalUpgradeCostReudction": 0.1
+                } 
+            ]
+        },
+
+        {
+            "Name": "Astronomical Capabilities",
+            "Description": "Space travel, migration, and more.",
+            "Cost": 1000000,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 100000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "upgradeCostReudction": 0.2
+                } 
+            ]
         }
-    ],
-    "Effect": [ 
-        {
-            "upgradeCostReudction": 5
-        } 
-    ]
+    ] 
 }
