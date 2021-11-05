@@ -240,10 +240,10 @@ function start() {
         militaryAnts.value = 999999999999999;
         scienceAnts.value = 999999999999999;
         religionAnts.value = 999999999999999;
-        workerAntsDisplay.text = `${workerAnts.name}: ` + workerAnts.value;
-        militaryAntsDisplay.text = `${militaryAnts.name}: ` + militaryAnts.value;
-        scienceAntsDisplay.text = `${scienceAnts.name}: ` + scienceAnts.value;
-        religionAntsDisplay.text = `${religionAnts.name}: ` + religionAnts.value;
+        workerAntsDisplay.text = `${workerAnts.name}: ` + simplifyNumber(workerAnts.value);
+        militaryAntsDisplay.text = `${militaryAnts.name}: ` + simplifyNumber(militaryAnts.value);
+        scienceAntsDisplay.text = `${scienceAnts.name}: ` + simplifyNumber(scienceAnts.value);
+        religionAntsDisplay.text = `${religionAnts.name}: ` + simplifyNumber(religionAnts.value);
     }
 
     timePlayed++;
@@ -284,7 +284,7 @@ function chanceGainWorkerAnts(amount) {
 // can use regex or js methods for this ^
 function gainSugarGrains() {
     sugarGrains += sugarGatherRate / 60;
-    sugarGrainsDisplay.text = "Sugar Grains: " + ~~sugarGrains;
+    sugarGrainsDisplay.text = "Sugar Grains: " + simplifyNumber(sugarGrains);
 }
 
 // function gainMilitaryPoints() {
@@ -304,7 +304,7 @@ function gainSugarGrains() {
 
 function showAntCap() {
     totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
-    antLimitDisplay.text = `Ant Cap: ${totalAnts} / ${antLimit}`;
+    antLimitDisplay.text = `Ant Cap: ${simplifyNumber(totalAnts)} / ${simplifyNumber(antLimit)}`;
 }
 
 // Shows all allocation tab elements
@@ -471,15 +471,15 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
     }
     else {
         panelDisplayBuyPrompt.text = "Buy For:";
-        panelDisplayCost.text = cost;
+        panelDisplayCost.text = simplifyNumber(cost);
     }
     panelDisplayName.text = name;
     panelDisplayDescription.text = `*${description}*`;
 
     switch(category){
         case "general":
-            panelDisplayEffect.text = `-Passive Ant Rate +${effects[0].passiveAntPerSecond * 100}%`;
-            panelDisplayRequirement.text = `-Population Requirement: ${requirements[0].Population}`;
+            panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
+            panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
@@ -510,9 +510,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = "-Total world domination!";
             }
             else {
-                panelDisplayEffect.text = `-New Population Cap of ${effects[0].populationCap}`;
+                panelDisplayEffect.text = `-New Population Cap of ${simplifyNumber(effects[0].populationCap)}`;
             }
-            panelDisplayRequirement.text = `-Military Requirement: ${requirements[0].Military}`;
+            panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, effects[0].populationCap];
@@ -543,9 +543,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = "-Live amongst the stars!";
             }
             else {
-                panelDisplayEffect.text = `-Upgrade Costs -${effects[0].upgradecostreduction * 100}%`;
+                panelDisplayEffect.text = `-Upgrade Costs -${simplifyNumber(effects[0].upgradecostreduction * 100)}%`;
             }
-            panelDisplayRequirement.text = `-Science Requirement: ${requirements[0].Science}`;
+            panelDisplayRequirement.text = `-Science Requirement: ${simplifyNumber(requirements[0].Science)}`;
             panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, effects[0].upgradecostreduction];
@@ -576,12 +576,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = "-Cleanse from mortal sin!";
             }
             else {
-                panelDisplayEffect.text = `-New Sugar Per Worker of ${effects[0].sugarPerFarmer}`;
+                panelDisplayEffect.text = `-New Sugar Per Worker of ${simplifyNumber(effects[0].sugarPerAnt)}`;
             }
-            panelDisplayRequirement.text = `-Religion Requirement: ${requirements[0].Religion}`;
+            panelDisplayRequirement.text = `-Religion Requirement: ${simplifyNumber(requirements[0].Religion)}`;
             panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, effects[0].sugarPerFarmer];
+            panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, effects[0].sugarPerAnt];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, newAmountPerWorker) => {
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
@@ -604,5 +604,101 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 }
             };
             break;
+    }
+}
+
+let scale = {
+    THOUSAND:    "1000",
+    MILLION:     "1000000",
+    BILLION:     "1000000000",
+    TRILLION:    "1000000000000",
+    QUADRILLION: "1000000000000000",
+    QUINTILLION: "1000000000000000000",
+    SEXTILLION:  "1000000000000000000000",
+    SEPTILLION:  "1000000000000000000000000",
+    OCTILLION:   "1000000000000000000000000000",
+    NONILLION:   "1000000000000000000000000000000",
+    DECILLION:   "1000000000000000000000000000000000",
+};
+
+/**
+ * @description Simplifies a number to a string representation
+ * @param {number} number Number to be simplified
+ * @returns {string} Simplified form of number
+ */
+function simplifyNumber(number) {
+    if(number == undefined) {
+        return number;
+    }
+    var num = number.toString();
+    var decimals = 1;
+    if (num.length >= scale.DECILLION.length && num >= scale.DECILLION) {
+        var x = num.substring(0, num.length - scale.DECILLION.length + decimals + 1);
+        if(decimals > 0) 
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Decillion";
+        else
+            return x + " Decillion";
+    } else if (num.length >= scale.NONILLION.length && num >= scale.NONILLION) {
+        var x = num.substring(0, num.length - scale.NONILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Nonillion";
+        else
+            return x + " Nonillion";
+    } else if (num.length >= scale.OCTILLION.length && num >= scale.OCTILLION) {
+        var x = num.substring(0, num.length - scale.OCTILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Octillion";
+        else
+            return x + " Octillion";
+    } else if (num.length >= scale.SEPTILLION.length && num >= scale.SEPTILLION) {
+        var x = num.substring(0, num.length - scale.SEPTILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Septillion";
+        else
+            return x + " Septillion";
+    } else if (num.length >= scale.SEXTILLION.length && num >= scale.SEXTILLION) {
+        var x = num.substring(0, num.length - scale.SEXTILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Sextillion";
+        else
+            return x + " Sextillion";
+    } else if (num.length >= scale.QUINTILLION.length && num >= scale.QUINTILLION) {
+        var x = num.substring(0, num.length - scale.QUINTILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Quintillion";
+        else
+            return x + " Quintillion";
+    } else if (num.length >= scale.QUADRILLION.length && num >= scale.QUADRILLION) {
+        var x = num.substring(0, num.length - scale.QUADRILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "Q";
+        else
+            return x + "Q";
+    } else if (num.length >= scale.TRILLION.length && num >= scale.TRILLION) {
+        var x = num.substring(0, num.length - scale.TRILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "T";
+        else
+            return x + "T";
+    } else if (num.length >= scale.BILLION.length && num >= scale.BILLION) {
+        var x = num.substring(0, num.length - scale.BILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "B";
+        else
+            return x + "B";
+    } else if (num.length >= scale.MILLION.length && num >= scale.MILLION) {
+        var x = num.substring(0, num.length - scale.MILLION.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "M";
+        else
+            return x + "M";
+    } else if (num.length >= scale.THOUSAND.length && num >= scale.THOUSAND) {
+        var x = num.substring(0, num.length - scale.THOUSAND.length + decimals + 1);
+        if (decimals > 0)
+            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "K";
+        else
+            return x + "K";
+    } else {
+        return num;
     }
 }
