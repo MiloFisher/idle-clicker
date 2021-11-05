@@ -265,6 +265,7 @@ function RenderText(text, x, y, font, color, align, noFill, layer) {
     this.align = align;
     this.noFill = noFill;
     this.layer = layer;
+    this.defaultVisibility = true;
     this.visible = true;
     this.id = GAME.RENDER_IDS++;
     /**
@@ -294,6 +295,7 @@ function Sprite(src, x, y, width, height, layer) {
     this.width = width;
     this.height = height;
     this.layer = layer;
+    this.defaultVisibility = true;
     this.visible = true;
     this.id = GAME.RENDER_IDS++;
     /**

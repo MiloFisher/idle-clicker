@@ -53,7 +53,7 @@
             ],
             "Effect": [ 
                 {
-                    "p assiveAntPerSecond": 1
+                    "passiveAntPerSecond": 1
                 } 
             ]
         },
