@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0.01
+                    "sugarPerAnt": 0.01
                 } 
             ]
         }, 
@@ -21,35 +21,35 @@
         {
             "Name": "Weekly prayers",
             "Description": "Remember to pray to the queen!",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
-                } 
+                    "sugarPerAnt": 0.01
+                }
             ]
         },
         
         {
             "Name": "New rituals and practices",
             "Description": "The queen will be pleased..",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -57,17 +57,17 @@
         {
             "Name": "Chapels",
             "Description": "A place for group worship",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -75,17 +75,17 @@
         {
             "Name": "Cathedrals",
             "Description": "The holiest of places for worship",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -93,17 +93,17 @@
         {
             "Name": "Church schools",
             "Description": "Ants are brought up to praise the queen",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -111,17 +111,17 @@
         {
             "Name": "Forced conversions",
             "Description": "There is no other religion",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -129,17 +129,17 @@
         {
             "Name": "Scare tactics",
             "Description": "These practices are getting out of hand..",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -147,17 +147,17 @@
         {
             "Name": "Punishment",
             "Description": "Unfaithful ants will be punished",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
                 } 
             ]
         },
@@ -165,17 +165,35 @@
         {
             "Name": "Ant sacrifice",
             "Description": "Sacrifice ants to prove faith in the queen.",
-            "Cost": 0,
+            "Cost": 50,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 0,
+                    "Religion": 50,
                     "Military": 0
                 }
             ],
             "Effect": [ 
                 {
-                    "sugarPerFarmer": 0
+                    "sugarPerAnt": 0.01
+                } 
+            ]
+        },
+
+        {
+            "Name": "Perform the ritual",
+            "Description": "Summon the great ant god to judge this mortal world.",
+            "Cost": 1500000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 200000,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "religionWin": true
                 } 
             ]
         }

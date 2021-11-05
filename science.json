@@ -178,6 +178,24 @@
                     "upgradecostreduction": 0.2
                 } 
             ]
+        },
+
+        {
+            "Name": "Lift off",
+            "Description": "Off to make ant colonies on planets throught the galaxy.",
+            "Cost": 1500000,
+            "UnlockRequirements": [
+                {
+                    "Science": 200000,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "scienceWin": true
+                } 
+            ]
         }
     ] 
 }

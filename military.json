@@ -181,6 +181,24 @@
                     "populationCap": 420694206942069420
                 } 
             ]
+        },
+
+        {
+            "Name": "Execute plan Alpha November Tango",
+            "Description": "The entire world will become our ant hill.",
+            "Cost": 1500000,
+            "UnlockRequirements": [
+                {
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 200000
+                }
+            ],
+            "Effect": [ 
+                {
+                    "militaryWin": true
+                } 
+            ]
         }
     ] 
 }
