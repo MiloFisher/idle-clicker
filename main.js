@@ -74,6 +74,9 @@ let scienceAntMinus;
 let religionAntPlus;
 let religionAntMinus;
 
+let xOffset = 0;
+let yOffset = 0;
+
 // Types of ants and their info
 let antLimit = 100;
 let totalAnts = 0;
@@ -153,7 +156,9 @@ function initializeUIElements() {
 
     upgradesInfoPanelElements = [];
     upgradesInfoPanelElements.push(upgradesInfoPanel = new Sprite("upgradeinfopanel.png", 115, 570, 410, 120, 0));
-    upgradesInfoPanelElements.push(panelDisplaySelectedUpgrade = new Sprite("selectedupgrade.png", 0, 0, 60, 60, -15));
+    upgradesInfoPanelElements.push(panelDisplaySelectedUpgrade = new Sprite("selectedupgrade.png", 0, 0, 66, 66, -5));
+    xOffset = -(panelDisplaySelectedUpgrade.width - 60) * 0.5;
+    yOffset = -(panelDisplaySelectedUpgrade.height - 60) * 0.5;
     upgradesInfoPanelElements.push(panelDisplayName = new RenderText("Name", 130, 595, "24px Gothic", "black", "left", true, -5));
     upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "20px Gothic", "black", "left", false, -5));
@@ -475,8 +480,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
         case "general":
             panelDisplayEffect.text = `-Passive Ant Rate +${effects[0].passiveAntPerSecond * 100}%`;
             panelDisplayRequirement.text = `-Population Requirement: ${requirements[0].Population}`;
-            panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x;
-            panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y;
+            panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
+            panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
                 // Check requirements and cost and if purchased before
@@ -508,8 +513,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-New Population Cap of ${effects[0].populationCap}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${requirements[0].Military}`;
-            panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x;
-            panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y;
+            panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
+            panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, effects[0].populationCap];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, newPopulationCap) => {
                 // Check requirements and cost and if purchased before
@@ -541,8 +546,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-Upgrade Costs -${effects[0].upgradecostreduction * 100}%`;
             }
             panelDisplayRequirement.text = `-Science Requirement: ${requirements[0].Science}`;
-            panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x;
-            panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y;
+            panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x + xOffset;
+            panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, effects[0].upgradecostreduction];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentReduced) => {
                 // Check requirements and cost and if purchased before
@@ -574,8 +579,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-New Sugar Per Worker of ${effects[0].sugarPerFarmer}`;
             }
             panelDisplayRequirement.text = `-Religion Requirement: ${requirements[0].Religion}`;
-            panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x;
-            panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y;
+            panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x + xOffset;
+            panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, effects[0].sugarPerFarmer];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, newAmountPerWorker) => {
                 // Check requirements and cost and if purchased before
