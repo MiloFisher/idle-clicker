@@ -1,108 +1,323 @@
 // UI Objects
-let gameBackground;         // Game Background sprite
-let clickArea;              // Main button for clicking to get Ants
-let workerAntsDisplay;      // Text showing worker ants amount
-let sugarGrainsDisplay;     // Text showing sugar grains amount
-let lowerBackground;        // Allocation/Upgrades background sprite
-let upgradesTabButton;      // Upgrades tab button
-let allocationTabButton;    // Ant allocation tab button
-let upgradesTabElements;    // Array holding upgrades tab UI elements
-let allocationTabElements;  // Array holding allocation tab UI elements
-let upgradesTabBackground;  // Upgrades tab background
-let allocationTabBackground;// Allocation tab background
+let gameBackground;          // Game Background sprite
+let lowerBackground;         // Allocation/Upgrades background sprite
+let clickArea;               // Main button for clicking to get Ants
 
-// Game Objects
-let workerAnts;             // Amount of worker ants the player has
-let sugarGrains;            // Amount of sugar grains the player has
-let workerAntRate;          // Worker ant rate in Sugar Grains per second
+let workerAntsDisplay;       // Text showing worker ants amount
+let militaryAntsDisplay;
+let scienceAntsDisplay;
+let religionAntsDisplay;
+let antLimitDisplay;
 
+let sugarGrainsDisplay;      // Text showing sugar grains amount
+let militaryPointsDisplay;
+let sciencePointsDisplay;
+let religionPointsDisplay;
+
+let upgradesTabButton;       // Upgrades tab button
+let upgradesTabText;         // Upgrades tab button text
+let upgradesTabBackground;   // Upgrades tab background
+
+let workerUpgradesTabElements;          // Array holding worker upgrades tab UI elements
+let workerUpgradesTabBackground;        // Worker upgrades tab background
+let militaryUpgradesTabElements;        // Array holding military upgrades tab UI elements
+let militaryUpgradesTabBackground;      // Military upgrades tab background
+let scienceUpgradesTabElements;         // Array holding science upgrades tab UI elements
+let scienceUpgradesTabBackground;       // Science upgrades tab background
+let religionUpgradesTabElements;        // Array holding religion upgrades tab UI elements
+let religionUpgradesTabBackground;      // Religion upgrades tab background
+
+let workerUpgradesTabButton;            // Worker upgrades tab button
+let militaryUpgradesTabButton;          // Military upgrades tab button
+let scienceUpgradesTabButton;           // Science upgrades tab button
+let religionUpgradesTabButton;          // Religion upgrades tab button
+let workerUpgradesTabIcon;              // Worker upgrades tab icon
+let militaryUpgradesTabIcon;            // Military upgrades tab icon
+let scienceUpgradesTabIcon;             // Science upgrades tab icon
+let religionUpgradesTabIcon;            // Religion upgrades tab icon
+
+let allocationTabButton;     // Ant allocation tab button
+let allocationTabText;       // Allocation tab button text
+let allocationTabElements;   // Array holding allocation tab UI elements
+let allocationTabBackground; // Allocation tab background
+let militaryAntIcon;
+let scienceAntIcon;
+let religionAntIcon;
+
+let militaryAntPlus;         // Increment for militaryAnts
+let militaryAntMinus;        // Decrement for militaryAnts
+let scienceAntPlus;
+let scienceAntMinus;
+let religionAntPlus;
+let religionAntMinus;
+
+// Types of ants and their info
+let antLimit = 100;
+let totalAnts = 0;
+let workerAnts = {
+    name: 'Worker Ants',
+    value: 0,
+    display: 0,
+};
+let militaryAnts = {
+    name: 'Military Ants',
+    value: 0,
+    display: 0,
+};
+let scienceAnts = {
+    name: 'Science Ants',
+    value: 0,
+    display: 0,
+};
+let religionAnts = {
+    name: 'Religion Ants',
+    value: 0,
+    display: 0,
+};
+let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
+
+// Resources and rates
+let workerAntRate = 0.1; // Worker ant rate in Sugar Grains per second
+let sugarGrains = 0;     // Amount of sugar grains the player has
+let militaryPoints = 0;  // Amount of points for specialized ants...
+let sciencePoints = 0;
+let religionPoints = 0;
+
+// Initializes all UI elements
+function initializeUIElements() {
+    gameBackground = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
+    lowerBackground = new Sprite("gray.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
+    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
+    clickArea.sprite.visible = false; // Make click area a invisible
+
+    // Text displays for game resources
+    sugarGrainsDisplay = new RenderText("Sugar Grains: 0", GAME.WIDTH - 10, 20, "20px Comic Sans", "black", "right", false, 0);
+    militaryPointsDisplay = new RenderText("Military Ants: 0", GAME.WIDTH - 10, 40, "20px Comic Sans", "black", "right", false, 0);
+    sciencePointsDisplay = new RenderText("Science Ants: 0", GAME.WIDTH - 10, 60, "20px Comic Sans", "black", "right", false, 0);
+    religionPointsDisplay = new RenderText("Religion Ants: 0", GAME.WIDTH - 10, 80, "20px Comic Sans", "black", "right", false, 0);
+    workerAntsDisplay = new RenderText("Worker Ants: 0", 10, 20, "20px Comic Sans", "black", "left", false, 0);
+    militaryAntsDisplay = new RenderText("Military Ants: 0", 10, 40, "20px Comic Sans", "black", "left", false, 0);
+    scienceAntsDisplay = new RenderText("Science Ants: 0", 10, 60, "20px Comic Sans", "black", "left", false, 0);
+    religionAntsDisplay = new RenderText("Religion Ants: 0", 10, 80, "20px Comic Sans", "black", "left", false, 0);
+    antLimitDisplay = new RenderText("Ant Cap: 0/100", 10, 100, "20px Comic Sans", "black", "left", false, 0);
+    
+    // Push the elements for the upgrades tab into its array for showing/hiding its functionality later
+    upgradesTabButton = new Button("black.png", 300, 360, 270, 40, 0, showUpgradesTab);
+    upgradesTabButton.sprite.visible = false;
+    upgradesTabText = new RenderText("Upgrades", 380, 390, "30px Gothic", "black", "left", false, -1);
+    upgradesTabBackground = new Sprite("upgradesbackground.png", 30, 360, 540, 360, 80);
+
+    workerUpgradesTabElements = [];
+    militaryUpgradesTabElements = [];
+    scienceUpgradesTabElements = [];
+    religionUpgradesTabElements = [];
+
+    workerUpgradesTabButton = new Button("black.png", 50, 420, 40, 70, 0, showWorkerTab);
+    workerUpgradesTabButton.sprite.visible = false;
+    militaryUpgradesTabButton = new Button("white.png", 50, 490, 40, 70, 0, showMilitaryTab);
+    militaryUpgradesTabButton.sprite.visible = false;
+    scienceUpgradesTabButton = new Button("black.png", 50, 560, 40, 70, 0, showScienceTab);
+    scienceUpgradesTabButton.sprite.visible = false;
+    religionUpgradesTabButton = new Button("white.png", 50, 630, 40, 70, 0, showReligionTab);
+    religionUpgradesTabButton.sprite.visible = false;
+
+    workerUpgradesTabIcon = new Sprite("workerant.png", 50, 440, 40, 40, 0);
+    militaryUpgradesTabIcon = new Sprite("militaryant.png", 50, 510, 40, 40, 0);
+    scienceUpgradesTabIcon = new Sprite("scienceant.png", 50, 580, 40, 40, 0);
+    religionUpgradesTabIcon = new Sprite("religionant.png", 50, 645, 40, 40, 0);
+
+    workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 50, 420, 500, 280, 70));
+    militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 50, 420, 500, 280, 70));
+    scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 50, 420, 500, 280, 70));
+    religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 50, 420, 500, 280, 70));
+
+    // Push the elements for the allocation tab into its array for showing/hiding its functionality later
+    allocationTabButton = new Button("black.png", 30, 360, 270, 40, 0, showAllocationTab);
+    allocationTabButton.sprite.visible = false;
+    allocationTabText = new RenderText("Allocation", 110, 390, "30px Gothic", "black", "left", false, -1);
+    allocationTabElements = [];
+    allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 30, 360, 540, 360, 80));
+    allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['militaryAnts']));
+    allocationTabElements.push(militaryAntIcon = new Sprite("militaryant.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
+    allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['militaryAnts']));
+    allocationTabElements.push(scienceAntPlus = new Button("uparrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['scienceAnts']));
+    allocationTabElements.push(scienceAntIcon = new Sprite("scienceant.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
+    allocationTabElements.push(scienceAntMinus = new Button("downarrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['scienceAnts']));
+    allocationTabElements.push(religionAntPlus = new Button("uparrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['religionAnts']));
+    allocationTabElements.push(religionAntIcon = new Sprite("religionant.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
+    allocationTabElements.push(religionAntMinus = new Button("downarrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['religionAnts']));
+
+    // Setting the display values of the different types of ants
+    workerAnts.display = workerAntsDisplay;
+    militaryAnts.display = militaryAntsDisplay;
+    scienceAnts.display = scienceAntsDisplay;
+    religionAnts.display = religionAntsDisplay;
+}
 
 // Called at start of game, before update()
 function start() {
     initializeUIElements();
-    initializeGameObjects();
-
-    showUpgradesTab(); // Start out with upgrades tab open
+    importUpgradesFromJson("upgrades.json");
+    showAllocationTab(); // Start out with upgrades tab open
 }
-let lastVal = 0;
+
 // Called every game tick, 60 ticks in a second
 function update() {
+    
     gainSugarGrains();
+    gainMilitaryPoints()
+    gainSciencePoints()
+    gainReligionPoints()
+    showAntCap();
 }
 
-// Initializes all UI elements
-function initializeUIElements() {
-    gameBackground = new Sprite("gray.png", 0,0, GAME.WIDTH, GAME.HEIGHT, 100);
-    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, gainWorkerAnts, [1]);
-    clickArea.sprite.visible = false; // Make click area a invisible
-    workerAntsDisplay = new RenderText("Worker Ants: 0", 10, 20, "20px Comic Sans", "black", "left", false, 0);
-    sugarGrainsDisplay = new RenderText("Sugar Grains: 0", GAME.WIDTH - 10, 20, "20px Comic Sans", "black", "right", false, 0);
-    lowerBackground = new Sprite("black.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
-    upgradesTabButton = new Button("upgradesTabButton.png", 150, GAME.HEIGHT * 0.5 + 20, 100, 25, 0, showUpgradesTab);
-    allocationTabButton = new Button("allocationTabButton.png", GAME.WIDTH - 250, GAME.HEIGHT * 0.5 + 20, 100, 25, 0, showAllocationTab);
-    upgradesTabElements = [];
-    allocationTabElements = [];
-    upgradesTabElements.push(upgradesTabBackground = new Sprite("white.png", 50, GAME.HEIGHT * 0.5 + 50, GAME.WIDTH - 100, GAME.HEIGHT * 0.5 - 100, 80));
-    allocationTabElements.push(allocationTabBackground = new Sprite("gray.png", 50, GAME.HEIGHT * 0.5 + 50, GAME.WIDTH - 100, GAME.HEIGHT * 0.5 - 100, 80));
-}
-
-// Initializes all Game Objects
-function initializeGameObjects() {
-    workerAnts = 0;         // Starting ants amount
-    sugarGrains = 0;        // Starting sugar grains amount 
-    workerAntRate = 0.5;    // Starting worker ant sugar collection rate
-}
-
+// phase out this function when other function works...............
 // Use this function to add to the amount of worker ants
 function gainWorkerAnts(amount) {
-    workerAnts += amount;
+    workerAnts.value += amount;
     // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = "Worker Ants: " + workerAnts;
+    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
+}
+
+// This function gives ants based on a random chance
+function chanceGainWorkerAnts(amount) {
+    var chance = Math.random();
+    if(chance < 0.1)
+        workerAnts.value += amount;
+    // Later we can add big number formatting here to simplify as like "5.5B"
+    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
 }
 
 // Gains sugar gains based on how many worker ants there are
+// Later we can add big number formatting here to simplify as like "5.5B"
+// can use regex or js methods for this ^
 function gainSugarGrains() {
-    sugarGrains += workerAntRate * workerAnts / 60;
-    // Later we can add big number formatting here to simplify as like "5.5B"
+    sugarGrains += workerAntRate * workerAnts.value / 60;
     sugarGrainsDisplay.text = "Sugar Grains: " + ~~sugarGrains;
 }
 
-// Shows all upgrade tab elements, hiding all allocation tab elements
-function showUpgradesTab() {
-    upgradesTabElements.forEach(e => {
-        if(e instanceof Button) {
-            e.sprite.visible = true;
-        }
-        else {
-            e.visible = true;
-        }
-    });
-    allocationTabElements.forEach(e => {
-        if (e instanceof Button) {
-            e.sprite.visible = false;
-        }
-        else {
-            e.visible = false;
-        }
-    });
+function gainMilitaryPoints() {
+    //militaryPoints += workerAntRate * militaryAnts.value / 60;
+    militaryPointsDisplay.text = "Military Ants: " + ~~militaryAnts.value;
+}
+
+function gainSciencePoints() {
+    //sciencePoints += workerAntRate * scienceAnts.value / 60;
+    sciencePointsDisplay.text = "Science Ants: " + ~~scienceAnts.value;
+}
+
+function gainReligionPoints() {
+    //religionPoints += workerAntRate * religionAnts.value / 60;
+    religionPointsDisplay.text = "Religion Ants: " + ~~religionAnts.value;
+}
+
+function showAntCap() {
+    totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
+    antLimitDisplay.text = `Ant Cap: ${totalAnts} / ${antLimit}`;
 }
 
 // Shows all allocation tab elements, hiding all upgrades tab elements
 function showAllocationTab() {
-    allocationTabElements.forEach(e => {
+    setTabActive(allocationTabElements, true);
+    upgradesTabBackground.visible = false;
+    workerUpgradesTabButton.enabled = false;
+    militaryUpgradesTabButton.enabled = false;
+    scienceUpgradesTabButton.enabled = false;
+    religionUpgradesTabButton.enabled = false;
+    workerUpgradesTabIcon.visible = false;
+    militaryUpgradesTabIcon.visible = false;
+    scienceUpgradesTabIcon.visible = false;
+    religionUpgradesTabIcon.visible = false;
+    setTabActive(workerUpgradesTabElements, false);
+    setTabActive(militaryUpgradesTabElements, false);
+    setTabActive(scienceUpgradesTabElements, false);
+    setTabActive(religionUpgradesTabElements, false);
+}
+
+// Shows all upgrade tab elements, hiding all allocation tab elements
+function showUpgradesTab() {
+    setTabActive(allocationTabElements, false);
+    upgradesTabBackground.visible = true;
+    workerUpgradesTabButton.enabled = true;
+    militaryUpgradesTabButton.enabled = true;
+    scienceUpgradesTabButton.enabled = true;
+    religionUpgradesTabButton.enabled = true;
+    workerUpgradesTabIcon.visible = true;
+    militaryUpgradesTabIcon.visible = true;
+    scienceUpgradesTabIcon.visible = true;
+    religionUpgradesTabIcon.visible = true;
+    showWorkerTab();
+}
+
+function showWorkerTab(){
+    setTabActive(workerUpgradesTabElements, true);
+    setTabActive(militaryUpgradesTabElements, false);
+    setTabActive(scienceUpgradesTabElements, false);
+    setTabActive(religionUpgradesTabElements, false);
+}
+
+function showMilitaryTab() {
+    setTabActive(workerUpgradesTabElements, false);
+    setTabActive(militaryUpgradesTabElements, true);
+    setTabActive(scienceUpgradesTabElements, false);
+    setTabActive(religionUpgradesTabElements, false);
+}
+
+function showScienceTab() {
+    setTabActive(workerUpgradesTabElements, false);
+    setTabActive(militaryUpgradesTabElements, false);
+    setTabActive(scienceUpgradesTabElements, true);
+    setTabActive(religionUpgradesTabElements, false);
+}
+
+function showReligionTab() {
+    setTabActive(workerUpgradesTabElements, false);
+    setTabActive(militaryUpgradesTabElements, false);
+    setTabActive(scienceUpgradesTabElements, false);
+    setTabActive(religionUpgradesTabElements, true);
+}
+
+function setTabActive(tab, active) {
+    tab.forEach(e => {
         if (e instanceof Button) {
-            e.sprite.visible = true;
-        }
-        else {
-            e.visible = true;
+            e.sprite.visible = active;
+            e.enabled = active;
+        } else {
+            e.visible = active;
         }
     });
-    upgradesTabElements.forEach(e => {
-        if (e instanceof Button) {
-            e.sprite.visible = false;
+}
+
+// Adds 1 to certain ant type on respective button press
+// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
+function antsPlus(a) {
+    // add in workerants distribution condition
+    if (totalAnts < antLimit && workerAnts.value !== 0) {
+        antTypes[a].value++;
+        antTypes[a].display.text = `${antTypes[a].name}: ` + antTypes[a].value;
+        antsMinus('workerAnts');
+    }
+}
+
+// Subtracts 1 from certain ant type on respective button press
+// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
+function antsMinus(a) {
+    if (antTypes[a].value > 0) {
+        antTypes[a].value--;
+        antTypes[a].display.text = `${antTypes[a].name}: ` + antTypes[a].value;
+    }
+}
+
+function importUpgradesFromJson(filePath) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", filePath, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            var data = JSON.parse(rawFile.responseText);
+            console.log(data);
+            
         }
-        else {
-            e.visible = false;
-        }
-    });
+    }
+    rawFile.send(null);
 }
