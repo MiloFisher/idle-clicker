@@ -459,7 +459,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
-            panelDisplayEffect.text = `-New Population Cap of ${effects[0].populationCap}`;
+            if (effects[0].militaryWin){
+                panelDisplayEffect.text = "-Total world domination!";
+            }
+            else {
+                panelDisplayEffect.text = `-New Population Cap of ${effects[0].populationCap}`;
+            }
             panelDisplayRequirement.text = `-Military Requirement: ${requirements[0].Military}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y;
@@ -485,7 +490,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
-            panelDisplayEffect.text = `-Upgrade Costs -${effects[0].upgradecostreduction * 100}%`;
+            if (effects[0].scienceWin) {
+                panelDisplayEffect.text = "-Live amongst the stars!";
+            }
+            else {
+                panelDisplayEffect.text = `-Upgrade Costs -${effects[0].upgradecostreduction * 100}%`;
+            }
             panelDisplayRequirement.text = `-Science Requirement: ${requirements[0].Science}`;
             panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x;
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y;
@@ -511,7 +521,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
-            panelDisplayEffect.text = `-New Sugar Per Worker of ${effects[0].sugarPerFarmer}`;
+            if (effects[0].religionWin) {
+                panelDisplayEffect.text = "-Cleanse from mortal sin!";
+            }
+            else {
+                panelDisplayEffect.text = `-New Sugar Per Worker of ${effects[0].sugarPerFarmer}`;
+            }
             panelDisplayRequirement.text = `-Religion Requirement: ${requirements[0].Religion}`;
             panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x;
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y;
