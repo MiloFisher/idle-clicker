@@ -4,6 +4,7 @@ let cheatMode = true;
 let gameBackground;          // Game Background sprite
 let lowerBackground;         // Allocation/Upgrades background sprite
 let clickArea;               // Main button for clicking to get Ants
+let gameWon;
 
 let workerAntsDisplay;       // Text showing worker ants amount
 let militaryAntsDisplay;
@@ -87,7 +88,7 @@ let xOffset = 0;
 let yOffset = 0;
 
 // Types of ants and their info
-let antLimit = 100;
+let antLimit = 50; // maybe 25?
 let totalAnts = 0;
 let workerAnts = {
     name: 'Worker Ants',
@@ -115,13 +116,14 @@ let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 let purchasedList;
 
 // Resources and rates
-
-let sugarGrains = 0;     // Amount of sugar grains the player has
-let sugarGatherRate = 0.25; // Worker ant rate in Sugar Grains per second
-let sugarCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
-// let militaryPoints = 0;  // Amount of points for specialized ants...
-// let sciencePoints = 0;
-// let religionPoints = 0;
+let sugarGrains = 0;            // Amount of sugar grains the player has
+let sugarGatherRate = 1;        // Worker ant rate in Sugar Grains per second
+let passiveAntRate = 0;
+let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
+let generalCostReduction = 0;   // Note that general refers to worker ant
+let militaryCostReduction = 0;
+let scienceCostReduction = 0;
+let religionCostReduction = 0;
 
 // Variable for leaderboards
 let timePlayed;
@@ -130,7 +132,7 @@ let timePlayed;
 function initializeUIElements() {
     gameBackground = new Sprite("BG2.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
     lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
-    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
+    clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, gainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
     purchasedList = [];
 
@@ -159,7 +161,7 @@ function initializeUIElements() {
     infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
     infoTabElements = [];
     infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 30, 360, 540, 360, 80));
-    
+
     /**
      * Upgrades objects here:
      */
@@ -248,8 +250,7 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
-    if(cheatMode)
-    {
+    if (cheatMode) {
         sugarGrains = 999999999999999;
         workerAnts.value = 999999999999999;
         militaryAnts.value = 999999999999999;
@@ -261,20 +262,48 @@ function start() {
         scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
         religionAntsDisplay.text = simplifyNumber(religionAnts.value);
     }
+}
+
+// Called every game tick, 60 ticks in a second
+function update() {
+
+    showAntCap();
+    gainSugarGrains();
+    if (passiveAntRate > 0) {
+        gainWorkerAntsPassively();
+    }
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
 }
 
-// Called every game tick, 60 ticks in a second
-function update() {
-    
-    gainSugarGrains();
-    // gainMilitaryPoints()
-    // gainSciencePoints()
-    // gainReligionPoints()
-    showAntCap();
+// Last milestone of an upgrades tab has been purchased, and therefore the game is won!
+function endGame(winType) {
+    gameWon = new RenderText(`${winType}`, GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
+    // gameWon.visible = false;
+    // needs a lot of polishing, that ill get to when i come back from dog walk...
+}
+
+
+// Updates and renders the total number of ants you can have
+function showAntCap() {
+    totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
+    antLimitDisplay.text = `${simplifyNumber(totalAnts)} / ${simplifyNumber(antLimit)}`;
+}
+
+// Gains sugar gains based on how many worker ants there are
+// Later we can add big number formatting here to simplify as like "5.5B"
+function gainSugarGrains() {
+    sugarGrains += workerAnts.value * sugarGatherRate / 60;
+    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+}
+
+// Gains sugar gains based on how many worker ants there are
+// Later we can add big number formatting here to simplify as like "5.5B"
+function gainWorkerAntsPassively() {
+    workerAnts += workerAnts * passiveAntRate / 60;
+    sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
 }
 
 // phase out this function when other function works...............
@@ -282,30 +311,7 @@ function update() {
 function gainWorkerAnts(amount) {
     workerAnts.value += amount;
     // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
-}
-
-// This function gives ants based on a random chance
-function chanceGainWorkerAnts(amount) {
-    var chance = Math.random();
-    if (chance < 0.25) {
-        workerAnts.value += amount;
-    }
-    // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
-}
-
-// Gains sugar gains based on how many worker ants there are
-// Later we can add big number formatting here to simplify as like "5.5B"
-// can use regex or js methods for this ^
-function gainSugarGrains() {
-    sugarGrains += sugarGatherRate / 60;
-    sugarGrainsDisplay.text = simplifyNumber(Math.trunc(sugarGrains));
-}
-
-function showAntCap() {
-    totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
-    antLimitDisplay.text = simplifyNumber(totalAnts) + " / " + simplifyNumber(antLimit);
+    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
 }
 
 // Shows all allocation tab elements
@@ -346,7 +352,7 @@ function showInfoTab() {
     setTabActive(religionUpgradesTabElements, false);
 }
 
-function showWorkerTab(){
+function showWorkerTab() {
     setTabActive(workerUpgradesTabElements, true);
     setTabActive(militaryUpgradesTabElements, false);
     setTabActive(scienceUpgradesTabElements, false);
@@ -381,7 +387,7 @@ function showReligionTab() {
 function setTabActive(tab, active) {
     tab.forEach(e => {
         if (e instanceof Button) {
-            if(active){
+            if (active) {
                 e.sprite.visible = e.sprite.defaultVisibility;
                 e.enabled = active;
             }
@@ -390,7 +396,7 @@ function setTabActive(tab, active) {
                 e.enabled = active;
             }
         } else {
-            if(active){
+            if (active) {
                 e.visible = e.defaultVisibility;
             }
             else {
@@ -427,7 +433,7 @@ function importUpgradesFromJson() {
     readUpgradesFromJson("religion", religionUpgradesTabElements);
 }
 
-function readUpgradesFromJson(category, elementList){
+function readUpgradesFromJson(category, elementList) {
     var filePath = category + ".json";
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -435,14 +441,14 @@ function readUpgradesFromJson(category, elementList){
     rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4 && rawFile.status == "200") {
             var data = JSON.parse(rawFile.responseText);
-            for(var i = 0; i < data.Upgrades.length; i++) {
+            for (var i = 0; i < data.Upgrades.length; i++) {
                 var id = elementList.length;
                 var name = data.Upgrades[i].Name;
                 var cost = data.Upgrades[i].Cost;
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
-                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i/6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
+                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
             }
             setTabActive(elementList, false);
         }
@@ -466,7 +472,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             alreadyPurchased = true;
         }
     });
-    if(alreadyPurchased) {
+    if (alreadyPurchased) {
         panelDisplayBuyPrompt.text = "";
         panelDisplayCost.text = "Purchased";
     }
@@ -477,7 +483,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
     panelDisplayName.text = name;
     panelDisplayDescription.text = `*${description}*`;
 
-    switch(category){
+    switch (category) {
         case "general":
             panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
@@ -487,17 +493,22 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
-                if(totalAnts < requirement || sugarGrains < cost) {
+                if (totalAnts < requirement || sugarGrains < cost) {
                     failedCheck = true;
                 }
                 purchasedList.forEach(e => {
-                    if(e.category == category && e.id == id){
+                    if (e.category == category && e.id == id) {
                         failedCheck = true;
                     }
                 });
                 if (!failedCheck) {
-                    // Give effect to player
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+                    sugarGrainsDisplay.text = simplifyNumber(sugarGrains); // can maybe remove this...
                     
+                    // Give effect to player
+                    passiveAntRate = percentIncrease; // not sure whether you want += or =. also whether to do the military thing so you cant downgrade with a lower buy.
+
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedgeneral.png";
                     purchasedList.push({ category: category, id: id });
@@ -508,7 +519,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "military":
             var type;
-            if (effects[0].militaryWin){
+            if (effects[0].militaryWin) {
                 type = "win";
                 panelDisplayEffect.text = "-Total world domination!";
             }
@@ -532,10 +543,21 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
                 });
                 if (!failedCheck) {
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+                    sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
+
                     // Give effect to player
+                    // Currently set so that you dont need a previous badge to unlock next
+                    if (effects[0].populationCap > antLimit) {
+                        antLimit = newPopulationCap;
+                    }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
-                    
+                    if (type === "win") {
+                        endGame("Martial Victory");
+                    }
+
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedmilitary.png";
                     purchasedList.push({ category: category, id: id });
@@ -598,13 +620,31 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
                 });
                 if (!failedCheck) {
-                    // Give effect to player
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+                    sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
 
+                    // Give effect to player
                     // type will be universal, general, military, science, or religion
                     // percentReduced will be how much reduction is applied to the global reduction variable corresponding to the type
+                    if (type === "universal") {
+                        universalCostReduction += percentReduced; // or = or *= ? not sure on the math wanted
+                    } else if (type === "general") {
+                        generalCostReduction += percentReduced;
+                    } else if (type === "military") {
+                        militaryCostReduction += percentReduced;
+                    } else if (type === "science") {
+                        scienceCostReduction += percentReduced;
+                    } else if (type === "religion") {
+                        religionCostReduction += percentReduced;
+                    }
+                    // ^ when reducing costs of specific types, apply the universal reduction as well as its own reduction...
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
-                    
+                    if (type === "win") {
+                        endGame("Scientific Victory");
+                    }
+
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
                     purchasedList.push({ category: category, id: id });
@@ -638,10 +678,18 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         failedCheck = true;
                     }
                 });
-                if(!failedCheck) {
+                if (!failedCheck) {
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+                    sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
+
                     // Give effect to player
-                    
+                    sugarGatherRate += newAmountPerWorker;
+
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
+                    if (type === "win") {
+                        endGame("Holy Victory");
+                    }
 
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedreligion.png";
@@ -655,17 +703,17 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 }
 
 let scale = {
-    THOUSAND:    "1000",
-    MILLION:     "1000000",
-    BILLION:     "1000000000",
-    TRILLION:    "1000000000000",
+    THOUSAND: "1000",
+    MILLION: "1000000",
+    BILLION: "1000000000",
+    TRILLION: "1000000000000",
     QUADRILLION: "1000000000000000",
     QUINTILLION: "1000000000000000000",
-    SEXTILLION:  "1000000000000000000000",
-    SEPTILLION:  "1000000000000000000000000",
-    OCTILLION:   "1000000000000000000000000000",
-    NONILLION:   "1000000000000000000000000000000",
-    DECILLION:   "1000000000000000000000000000000000",
+    SEXTILLION: "1000000000000000000000",
+    SEPTILLION: "1000000000000000000000000",
+    OCTILLION: "1000000000000000000000000000",
+    NONILLION: "1000000000000000000000000000000",
+    DECILLION: "1000000000000000000000000000000000",
 };
 
 /**
@@ -674,14 +722,14 @@ let scale = {
  * @returns {string} Simplified form of number
  */
 function simplifyNumber(number) {
-    if(number == undefined) {
+    if (number == undefined) {
         return number;
     }
     var num = number.toString();
     var decimals = 1;
     if (num.length >= scale.DECILLION.length && num >= scale.DECILLION) {
         var x = num.substring(0, num.length - scale.DECILLION.length + decimals + 1);
-        if(decimals > 0) 
+        if (decimals > 0)
             return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Decillion";
         else
             return x + " Decillion";
