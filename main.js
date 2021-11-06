@@ -122,9 +122,8 @@ let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 let purchasedList;
 
 // Resources and rates
-
 let sugarGrains = 0;            // Amount of sugar grains the player has
-let sugarGatherRate = .05;     // Worker ant rate in Sugar Grains per second
+let sugarGatherRate = 0.25;     // Worker ant rate in Sugar Grains per second
 let passiveAntRate = 1;
 let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
 let generalCostReduction = 0;   // Note that general refers to worker ant
@@ -179,7 +178,7 @@ function initializeUIElements() {
     infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
     infoTabElements = [];
     infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 30, 360, 540, 360, 80));
-    
+
     /**
      * Upgrades objects here:
      */
@@ -268,7 +267,7 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
-    if(cheatMode) {
+    if (cheatMode) {
         sugarGrains = 999999999999999;
         workerAnts.value = 999999999999999;
         militaryAnts.value = 999999999999999;
@@ -286,7 +285,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntRate > 0) {
+    if (passiveAntRate > 1) {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
@@ -318,7 +317,7 @@ function chanceGainWorkerAnts(amount) {
     if (totalAnts < antLimit) {
         if(useChance){
             var chance = Math.random();
-            if (chance < 0.25) {
+            if (chance < 0.34) {
                 workerAnts.value += amount;
             }
         } else {
@@ -339,10 +338,19 @@ function showAntCap() {
     antLimitDisplay.text = simplifyNumber(Math.trunc(totalAnts)) + " / " + simplifyNumber(antLimit);
 }
 
+// Gains sugar gains based on how many worker ants there are
 function gainWorkerAntsPassively() {
     if (totalAnts < antLimit) {
-        workerAnts.value += passiveAntRate / 60;
+        workerAnts.value += workerAnts.value * passiveAntRate / 60;
         workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
+    }
+}
+
+// Use this function to add to the amount of worker ants
+function gainWorkerAnts(amount) {
+    if (totalAnts < antLimit) {
+        workerAnts.value += amount;
+        workerAntsDisplay.text = simplifyNumber(workerAnts.value);
     }
 }
 
@@ -542,7 +550,7 @@ function incrementAnts(a) {
 
 function antsPlus(a, amount) {
     totalAnts = Math.floor(totalAnts);
-    if (totalAnts <= antLimit && workerAnts.value >= amount) {
+    if (totalAnts < antLimit && workerAnts.value >= amount) { // changed <= to < for upper bound
         antsMinus('workerAnts', amount);
         antTypes[a].value += amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
@@ -555,7 +563,7 @@ function decrementAnts(a) {
 }
 
 function antsMinus(a, amount) {
-    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) {
+    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) { // may need to test the lower bounds like with antsPlus
         antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
@@ -576,7 +584,7 @@ function readUpgradesFromJson(category, elementList) {
     rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4 && rawFile.status == "200") {
             var data = JSON.parse(rawFile.responseText);
-            for(var i = 0; i < data.Upgrades.length; i++) {
+            for (var i = 0; i < data.Upgrades.length; i++) {
                 var id = elementList.length;
                 var name = data.Upgrades[i].Name;
                 var cost = data.Upgrades[i].Cost;
@@ -668,7 +676,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             }
             else {
                 type = "normal";
-                panelDisplayEffect.text = `-New Population Cap of ${simplifyNumber(effects[0].populationCap)}`;
+                panelDisplayEffect.text = `-Increase population cap by ${simplifyNumber(effects[0].populationCap)}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
@@ -698,7 +706,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Currently set so that you dont need a previous badge to unlock next
                     if (newPopulationCap) {
                         if (effects[0].populationCap > antLimit) {
-                            antLimit = newPopulationCap;
+                            antLimit = newPopulationCap; // = -> +=
                         }
                     }
 
@@ -800,6 +808,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         endGame("Scientific Victory");
                     }
 
+                    // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
                     purchasedList.push({ category: category, id: id });
                     panelDisplayCost.text = "Purchased";

@@ -2,7 +2,7 @@
     "Upgrades": [
         {
             "Name": "Math",
-            "Description": "Ants found a use for pythagorean theorem..",
+            "Description": "Ants found a use for pythagorean theorem.",
             "Cost": 50,
             "UnlockRequirements": [
                 {
@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.02
+                    "upgradecostreduction": 0.05
                 } 
             ]
         },
@@ -21,7 +21,7 @@
         {
             "Name": "Logical reasoning",
             "Description": "They're getting even smarter!",
-            "Cost": 200,
+            "Cost": 250,
             "UnlockRequirements": [
                 {
                     "Science": 50,
@@ -31,14 +31,14 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.03
+                    "upgradecostreduction": 0.1
                 } 
             ]
         },
 
         {
             "Name": "Basic construction",
-            "Description": "Ever seen ants build anything other than a hill?",
+            "Description": "Ants can build more than just a hill now.",
             "Cost": 1000,
             "UnlockRequirements": [
                 {
@@ -49,15 +49,15 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.15
                 } 
             ]
         },
 
         {
             "Name": "Computing",
-            "Description": "Harness the power of technology..",
-            "Cost": 4000,
+            "Description": "Harness the power of technology.",
+            "Cost": 5000,
             "UnlockRequirements": [
                 {
                     "Science": 500,
@@ -67,15 +67,15 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.2
                 } 
             ]
         },
 
         {
             "Name": "Organized research",
-            "Description": "Ants now strive for better technology",
-            "Cost": 15000,
+            "Description": "Ants now strive for better technology.",
+            "Cost": 20000,
             "UnlockRequirements": [
                 {
                     "Science": 1000,
@@ -85,7 +85,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.25
                 } 
             ]
         },
@@ -103,14 +103,14 @@
             ],
             "Effect": [ 
                 {
-                    "scienceupgradecostreduction": 0.1
+                    "scienceupgradecostreduction": 0.3
                 } 
             ]
         },
 
         {
             "Name": "AIT",
-            "Description": "Ant Institute of Technology",
+            "Description": "Ant Institute of Technology.",
             "Cost": 100000,
             "UnlockRequirements": [
                 {
@@ -121,15 +121,15 @@
             ],
             "Effect": [ 
                 {
-                    "religionupgradecostreduction": 0.1
+                    "religionupgradecostreduction": 0.3
                 } 
             ]
         },
 
         {
             "Name": "Aeronautics",
-            "Description": "Awesome, flying ants",
-            "Cost": 200000,
+            "Description": "Awesome, flying ants.",
+            "Cost": 250000,
             "UnlockRequirements": [
                 {
                     "Science": 25000,
@@ -139,7 +139,7 @@
             ],
             "Effect": [ 
                 {
-                    "militaryupgradecostreduction": 0.1
+                    "militaryupgradecostreduction": 0.3
                 } 
             ]
         },
@@ -157,7 +157,7 @@
             ],
             "Effect": [ 
                 {
-                    "generalupgradecostreduction": 0.1
+                    "generalupgradecostreduction": 0.4
                 } 
             ]
         },
@@ -175,18 +175,18 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.2
+                    "upgradecostreduction": 0.5
                 } 
             ]
         },
 
         {
             "Name": "Lift off",
-            "Description": "Off to make ant colonies on planets throught the galaxy.",
-            "Cost": 1500000,
+            "Description": "Off to colonize other worlds!",
+            "Cost": 2000000,
             "UnlockRequirements": [
                 {
-                    "Science": 200000,
+                    "Science": 500000,
                     "Religion": 0,
                     "Military": 0
                 }

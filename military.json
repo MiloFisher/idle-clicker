@@ -3,7 +3,7 @@
     [ 
         {
             "Name": "Scouts",
-            "Description": "Organize basic patrol groups",
+            "Description": "Organize basic patrol groups.",
             "Cost": 50,
             "UnlockRequirements": [
                 {
@@ -22,14 +22,14 @@
 
         {
             "Name": "Sharpened antenna",
-            "Description": "Those antennae can do more than just communicate!",
-            "Cost": 100,
+            "Description": "Ants now have a collective conscience!",
+            "Cost": 250,
             "UnlockRequirements": [
                 {
                     "Population": 0,
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 250
+                    "Military": 150
                 }
             ],
             "Effect": [ 
@@ -42,12 +42,12 @@
         {
             "Name": "House invasion",
             "Description": "Take over your human's house.",
-            "Cost": 650,
+            "Cost": 1000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 1000
+                    "Military": 500
                 }
             ],
             "Effect": [ 
@@ -59,13 +59,13 @@
 
         {
             "Name": "Ant armies",
-            "Description": "Organize large armies of ants",
-            "Cost": 2250,
+            "Description": "Organize large armies of ants.",
+            "Cost": 5000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 6500
+                    "Military": 1000
                 }
             ],
             "Effect": [ 
@@ -77,13 +77,13 @@
 
         {
             "Name": "Advanced weaponry",
-            "Description": "Mini rifles, tanks, and more.",
-            "Cost": 10000,
+            "Description": "Mini rifles, tanks, and more...",
+            "Cost": 15000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 30000
+                    "Military": 3000
                 }
             ],
             "Effect": [ 
@@ -95,103 +95,103 @@
 
         {
             "Name": "City invasion",
-            "Description": "The infestation cannot be contained",
-            "Cost": 75000,
+            "Description": "The infestation cannot be contained.",
+            "Cost": 50000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 880000
+                    "Military": 10000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1100000
+                    "populationCap": 100000
                 } 
             ]
         },
 
         {
             "Name": "Ant AI",
-            "Description": "Killer ant robots, nice!",
-            "Cost": 900000,
+            "Description": "Killer ant robots, oh boy!",
+            "Cost": 100000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 6900000
+                    "Military": 25000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 50000000
+                    "populationCap": 5000000
                 } 
             ]
         },
 
         {
             "Name": "Domestic invasion",
-            "Description": "With such power you can overthrow a country",
-            "Cost": 150000000,
+            "Description": "Ants can even overthrow a country.",
+            "Cost": 250000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 1350000000
+                    "Military": 100000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 6200000000
+                    "populationCap": 1000000
                 } 
             ]
         },
 
         {
             "Name": "Military hacking",
-            "Description": "You now have control over the human military's arsenal",
-            "Cost": 4700000000,
+            "Description": "Ants took over the humans' weapon arsenals.",
+            "Cost": 500000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 712000000000
+                    "Military": 250000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1500000000000
+                    "populationCap": 2500000
                 } 
             ]
         },
 
         {
             "Name": "Global invasion",
-            "Description": "Become the new most advanced, dominant species on the planet.",
-            "Cost": 696969696969696,
+            "Description": "Ants are Earth's apex predators now.",
+            "Cost": 1000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 420420420420420
+                    "Military": 500000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 420694206942069420
+                    "populationCap": 10000000
                 } 
             ]
         },
 
         {
             "Name": "Execute plan Alpha November Tango",
-            "Description": "The entire world will become our ant hill.",
-            "Cost": 1500000,
+            "Description": "The entire world will become our ant hill!",
+            "Cost": 2000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 200000
+                    "Military": 1000000
                 }
             ],
             "Effect": [ 
