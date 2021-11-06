@@ -1,9 +1,10 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
 let lowerBackground;         // Allocation/Upgrades background sprite
 let clickArea;               // Main button for clicking to get Ants
+let gameWon;
 
 let workerAntsDisplay;       // Text showing worker ants amount
 let militaryAntsDisplay;
@@ -116,12 +117,14 @@ let purchasedList;
 
 // Resources and rates
 
-let sugarGrains = 0;     // Amount of sugar grains the player has
-let sugarGatherRate = 0.25; // Worker ant rate in Sugar Grains per second
-let sugarCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
-// let militaryPoints = 0;  // Amount of points for specialized ants...
-// let sciencePoints = 0;
-// let religionPoints = 0;
+let sugarGrains = 0;            // Amount of sugar grains the player has
+let sugarGatherRate = .05;     // Worker ant rate in Sugar Grains per second
+let passiveAntRate = 1;
+let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
+let generalCostReduction = 0;   // Note that general refers to worker ant
+let militaryCostReduction = 0;
+let scienceCostReduction = 0;
+let religionCostReduction = 0;
 
 // Variable for leaderboards
 let timePlayed;
@@ -248,8 +251,7 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
-    if(cheatMode)
-    {
+    if(cheatMode) {
         sugarGrains = 999999999999999;
         workerAnts.value = 999999999999999;
         militaryAnts.value = 999999999999999;
@@ -261,51 +263,62 @@ function start() {
         scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
         religionAntsDisplay.text = simplifyNumber(religionAnts.value);
     }
+}
+
+// Called every game tick, 60 ticks in a second
+function update() {
+    showAntCap();
+    gainSugarGrains();
+    if (passiveAntRate > 0) {
+        gainWorkerAntsPassively();
+    }
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
 }
 
-// Called every game tick, 60 ticks in a second
-function update() {
-    
-    gainSugarGrains();
-    // gainMilitaryPoints()
-    // gainSciencePoints()
-    // gainReligionPoints()
-    showAntCap();
-}
-
-// phase out this function when other function works...............
-// Use this function to add to the amount of worker ants
-function gainWorkerAnts(amount) {
-    workerAnts.value += amount;
-    // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+// Last milestone of an upgrades tab has been purchased, and therefore the game is won!
+function endGame(winType) {
+    gameWon = new RenderText(`${winType}`, GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
+    // gameWon.visible = false;
+    // needs a lot of polishing, that ill get to when i come back from dog walk...
 }
 
 // This function gives ants based on a random chance
 function chanceGainWorkerAnts(amount) {
-    var chance = Math.random();
-    if (chance < 0.25) {
-        workerAnts.value += amount;
+    // Decide if we want to use chance or not when spawning ants on click
+    var useChance = true;
+
+    if (totalAnts < antLimit) {
+        if(useChance){
+            var chance = Math.random();
+            if (chance < 0.25) {
+                workerAnts.value += amount;
+            }
+        } else {
+            workerAnts.value += amount;
+        }
     }
-    // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+    workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
 }
 
-// Gains sugar gains based on how many worker ants there are
-// Later we can add big number formatting here to simplify as like "5.5B"
-// can use regex or js methods for this ^
 function gainSugarGrains() {
-    sugarGrains += sugarGatherRate / 60;
+    sugarGrains += workerAnts.value * sugarGatherRate / 60;
     sugarGrainsDisplay.text = simplifyNumber(Math.trunc(sugarGrains));
 }
 
+// Updates and renders the total number of ants you can have
 function showAntCap() {
     totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
-    antLimitDisplay.text = simplifyNumber(totalAnts) + " / " + simplifyNumber(antLimit);
+    antLimitDisplay.text = simplifyNumber(Math.trunc(totalAnts)) + " / " + simplifyNumber(antLimit);
+}
+
+function gainWorkerAntsPassively() {
+    if (totalAnts < antLimit) {
+        workerAnts.value += passiveAntRate / 60;
+        workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
+    }
 }
 
 // Shows all allocation tab elements
@@ -346,7 +359,7 @@ function showInfoTab() {
     setTabActive(religionUpgradesTabElements, false);
 }
 
-function showWorkerTab(){
+function showWorkerTab() {
     setTabActive(workerUpgradesTabElements, true);
     setTabActive(militaryUpgradesTabElements, false);
     setTabActive(scienceUpgradesTabElements, false);
@@ -381,7 +394,7 @@ function showReligionTab() {
 function setTabActive(tab, active) {
     tab.forEach(e => {
         if (e instanceof Button) {
-            if(active){
+            if (active) {
                 e.sprite.visible = e.sprite.defaultVisibility;
                 e.enabled = active;
             }
@@ -390,7 +403,7 @@ function setTabActive(tab, active) {
                 e.enabled = active;
             }
         } else {
-            if(active){
+            if (active) {
                 e.visible = e.defaultVisibility;
             }
             else {
@@ -401,13 +414,13 @@ function setTabActive(tab, active) {
 }
 
 // Adds 1 to certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
+// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker or implement via hold button
 function antsPlus(a) {
-    // add in workerants distribution condition
-    if (totalAnts < antLimit && workerAnts.value !== 0) {
-        antTypes[a].value++;
-        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
+    totalAnts = Math.floor(totalAnts);
+    if (totalAnts <= antLimit && workerAnts.value !== 0) {
         antsMinus('workerAnts');
+        antTypes[a].value++;
+        antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
 
@@ -416,7 +429,7 @@ function antsPlus(a) {
 function antsMinus(a) {
     if (antTypes[a].value > 0) {
         antTypes[a].value--;
-        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
+        antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
 
@@ -427,7 +440,7 @@ function importUpgradesFromJson() {
     readUpgradesFromJson("religion", religionUpgradesTabElements);
 }
 
-function readUpgradesFromJson(category, elementList){
+function readUpgradesFromJson(category, elementList) {
     var filePath = category + ".json";
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -442,7 +455,7 @@ function readUpgradesFromJson(category, elementList){
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
-                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i/6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
+                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
             }
             setTabActive(elementList, false);
         }
@@ -466,37 +479,45 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             alreadyPurchased = true;
         }
     });
-    if(alreadyPurchased) {
+    if (alreadyPurchased) {
         panelDisplayBuyPrompt.text = "";
         panelDisplayCost.text = "Purchased";
     }
     else {
         panelDisplayBuyPrompt.text = "Buy For:";
-        panelDisplayCost.text = simplifyNumber(cost);
     }
     panelDisplayName.text = name;
     panelDisplayDescription.text = `*${description}*`;
 
-    switch(category){
+    switch (category) {
         case "general":
+            if (!alreadyPurchased)
+                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - generalCostReduction));
             panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction) * (1 - generalCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
-                if(totalAnts < requirement || sugarGrains < cost) {
+                if (totalAnts < requirement || sugarGrains < cost) {
                     failedCheck = true;
                 }
                 purchasedList.forEach(e => {
-                    if(e.category == category && e.id == id){
+                    if (e.category == category && e.id == id){
                         failedCheck = true;
                     }
                 });
                 if (!failedCheck) {
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+
                     // Give effect to player
+                    passiveAntRate *= 1 + percentIncrease; // I believe this is the correct way to stack percent increases
                     
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedgeneral.png";
@@ -507,8 +528,10 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
+            if (!alreadyPurchased)
+                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - militaryCostReduction));
             var type;
-            if (effects[0].militaryWin){
+            if (effects[0].militaryWin) {
                 type = "win";
                 panelDisplayEffect.text = "-Total world domination!";
             }
@@ -521,6 +544,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction) * (1 - militaryCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (militaryAnts.value < requirement || sugarGrains < cost) {
@@ -532,10 +558,20 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
                 });
                 if (!failedCheck) {
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+
                     // Give effect to player
+                    // Currently set so that you dont need a previous badge to unlock next
+                    if (effects[0].populationCap > antLimit) {
+                        antLimit = newPopulationCap;
+                    }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
-                    
+                    if (type === "win") {
+                        endGame("Martial Victory");
+                    }
+
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedmilitary.png";
                     purchasedList.push({ category: category, id: id });
@@ -545,6 +581,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
+            if (!alreadyPurchased)
+                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - scienceCostReduction));
             var type;
             var value;
             if (effects[0].scienceWin) {
@@ -587,6 +625,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentReduced) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction) * (1 - scienceCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (scienceAnts.value < requirement || sugarGrains < cost) {
@@ -598,14 +639,30 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
                 });
                 if (!failedCheck) {
-                    // Give effect to player
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
 
+                    // Give effect to player
                     // type will be universal, general, military, science, or religion
                     // percentReduced will be how much reduction is applied to the global reduction variable corresponding to the type
+                    if (type === "universal") {
+                        universalCostReduction += percentReduced; // I believe this is the correct math pertaining to how we have it specified
+                    } else if (type === "general") {
+                        generalCostReduction += percentReduced;
+                    } else if (type === "military") {
+                        militaryCostReduction += percentReduced;
+                    } else if (type === "science") {
+                        scienceCostReduction += percentReduced;
+                    } else if (type === "religion") {
+                        religionCostReduction += percentReduced;
+                    }
+                    // ^ when reducing costs of specific types, apply the universal reduction as well as its own reduction...
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
-                    
-                    // Update icon to that of purchased one and add to purchased list
+                    if (type === "win") {
+                        endGame("Scientific Victory");
+                    }
+
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedscience.png";
                     purchasedList.push({ category: category, id: id });
                     panelDisplayCost.text = "Purchased";
@@ -614,6 +671,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
+            if (!alreadyPurchased)
+                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - religionCostReduction));
             var type;
             if (effects[0].religionWin) {
                 type = "win";
@@ -628,6 +687,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newAmountPerWorker) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction) * (1 - religionCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (religionAnts.value < requirement || sugarGrains < cost) {
@@ -638,10 +700,17 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         failedCheck = true;
                     }
                 });
-                if(!failedCheck) {
-                    // Give effect to player
-                    
+                if (!failedCheck) {
+                    // Subtract cost from sugar supply
+                    sugarGrains -= cost;
+
+                    // Give effect to player (I believe this is meant to replace old rate, otherwise we need to phrase differently in upgrade description)
+                    sugarGatherRate = newAmountPerWorker;
+
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
+                    if (type === "win") {
+                        endGame("Holy Victory");
+                    }
 
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedreligion.png";
@@ -655,17 +724,17 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 }
 
 let scale = {
-    THOUSAND:    "1000",
-    MILLION:     "1000000",
-    BILLION:     "1000000000",
-    TRILLION:    "1000000000000",
+    THOUSAND: "1000",
+    MILLION: "1000000",
+    BILLION: "1000000000",
+    TRILLION: "1000000000000",
     QUADRILLION: "1000000000000000",
     QUINTILLION: "1000000000000000000",
-    SEXTILLION:  "1000000000000000000000",
-    SEPTILLION:  "1000000000000000000000000",
-    OCTILLION:   "1000000000000000000000000000",
-    NONILLION:   "1000000000000000000000000000000",
-    DECILLION:   "1000000000000000000000000000000000",
+    SEXTILLION: "1000000000000000000000",
+    SEPTILLION: "1000000000000000000000000",
+    OCTILLION: "1000000000000000000000000000",
+    NONILLION: "1000000000000000000000000000000",
+    DECILLION: "1000000000000000000000000000000000",
 };
 
 /**
@@ -674,14 +743,14 @@ let scale = {
  * @returns {string} Simplified form of number
  */
 function simplifyNumber(number) {
-    if(number == undefined) {
+    if (number == undefined) {
         return number;
     }
     var num = number.toString();
     var decimals = 1;
     if (num.length >= scale.DECILLION.length && num >= scale.DECILLION) {
         var x = num.substring(0, num.length - scale.DECILLION.length + decimals + 1);
-        if(decimals > 0) 
+        if (decimals > 0) 
             return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Decillion";
         else
             return x + " Decillion";
