@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -96,21 +96,25 @@ let workerAnts = {
     name: 'Worker Ants',
     value: 0,
     display: 0,
+    minimum: 0,
 };
 let militaryAnts = {
     name: 'Military Ants',
     value: 0,
     display: 0,
+    minimum: 0,
 };
 let scienceAnts = {
     name: 'Science Ants',
     value: 0,
     display: 0,
+    minimum: 0,
 };
 let religionAnts = {
     name: 'Religion Ants',
     value: 0,
     display: 0,
+    minimum: 0,
 };
 let antTypes = { workerAnts, militaryAnts, scienceAnts, religionAnts };
 
@@ -551,7 +555,7 @@ function decrementAnts(a) {
 }
 
 function antsMinus(a, amount) {
-    if (antTypes[a].value >= amount) {
+    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) {
         antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
@@ -687,6 +691,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    // Set new minimum value to the required amount for this upgrade
+                    antTypes['militaryAnts'].minimum = requirement;
 
                     // Give effect to player
                     // Currently set so that you dont need a previous badge to unlock next
@@ -770,6 +776,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    // Set new minimum value to the required amount for this upgrade
+                    antTypes['scienceAnts'].minimum = requirement;
 
                     // Give effect to player
                     // type will be universal, general, military, science, or religion
@@ -832,6 +840,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    // Set new minimum value to the required amount for this upgrade
+                    antTypes['religionAnts'].minimum = requirement;
 
                     // Give effect to player (I believe this is meant to replace old rate, otherwise we need to phrase differently in upgrade description)
                     if(newAmountPerWorker) {
