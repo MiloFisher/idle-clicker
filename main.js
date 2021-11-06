@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -88,7 +88,7 @@ let xOffset = 0;
 let yOffset = 0;
 
 // Types of ants and their info
-let antLimit = 50; // maybe 25?
+let antLimit = 100;
 let totalAnts = 0;
 let workerAnts = {
     name: 'Worker Ants',
@@ -266,7 +266,6 @@ function start() {
 
 // Called every game tick, 60 ticks in a second
 function update() {
-
     showAntCap();
     gainSugarGrains();
     if (passiveAntRate > 0) {
@@ -285,33 +284,33 @@ function endGame(winType) {
     // needs a lot of polishing, that ill get to when i come back from dog walk...
 }
 
-
 // Updates and renders the total number of ants you can have
 function showAntCap() {
     totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
-    antLimitDisplay.text = `${simplifyNumber(totalAnts)} / ${simplifyNumber(antLimit)}`;
+    antLimitDisplay.text = `${simplifyNumber(Math.trunc(totalAnts))} / ${simplifyNumber(antLimit)}`;
 }
 
 // Gains sugar gains based on how many worker ants there are
-// Later we can add big number formatting here to simplify as like "5.5B"
+// Later we can add big number formatting here to simplify as like "5.5B"...
 function gainSugarGrains() {
     sugarGrains += workerAnts.value * sugarGatherRate / 60;
-    workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+    sugarGrainsDisplay.text = simplifyNumber(Math.trunc(sugarGrains));
 }
 
 // Gains sugar gains based on how many worker ants there are
-// Later we can add big number formatting here to simplify as like "5.5B"
 function gainWorkerAntsPassively() {
-    workerAnts += workerAnts * passiveAntRate / 60;
-    sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
+    if (totalAnts < antLimit) {
+        workerAnts.value += workerAnts.value * passiveAntRate / 60;
+        workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
+    }
 }
 
-// phase out this function when other function works...............
 // Use this function to add to the amount of worker ants
 function gainWorkerAnts(amount) {
-    workerAnts.value += amount;
-    // Later we can add big number formatting here to simplify as like "5.5B"
-    workerAntsDisplay.text = "Worker Ants: " + workerAnts.value;
+    if (totalAnts < antLimit) {
+        workerAnts.value += amount;
+        workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+    }
 }
 
 // Shows all allocation tab elements
@@ -407,13 +406,13 @@ function setTabActive(tab, active) {
 }
 
 // Adds 1 to certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
+// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker or implement via hold button
 function antsPlus(a) {
-    // add in workerants distribution condition
-    if (totalAnts < antLimit && workerAnts.value !== 0) {
-        antTypes[a].value++;
-        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
+    totalAnts = Math.floor(totalAnts);
+    if (totalAnts <= antLimit && workerAnts.value !== 0) {
         antsMinus('workerAnts');
+        antTypes[a].value++;
+        antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
 
@@ -422,7 +421,7 @@ function antsPlus(a) {
 function antsMinus(a) {
     if (antTypes[a].value > 0) {
         antTypes[a].value--;
-        antTypes[a].display.text = simplifyNumber(antTypes[a].value);
+        antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
 
@@ -491,6 +490,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
+                // note that the buttons need to be repainted!!!!!
+                // Cost update based on modifiers
+                console.log('original cost: ', cost);
+                cost *= (1 - universalCostReduction - generalCostReduction);
+                console.log('updated cost: ', cost);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (totalAnts < requirement || sugarGrains < cost) {
@@ -505,7 +510,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
                     sugarGrainsDisplay.text = simplifyNumber(sugarGrains); // can maybe remove this...
-                    
+
                     // Give effect to player
                     passiveAntRate = percentIncrease; // not sure whether you want += or =. also whether to do the military thing so you cant downgrade with a lower buy.
 
@@ -532,6 +537,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction - militaryCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (militaryAnts.value < requirement || sugarGrains < cost) {
@@ -609,6 +617,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentReduced) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction - scienceCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (scienceAnts.value < requirement || sugarGrains < cost) {
@@ -668,6 +679,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newAmountPerWorker) => {
+                // Cost update based on modifiers
+                cost *= (1 - universalCostReduction - religionCostReduction);
+
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
                 if (religionAnts.value < requirement || sugarGrains < cost) {
