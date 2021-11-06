@@ -124,6 +124,7 @@ let purchasedList;
 // Resources and rates
 let sugarGrains = 0;            // Amount of sugar grains the player has
 let sugarGatherRate = 0.1;     // Worker ant rate in Sugar Grains per second
+let passiveAntGeneration = false;
 let passiveAntRate = 1;
 let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
 let generalCostReduction = 0;   // Note that general refers to worker ant
@@ -141,7 +142,7 @@ let timePlayed;
 
 // Initializes all UI elements
 function initializeUIElements() {
-    gameBackground = new Sprite("BG2.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
+    gameBackground = new Sprite("BG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
     lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
     gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
     gameWon.visible = false;
@@ -273,7 +274,7 @@ function start() {
         militaryAnts.value = 999999999999999;
         scienceAnts.value = 999999999999999;
         religionAnts.value = 999999999999999;
-        antLimit = 99999999999999;
+        //antLimit = 99999999999999;
         workerAntsDisplay.text = simplifyNumber(workerAnts.value);
         militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
         scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
@@ -285,7 +286,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntRate > 0) {
+    if (passiveAntGeneration) {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
@@ -622,12 +623,20 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
         case "general":
             if (!alreadyPurchased)
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction)));
-            panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
+            var type;
+            if (effects[0].enablePassiveAntGeneration) {
+                type = "enable";
+                panelDisplayEffect.text = "-Enables Passive Ant Rate";
+            }
+            else {
+                type = "normal";
+                panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
+            }
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
+            panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, type, effects[0].passiveAntPerSecond];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentIncrease) => {
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - generalCostReduction);
 
@@ -648,6 +657,10 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     if (percentIncrease) {
                         passiveAntRate *= 1 + percentIncrease; // I believe this is the correct way to stack percent increases
+                    }
+
+                    if (type == "enable") {
+                        passiveAntGeneration = true;
                     }
                     
                     // Update icon to that of purchased one and add to purchased list
@@ -699,6 +712,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     if (newPopulationCap) {
                         if (effects[0].populationCap > antLimit) {
                             antLimit = newPopulationCap; // = -> +=
+                            gameBackground.image.src = GAME.ASSETS_PATH + "BG" + effects[0].background + ".png";
                         }
                     }
 
