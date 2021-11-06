@@ -123,7 +123,7 @@ let purchasedList;
 
 // Resources and rates
 let sugarGrains = 0;            // Amount of sugar grains the player has
-let sugarGatherRate = 0.25;     // Worker ant rate in Sugar Grains per second
+let sugarGatherRate = 0.1;     // Worker ant rate in Sugar Grains per second
 let passiveAntRate = 1;
 let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
 let generalCostReduction = 0;   // Note that general refers to worker ant
@@ -285,7 +285,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntRate > 1) {
+    if (passiveAntRate > 0) {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
@@ -341,16 +341,8 @@ function showAntCap() {
 // Gains sugar gains based on how many worker ants there are
 function gainWorkerAntsPassively() {
     if (totalAnts < antLimit) {
-        workerAnts.value += workerAnts.value * passiveAntRate / 60;
+        workerAnts.value += passiveAntRate / 60; // Passive rate, I believe, is unaffected by current population
         workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
-    }
-}
-
-// Use this function to add to the amount of worker ants
-function gainWorkerAnts(amount) {
-    if (totalAnts < antLimit) {
-        workerAnts.value += amount;
-        workerAntsDisplay.text = simplifyNumber(workerAnts.value);
     }
 }
 
@@ -550,7 +542,7 @@ function incrementAnts(a) {
 
 function antsPlus(a, amount) {
     totalAnts = Math.floor(totalAnts);
-    if (totalAnts < antLimit && workerAnts.value >= amount) { // changed <= to < for upper bound
+    if (totalAnts <= antLimit && workerAnts.value >= amount) {
         antsMinus('workerAnts', amount);
         antTypes[a].value += amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
@@ -563,7 +555,7 @@ function decrementAnts(a) {
 }
 
 function antsMinus(a, amount) {
-    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) { // may need to test the lower bounds like with antsPlus
+    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) {
         antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
@@ -629,7 +621,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
     switch (category) {
         case "general":
             if (!alreadyPurchased)
-                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - generalCostReduction));
+                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction)));
             panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
@@ -668,7 +660,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "military":
             if (!alreadyPurchased)
-                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - militaryCostReduction));
+                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction)));
             var type;
             if (effects[0].militaryWin) {
                 type = "win";
@@ -676,7 +668,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             }
             else {
                 type = "normal";
-                panelDisplayEffect.text = `-Increase population cap by ${simplifyNumber(effects[0].populationCap)}`;
+                panelDisplayEffect.text = `-Population Cap set to ${simplifyNumber(effects[0].populationCap)}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
@@ -725,7 +717,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "science":
             if (!alreadyPurchased)
-                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - scienceCostReduction));
+                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction)));
             var type;
             var value;
             if (effects[0].scienceWin) {
@@ -818,7 +810,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "religion":
             if (!alreadyPurchased)
-                panelDisplayCost.text = simplifyNumber(cost * (1 - universalCostReduction) * (1 - religionCostReduction));
+                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction)));
             var type;
             if (effects[0].religionWin) {
                 type = "win";
