@@ -1,6 +1,7 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
+let currentBackground = 1;
 let gameBackground;          // Game Background sprite
 let lowerBackground;         // Allocation/Upgrades background sprite
 let clickArea;               // Main button for clicking to get Ants
@@ -216,10 +217,10 @@ function initializeUIElements() {
     upgradesTabElements.push(religionUpgradesTabButton = new Button("white.png", 50, 630, 40, 70, 0, showReligionTab));
     religionUpgradesTabButton.sprite.defaultVisibility = false;
 
-    upgradesTabElements.push(workerUpgradesTabIcon = new Sprite("workerant.png", 50, 440, 40, 40, 0));
-    upgradesTabElements.push(militaryUpgradesTabIcon = new Sprite("militaryant.png", 50, 510, 40, 40, 0));
-    upgradesTabElements.push(scienceUpgradesTabIcon = new Sprite("scienceant.png", 50, 580, 40, 40, 0));
-    upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 50, 645, 40, 40, 0));
+    upgradesTabElements.push(workerUpgradesTabIcon = new Sprite("workerant.png", 52, 440, 40, 40, 0));
+    upgradesTabElements.push(militaryUpgradesTabIcon = new Sprite("militaryant.png", 52, 510, 40, 40, 0));
+    upgradesTabElements.push(scienceUpgradesTabIcon = new Sprite("scienceant.png", 52, 580, 40, 40, 0));
+    upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 52, 645, 40, 40, 0));
 
     workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 0, 0, 600, 720, 70));
     workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
@@ -626,7 +627,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             var type;
             if (effects[0].enablePassiveAntGeneration) {
                 type = "enable";
-                panelDisplayEffect.text = "-Enables Passive Ant Rate";
+                panelDisplayEffect.text = "-Enables Passive Ant Generation";
             }
             else {
                 type = "normal";
@@ -686,8 +687,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap) => {
+            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap, effects[0].background];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap, background) => {
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - militaryCostReduction);
 
@@ -712,12 +713,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     if (newPopulationCap) {
                         if (effects[0].populationCap > antLimit) {
                             antLimit = newPopulationCap; // = -> +=
-                            gameBackground.image.src = GAME.ASSETS_PATH + "BG" + effects[0].background + ".png";
+                            if (currentBackground != background) {
+                                gameBackground.image.src = GAME.ASSETS_PATH + "BG" + background + ".png";
+                                currentBackground = background;
+                            } 
                         }
                     }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
+                        gameBackground.image.src = GAME.ASSETS_PATH + "militaryVictorywithflag.png";
                         endGame("Martial Victory");
                     }
 
@@ -811,6 +816,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
 
                     if (type === "win") {
+                        gameBackground.image.src = GAME.ASSETS_PATH + "scienceVictory.png";
                         endGame("Scientific Victory");
                     }
 
@@ -865,6 +871,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
+                        gameBackground.image.src = GAME.ASSETS_PATH + "religionVictoryfacepaint.png";
                         endGame("Holy Victory");
                     }
 
