@@ -5,6 +5,8 @@ let gameBackground;          // Game Background sprite
 let lowerBackground;         // Allocation/Upgrades background sprite
 let clickArea;               // Main button for clicking to get Ants
 let gameWon;
+let gameContinuedButton;
+let gameContinuedText;
 
 let workerAntsDisplay;       // Text showing worker ants amount
 let militaryAntsDisplay;
@@ -133,6 +135,12 @@ let timePlayed;
 function initializeUIElements() {
     gameBackground = new Sprite("BG2.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
     lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
+    gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
+    gameWon.visible = false;
+    gameContinuedButton = new Button("white.png", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 80, 250, 40, -110, continueGame);
+    gameContinuedButton.sprite.visible = false;
+    gameContinuedText = new RenderText("CLICK TO CONTINUE", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 50, "25px Comic Sans", "black", "left", false, -120);
+    gameContinuedText.visible = false;
     clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
     purchasedList = [];
@@ -280,9 +288,16 @@ function update() {
 
 // Last milestone of an upgrades tab has been purchased, and therefore the game is won!
 function endGame(winType) {
-    gameWon = new RenderText(`${winType}`, GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
-    // gameWon.visible = false;
-    // needs a lot of polishing, that ill get to when i come back from dog walk...
+    gameWon.text = `${winType}`;
+    gameWon.visible = true;
+    gameContinuedButton.sprite.visible = true;
+    gameContinuedText.visible = true;
+}
+
+function continueGame() {
+    gameWon.visible = false;
+    gameContinuedButton.sprite.visible = false;
+    gameContinuedText.visible = false;
 }
 
 // This function gives ants based on a random chance
@@ -518,7 +533,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     sugarGrains -= cost;
 
                     // Give effect to player
-                    passiveAntRate *= 1 + percentIncrease; // I believe this is the correct way to stack percent increases
+                    if (percentIncrease) {
+                        passiveAntRate *= 1 + percentIncrease; // I believe this is the correct way to stack percent increases
+                    }
                     
                     // Update icon to that of purchased one and add to purchased list
                     elementList[id].sprite.image.src = GAME.ASSETS_PATH + "purchasedgeneral.png";
@@ -564,8 +581,10 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
                     // Give effect to player
                     // Currently set so that you dont need a previous badge to unlock next
-                    if (effects[0].populationCap > antLimit) {
-                        antLimit = newPopulationCap;
+                    if (newPopulationCap) {
+                        if (effects[0].populationCap > antLimit) {
+                            antLimit = newPopulationCap;
+                        }
                     }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
@@ -646,20 +665,20 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Give effect to player
                     // type will be universal, general, military, science, or religion
                     // percentReduced will be how much reduction is applied to the global reduction variable corresponding to the type
-                    if (type === "universal") {
-                        universalCostReduction += percentReduced; // I believe this is the correct math pertaining to how we have it specified
-                    } else if (type === "general") {
-                        generalCostReduction += percentReduced;
-                    } else if (type === "military") {
-                        militaryCostReduction += percentReduced;
-                    } else if (type === "science") {
-                        scienceCostReduction += percentReduced;
-                    } else if (type === "religion") {
-                        religionCostReduction += percentReduced;
+                    if (percentReduced) {
+                        if (type === "universal") {
+                            universalCostReduction += percentReduced; // I believe this is the correct math pertaining to how we have it specified
+                        } else if (type === "general") {
+                            generalCostReduction += percentReduced;
+                        } else if (type === "military") {
+                            militaryCostReduction += percentReduced;
+                        } else if (type === "science") {
+                            scienceCostReduction += percentReduced;
+                        } else if (type === "religion") {
+                            religionCostReduction += percentReduced;
+                        }
                     }
-                    // ^ when reducing costs of specific types, apply the universal reduction as well as its own reduction...
 
-                    // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
                         endGame("Scientific Victory");
                     }
@@ -706,7 +725,9 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     sugarGrains -= cost;
 
                     // Give effect to player (I believe this is meant to replace old rate, otherwise we need to phrase differently in upgrade description)
-                    sugarGatherRate = newAmountPerWorker;
+                    if(newAmountPerWorker) {
+                        sugarGatherRate = newAmountPerWorker;
+                    }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
