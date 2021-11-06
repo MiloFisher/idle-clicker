@@ -106,6 +106,12 @@ function updateRenderObjects() {
         GAME.BUTTON_LIST.sort((a, b) => a.sprite.layer - b.sprite.layer);
         GAME.NEED_LAYER_SORT = false;
     }
+    // Increment Button held ticks while button is held
+    GAME.BUTTON_LIST.forEach(e => {
+        if(e.heldDown) {
+            e.heldTicks++;
+        }
+    });
     // Draw all rendered items
     GAME.RENDER_LIST.forEach(e => {
         // Draw Sprites
@@ -322,6 +328,8 @@ function Sprite(src, x, y, width, height, layer) {
 function Button(src, x, y, width, height, layer, functionCall = () => { }, parameters = []) {
     this.sprite = new Sprite(src, x, y, width, height, layer);
     this.enabled = true;
+    this.heldDown = false;
+    this.heldTicks = 0;
     this.functionCall = functionCall;
     this.parameters = parameters;
 
@@ -355,7 +363,7 @@ function destroy(object) {
 }
 
 // Event Listener on canvas for button clicks
-canvas.addEventListener('click', function (event) {
+canvas.addEventListener('mousedown', function (event) {
     var bounds = canvas.getBoundingClientRect();
     var mouse = {
         x: event.clientX - bounds.left,
@@ -363,8 +371,19 @@ canvas.addEventListener('click', function (event) {
     }
     for(var i = 0; i < GAME.BUTTON_LIST.length; i++) {
         if (GAME.BUTTON_LIST[i].enabled && mouse.y > GAME.BUTTON_LIST[i].sprite.y && mouse.y < GAME.BUTTON_LIST[i].sprite.y + GAME.BUTTON_LIST[i].sprite.height && mouse.x > GAME.BUTTON_LIST[i].sprite.x && mouse.x < GAME.BUTTON_LIST[i].sprite.x + GAME.BUTTON_LIST[i].sprite.width) {
+            GAME.BUTTON_LIST[i].heldDown = true;
             GAME.BUTTON_LIST[i].functionCall(...GAME.BUTTON_LIST[i].parameters);
             break;
         }
     } 
+}, false);
+
+canvas.addEventListener('mouseup', function (event) {
+    for (var i = 0; i < GAME.BUTTON_LIST.length; i++) {
+        if (GAME.BUTTON_LIST[i].heldDown) {
+            GAME.BUTTON_LIST[i].heldDown = false;
+            GAME.BUTTON_LIST[i].heldTicks = 0;
+            break;
+        }
+    }
 }, false);
