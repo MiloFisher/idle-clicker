@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -119,8 +119,8 @@ let purchasedList;
 
 // Resources and rates
 let sugarGrains = 0;            // Amount of sugar grains the player has
-let sugarGatherRate = 1;        // Worker ant rate in Sugar Grains per second
-let passiveAntRate = 0;
+let sugarGatherRate = 0.25;     // Worker ant rate in Sugar Grains per second
+let passiveAntRate = 1;
 let universalCostReduction = 0; // Percent to deduct from an upgrades' sugar cost.
 let generalCostReduction = 0;   // Note that general refers to worker ant
 let militaryCostReduction = 0;
@@ -276,7 +276,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntRate > 0) {
+    if (passiveAntRate > 1) {
         gainWorkerAntsPassively();
     }
 
@@ -321,7 +321,7 @@ function chanceGainWorkerAnts(amount) {
     if (totalAnts < antLimit) {
         if(useChance){
             var chance = Math.random();
-            if (chance < 0.25) {
+            if (chance < 0.34) {
                 workerAnts.value += amount;
             }
         } else {
@@ -443,7 +443,7 @@ function setTabActive(tab, active) {
 // Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker or implement via hold button
 function antsPlus(a) {
     totalAnts = Math.floor(totalAnts);
-    if (totalAnts <= antLimit && workerAnts.value !== 0) {
+    if (totalAnts < antLimit && workerAnts.value !== 0) {
         antsMinus('workerAnts');
         antTypes[a].value++;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
@@ -563,7 +563,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             }
             else {
                 type = "normal";
-                panelDisplayEffect.text = `-New Population Cap of ${simplifyNumber(effects[0].populationCap)}`;
+                panelDisplayEffect.text = `-Increase population cap by ${simplifyNumber(effects[0].populationCap)}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
@@ -589,11 +589,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     sugarGrainsDisplay.text = simplifyNumber(sugarGrains);
 
                     // Give effect to player
-                    // Currently set so that you dont need a previous badge to unlock next
                     if (newPopulationCap) {
-                        if (effects[0].populationCap > antLimit) {
-                            antLimit = newPopulationCap;
-                        }
+                        antLimit += newPopulationCap;
                     }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
@@ -653,7 +650,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentReduced) => {
                 // Cost update based on modifiers
-                cost *= (1 - universalCostReduction - scienceCostReduction);
+                cost *= (1 - universalCostReduction) * (1 - scienceCostReduction);
 
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;
@@ -715,7 +712,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newAmountPerWorker) => {
                 // Cost update based on modifiers
-                cost *= (1 - universalCostReduction - religionCostReduction);
+                cost *= (1 - universalCostReduction) * (1 - scienceCostReduction);
 
                 // Check requirements and cost and if purchased before
                 var failedCheck = false;

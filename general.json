@@ -3,11 +3,11 @@
     [
         {
             "Name": "A lil' more mating",
-            "Description": "Ants are more h*rny and bang more",
-            "Cost": 20,
+            "Description": "Ants are more h*rny and b*ng more",
+            "Cost": 50,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 25,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -22,11 +22,11 @@
 
         {
             "Name": "Even more mating",
-            "Description": "Even more ants in heat :flushed:",
-            "Cost": 100,
+            "Description": "Even more ants in heat O.O",
+            "Cost": 250,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 100,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -42,10 +42,10 @@
         {
             "Name": "A whole LOT of mating",
             "Description": "That's a lot of babies!",
-            "Cost": 500,
+            "Cost": 1000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 500,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0 
@@ -61,10 +61,10 @@
         {
             "Name": "Permanent mating season",
             "Description": "Ants are now h*rny year round",
-            "Cost": 2000,
+            "Cost": 5000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 1500,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -72,18 +72,18 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 1.5
+                    "passiveAntPerSecond": 2
                 } 
             ]
         },
 
         {
             "Name": "Twin reproduction",
-            "Description": "All ants are now born with a twin..",
-            "Cost": 10000,
+            "Description": "All ants are now born with a twin",
+            "Cost": 15000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 5000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -91,7 +91,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 3
+                    "passiveAntPerSecond": 5
                 } 
             ]
         },
@@ -99,10 +99,10 @@
         {
             "Name": "Triplet reproduction",
             "Description": "As if double trouble wasn't enough",
-            "Cost": 30000,
+            "Cost": 50000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 12500,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -110,18 +110,18 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 9
+                    "passiveAntPerSecond": 15
                 } 
             ]
         },
 
         {
             "Name": "Quadruplet reproduction",
-            "Description": "Even the twins have twins??",
-            "Cost": 60000,
+            "Description": "Even the twins have twins?!",
+            "Cost": 100000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 50000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -129,18 +129,18 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 36
+                    "passiveAntPerSecond": 40
                 } 
             ]
         },
 
         {
             "Name": "Ant cloning",
-            "Description": "They've learned to clone themselves..",
-            "Cost": 100000,
+            "Description": "They've learned to clone themselves...",
+            "Cost": 250000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 100000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -148,18 +148,18 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond" : 420
+                    "passiveAntPerSecond" : 100
                 } 
             ]
         },
 
         {
             "Name": "Even faster cloning",
-            "Description": "A more efficient algorithm to clone even MORE ants!",
-            "Cost": 250000,
+            "Description": "2nd generation cloning for MORE ants!",
+            "Cost": 500000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 200000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -167,7 +167,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 6969
+                    "passiveAntPerSecond": 250
                 } 
             ]
         },
@@ -178,7 +178,7 @@
             "Cost": 1000000,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
+                    "Population": 500000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -186,7 +186,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 69420
+                    "passiveAntPerSecond": 1000
                 } 
             ]
         }
