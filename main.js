@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -270,7 +270,7 @@ function start() {
         militaryAnts.value = 999999999999999;
         scienceAnts.value = 999999999999999;
         religionAnts.value = 999999999999999;
-        antLimit = 99999999999999999;
+        antLimit = 99999999999999;
         workerAntsDisplay.text = simplifyNumber(workerAnts.value);
         militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
         scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
