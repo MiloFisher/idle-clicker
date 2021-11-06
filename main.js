@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -456,9 +456,7 @@ function readUpgradesFromJson(category, elementList) {
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
                 elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
-                // Remove if statement once religion icons are added
-                if(category != "religion")
-                    elementList.push(new Sprite("icons/" + category + "" + (i + 1) + ".png", 121 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -15));
+                elementList.push(new Sprite("icons/" + category + "" + (i + 1) + ".png", 121 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -15));
             }
             setTabActive(elementList, false);
         }
