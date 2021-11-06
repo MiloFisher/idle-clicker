@@ -177,7 +177,7 @@ function initializeUIElements() {
     infoTabButton.sprite.visible = false;
     infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
     infoTabElements = [];
-    infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 30, 360, 540, 360, 80));
+    infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 0, 0, 600, 720, 80));
 
     /**
      * Upgrades objects here:
@@ -186,7 +186,7 @@ function initializeUIElements() {
     upgradesTabButton.sprite.visible = false;
     upgradesTabText = new RenderText("Upgrades", 250, 390, "26px Gothic", "black", "left", false, -1);
     upgradesTabElements = [];
-    upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 30, 360, 540, 360, 80));
+    upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 0, 0, 600, 720, 80));
 
     upgradesInfoPanelElements = [];
     upgradesInfoPanelElements.push(upgradesInfoPanel = new Sprite("upgradeinfopanel.png", 115, 570, 410, 120, 0));
@@ -220,16 +220,16 @@ function initializeUIElements() {
     upgradesTabElements.push(scienceUpgradesTabIcon = new Sprite("scienceant.png", 50, 580, 40, 40, 0));
     upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 50, 645, 40, 40, 0));
 
-    workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 50, 420, 500, 280, 70));
+    workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 0, 0, 600, 720, 70));
     workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
     workerUpgradesPageButton.sprite.defaultVisibility = false;
-    militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 50, 420, 500, 280, 70));
+    militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 0, 0, 600, 720, 70));
     militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
     militaryUpgradesPageButton.sprite.defaultVisibility = false;
-    scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 50, 420, 500, 280, 70));
+    scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 0, 0, 600, 720, 70));
     scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
     scienceUpgradesPageButton.sprite.defaultVisibility = false;
-    religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 50, 420, 500, 280, 70));
+    religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 0, 0, 600, 720, 70));
     religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
     religionUpgradesPageButton.sprite.defaultVisibility = false;
 
@@ -241,7 +241,7 @@ function initializeUIElements() {
     allocationTabText = new RenderText("Allocation", 65, 390, "26px Gothic", "black", "left", false, -1);
 
     allocationTabElements = [];
-    allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 30, 360, 540, 360, 80));
+    allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 0, 0, 600, 720, 80));
     allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['militaryAnts']));
     allocationTabElements.push(militaryAntIcon = new Sprite("militaryant.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
     allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['militaryAnts']));
