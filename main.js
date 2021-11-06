@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let gameBackground;          // Game Background sprite
@@ -128,6 +128,11 @@ let militaryCostReduction = 0;
 let scienceCostReduction = 0;
 let religionCostReduction = 0;
 
+// Hold down variables
+let countdownUntilHold = 0; // Will hold a tick counter that will count down until a click becomes a hold
+let effectFrequency = 30;
+let effectAmount = 1;
+
 // Variable for leaderboards
 let timePlayed;
 
@@ -234,15 +239,15 @@ function initializeUIElements() {
 
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 30, 360, 540, 360, 80));
-    allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['militaryAnts']));
+    allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['militaryAnts']));
     allocationTabElements.push(militaryAntIcon = new Sprite("militaryant.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['militaryAnts']));
-    allocationTabElements.push(scienceAntPlus = new Button("uparrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['scienceAnts']));
+    allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['militaryAnts']));
+    allocationTabElements.push(scienceAntPlus = new Button("uparrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['scienceAnts']));
     allocationTabElements.push(scienceAntIcon = new Sprite("scienceant.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(scienceAntMinus = new Button("downarrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['scienceAnts']));
-    allocationTabElements.push(religionAntPlus = new Button("uparrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, antsPlus, ['religionAnts']));
+    allocationTabElements.push(scienceAntMinus = new Button("downarrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['scienceAnts']));
+    allocationTabElements.push(religionAntPlus = new Button("uparrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['religionAnts']));
     allocationTabElements.push(religionAntIcon = new Sprite("religionant.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(religionAntMinus = new Button("downarrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, antsMinus, ['religionAnts']));
+    allocationTabElements.push(religionAntMinus = new Button("downarrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['religionAnts']));
 
     // Setting the display values of the different types of ants
     workerAnts.display = workerAntsDisplay;
@@ -280,6 +285,7 @@ function update() {
     if (passiveAntRate > 0) {
         gainWorkerAntsPassively();
     }
+    checkHeldButtons();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -428,22 +434,125 @@ function setTabActive(tab, active) {
     });
 }
 
-// Adds 1 to certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker or implement via hold button
-function antsPlus(a) {
+function checkHeldButtons() {
+    effectAmount = antLimit / 100; // Single unit for now is 1/100th of the population cap
+    var buttonHeld = false;
+
+    // Military Ant allocation buttons
+    if (militaryAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if(militaryAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('militaryAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (militaryAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (militaryAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('militaryAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // Science Ant allocation buttons
+    if (scienceAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (scienceAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('scienceAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (scienceAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (scienceAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('scienceAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // Religion Ant allocation buttons
+    if (religionAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (religionAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('religionAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (religionAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (religionAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('religionAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // If no button is held, reset effectFrequency and effectAmount
+    if (!buttonHeld) {
+        effectFrequency = 30;
+    }
+}
+
+function incrementAnts(a) {
+    countdownUntilHold = 30;
+    antsPlus(a, effectAmount);
+}
+
+function antsPlus(a, amount) {
     totalAnts = Math.floor(totalAnts);
-    if (totalAnts <= antLimit && workerAnts.value !== 0) {
-        antsMinus('workerAnts');
-        antTypes[a].value++;
+    if (totalAnts <= antLimit && workerAnts.value >= amount) {
+        antsMinus('workerAnts', amount);
+        antTypes[a].value += amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
 
-// Subtracts 1 from certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
-function antsMinus(a) {
-    if (antTypes[a].value > 0) {
-        antTypes[a].value--;
+function decrementAnts(a) {
+    countdownUntilHold = 30;
+    antsMinus(a, effectAmount);
+}
+
+function antsMinus(a, amount) {
+    if (antTypes[a].value >= amount) {
+        antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
