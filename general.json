@@ -34,7 +34,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 0.5
+                    "passiveAntPerSecond": 5
                 } 
             ]
         },
@@ -53,7 +53,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 1
+                    "passiveAntPerSecond": 25
                 } 
             ]
         },
@@ -72,7 +72,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 2
+                    "passiveAntPerSecond": 75
                 } 
             ]
         },
@@ -91,7 +91,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 5
+                    "passiveAntPerSecond": 250
                 } 
             ]
         },
@@ -110,7 +110,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 15
+                    "passiveAntPerSecond": 625
                 } 
             ]
         },
@@ -129,7 +129,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 40
+                    "passiveAntPerSecond": 2500
                 } 
             ]
         },
@@ -148,7 +148,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond" : 100
+                    "passiveAntPerSecond" : 5000
                 } 
             ]
         },
@@ -167,7 +167,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 250
+                    "passiveAntPerSecond": 10000
                 } 
             ]
         },
@@ -186,7 +186,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 1000
+                    "passiveAntPerSecond": 25000
                 } 
             ]
         }

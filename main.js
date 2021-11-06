@@ -3,7 +3,6 @@ let cheatMode = false;
 // UI Objects
 let currentBackground = 1;
 let gameBackground;          // Game Background sprite
-let lowerBackground;         // Allocation/Upgrades background sprite
 let clickArea;               // Main button for clicking to get Ants
 let gameWon;
 let gameContinuedButton;
@@ -71,6 +70,24 @@ let infoTabButton;           // Info tab button
 let infoTabText;             // Info tab button text
 let infoTabElements;         // Array holding info tab UI elements
 let infoTabBackground;       // Info tab background
+let infoAntsPerClick;
+let infoAntsPerSecond;
+let infoSugarPerWorker;
+let infoCostReduction;
+let infoGeneralCostReduction;
+let infoMilitaryCostReduction;
+let infoScienceCostReduction;
+let infoReligionCostReduction;
+let infoPopulationCap;
+let infoGeneralProgress;
+let infoMilitaryProgress;
+let infoScienceProgress;
+let infoReligionProgress;
+
+let generalProgress = 0;
+let militaryProgress = 0;
+let scienceProgress = 0;
+let religionProgress = 0;
 
 let allocationTabButton;     // Ant allocation tab button
 let allocationTabText;       // Allocation tab button text
@@ -143,8 +160,7 @@ let timePlayed;
 
 // Initializes all UI elements
 function initializeUIElements() {
-    gameBackground = new Sprite("BG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
-    lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
+    gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
     gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
     gameWon.visible = false;
     gameContinuedButton = new Button("white.png", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 80, 250, 40, -110, continueGame);
@@ -177,16 +193,33 @@ function initializeUIElements() {
      */
     infoTabButton = new Button("black.png", 390, 360, 180, 40, 0, showInfoTab);
     infoTabButton.sprite.visible = false;
-    infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
+    infoTabText = new RenderText("Info", 455, 392, "26px Gothic", "black", "left", false, -1);
     infoTabElements = [];
     infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 0, 0, 600, 720, 80));
+
+    var gap = 32;
+    var startHeight = 432;
+    infoTabElements.push(infoPopulationCap = new RenderText("Test", 50, startHeight + gap * 0, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerClick = new RenderText("Test", 50, startHeight + gap * 1, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerSecond = new RenderText("Test", 50, startHeight + gap * 2, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoSugarPerWorker = new RenderText("Test", 50, startHeight + gap * 3, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoCostReduction = new RenderText("Test", 50, startHeight + gap * 4, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoGeneralCostReduction = new RenderText("Test", 50, startHeight + gap * 5, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoMilitaryCostReduction = new RenderText("Test", 50, startHeight + gap * 6, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoScienceCostReduction = new RenderText("Test", 50, startHeight + gap * 7, "20px Gothic", "black", "left", false, 0));
+    infoTabElements.push(infoReligionCostReduction = new RenderText("Test", 50, startHeight + gap * 8, "20px Gothic", "black", "left", false, 0));
+
+    infoTabElements.push(infoGeneralProgress = new RenderText("Test", 340, startHeight + gap * 0, "20px Gothic", "#2b3664", "left", false, 0));
+    infoTabElements.push(infoMilitaryProgress = new RenderText("Test", 340, startHeight + gap * 1, "20px Gothic", "#2e402a", "left", false, 0));
+    infoTabElements.push(infoScienceProgress = new RenderText("Test", 340, startHeight + gap * 2, "20px Gothic", "#6b471c", "left", false, 0));
+    infoTabElements.push(infoReligionProgress = new RenderText("Test", 340, startHeight + gap * 3, "20px Gothic", "#662160", "left", false, 0));
 
     /**
      * Upgrades objects here:
      */
     upgradesTabButton = new Button("black.png", 210, 360, 180, 40, 0, showUpgradesTab);
     upgradesTabButton.sprite.visible = false;
-    upgradesTabText = new RenderText("Upgrades", 250, 390, "26px Gothic", "black", "left", false, -1);
+    upgradesTabText = new RenderText("Upgrades", 250, 392, "26px Gothic", "black", "left", false, -1);
     upgradesTabElements = [];
     upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 0, 0, 600, 720, 80));
 
@@ -240,7 +273,7 @@ function initializeUIElements() {
      */
     allocationTabButton = new Button("black.png", 30, 360, 180, 40, 0, showAllocationTab);
     allocationTabButton.sprite.visible = false;
-    allocationTabText = new RenderText("Allocation", 65, 390, "26px Gothic", "black", "left", false, -1);
+    allocationTabText = new RenderText("Allocation", 65, 392, "26px Gothic", "black", "left", false, -1);
 
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 0, 0, 600, 720, 80));
@@ -270,12 +303,12 @@ function start() {
     showAllocationTab(); // Start out with upgrades tab open
 
     if (cheatMode) {
-        sugarGrains = 999999999999999;
-        workerAnts.value = 999999999999999;
-        militaryAnts.value = 999999999999999;
-        scienceAnts.value = 999999999999999;
-        religionAnts.value = 999999999999999;
-        //antLimit = 99999999999999;
+        sugarGrains = 1000000;
+        workerAnts.value = 1000000;
+        militaryAnts.value = 1000000;
+        scienceAnts.value = 1000000;
+        religionAnts.value = 1000000;
+        antLimit = 10000000;
         workerAntsDisplay.text = simplifyNumber(workerAnts.value);
         militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
         scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
@@ -291,10 +324,32 @@ function update() {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
+    updateInfoValues();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
+}
+
+function updateInfoValues() {
+    infoPopulationCap.text = "-Population cap: " + antLimit;
+    infoAntsPerClick.text = "-Ants per click: " + clickArea.parameters[0];
+    if (passiveAntGeneration) {
+        infoAntsPerSecond.text = "-Passive ants per second: " + passiveAntRate;
+    } else {
+        infoAntsPerSecond.text = "-Passive ants per second: 0";
+    }
+    infoSugarPerWorker.text = "-Sugar per worker: " + sugarGatherRate;
+    infoCostReduction.text = "-Universal cost reduction: " + Math.trunc(universalCostReduction * 100) + "%";
+    infoGeneralCostReduction.text = "-General cost reduction: " + Math.trunc(generalCostReduction * 100) + "%";
+    infoMilitaryCostReduction.text = "-Military cost reduction: " + Math.trunc(militaryCostReduction * 100) + "%";
+    infoScienceCostReduction.text = "-Science cost reduction: " + Math.trunc(scienceCostReduction * 100) + "%";
+    infoReligionCostReduction.text = "-Religion cost reduction: " + Math.trunc(religionCostReduction * 100) + "%";
+
+    infoGeneralProgress.text = "-General Upgrades: " + generalProgress + " / 10";
+    infoMilitaryProgress.text = "-Military Upgrades: " + militaryProgress + " / 11";
+    infoScienceProgress.text = "-Science Upgrades: " + scienceProgress + " / 11";
+    infoReligionProgress.text = "-Religion Upgrades: " + religionProgress + " / 11";
 }
 
 // Last milestone of an upgrades tab has been purchased, and therefore the game is won!
@@ -314,9 +369,9 @@ function continueGame() {
 // This function gives ants based on a random chance
 function chanceGainWorkerAnts(amount) {
     // Decide if we want to use chance or not when spawning ants on click
-    var useChance = true;
+    var useChance = false;
 
-    if (totalAnts < antLimit) {
+    if (totalAnts + amount <= antLimit) {
         if(useChance){
             var chance = Math.random();
             if (chance < 0.34) {
@@ -325,7 +380,12 @@ function chanceGainWorkerAnts(amount) {
         } else {
             workerAnts.value += amount;
         }
+    } else if (totalAnts < antLimit) {
+        workerAnts.value += (totalAnts + amount) - antLimit;
+    } else {
+        workerAnts.value -= totalAnts - antLimit;
     }
+    updateTotalAnts();
     workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
 }
 
@@ -336,16 +396,27 @@ function gainSugarGrains() {
 
 // Updates and renders the total number of ants you can have
 function showAntCap() {
-    totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
+    updateTotalAnts();
     antLimitDisplay.text = simplifyNumber(Math.trunc(totalAnts)) + " / " + simplifyNumber(antLimit);
+}
+
+// Call this whenever adding or subtracting ants
+function updateTotalAnts() {
+    totalAnts = workerAnts.value + militaryAnts.value + scienceAnts.value + religionAnts.value;
 }
 
 // Gains sugar gains based on how many worker ants there are
 function gainWorkerAntsPassively() {
-    if (totalAnts < antLimit) {
+    if (totalAnts + passiveAntRate / 60 <= antLimit) {
         workerAnts.value += passiveAntRate / 60; // Passive rate, I believe, is unaffected by current population
         workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
+    } else if(totalAnts < antLimit) {
+        workerAnts.value += (totalAnts + passiveAntRate / 60) - antLimit;
+        workerAntsDisplay.text = simplifyNumber(Math.trunc(workerAnts.value));
+    } else {
+        workerAnts.value -= totalAnts - antLimit;
     }
+    updateTotalAnts();
 }
 
 // Shows all allocation tab elements
@@ -441,7 +512,10 @@ function setTabActive(tab, active) {
 }
 
 function checkHeldButtons() {
-    effectAmount = antLimit / 100; // Single unit for now is 1/100th of the population cap
+    effectAmount = Math.floor(antLimit / 1000); // Single unit for now is 1/1000th of the population cap
+    if(effectAmount < 1) {
+        effectAmount = 1;
+    }
     var buttonHeld = false;
 
     // Military Ant allocation buttons
@@ -539,33 +613,39 @@ function checkHeldButtons() {
     }
     // If no button is held, reset effectFrequency and effectAmount
     if (!buttonHeld) {
-        effectFrequency = 20;
+        effectFrequency = 12;
     }
 }
 
 function incrementAnts(a) {
-    countdownUntilHold = 30;
+    countdownUntilHold = 20;
     antsPlus(a, effectAmount);
 }
 
 function antsPlus(a, amount) {
     totalAnts = Math.floor(totalAnts);
-    if (totalAnts <= antLimit && workerAnts.value >= amount) {
+    if (amount >= 1 && totalAnts <= antLimit && workerAnts.value >= amount) {
         antsMinus('workerAnts', amount);
         antTypes[a].value += amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
+        updateTotalAnts();
+    } else if (amount >= 1 && totalAnts <= antLimit) {
+        antsPlus(a, amount / 2);
     }
 }
 
 function decrementAnts(a) {
-    countdownUntilHold = 30;
+    countdownUntilHold = 20;
     antsMinus(a, effectAmount);
 }
 
 function antsMinus(a, amount) {
-    if (antTypes[a].value >= amount && antTypes[a].value - amount >= antTypes[a].minimum) {
+    if (amount >= 1 && antTypes[a].value - amount >= antTypes[a].minimum) {
         antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
+        updateTotalAnts();
+    } else if (amount >= 1) {
+        antsMinus(a, amount / 2);
     }
 }
 
@@ -637,7 +717,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             }
             else {
                 type = "normal";
-                panelDisplayEffect.text = `-Passive Ant Rate +${simplifyNumber(effects[0].passiveAntPerSecond * 100)}%`;
+                panelDisplayEffect.text = `-Passively Spawn ${simplifyNumber(effects[0].passiveAntPerSecond)} Ant/Second`;
             }
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
@@ -660,10 +740,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    generalProgress++;
 
                     // Give effect to player
-                    if (percentIncrease) {
-                        passiveAntRate *= 1 + percentIncrease; // I believe this is the correct way to stack percent increases
+                    if (percentIncrease && percentIncrease > passiveAntRate) {
+                        passiveAntRate = percentIncrease;
+                        var amt = percentIncrease / 10;
+                        if (amt < 1) {
+                            amt = 1;
+                        }
+                        clickArea.parameters = [amt];
                     }
 
                     if (type == "enable") {
@@ -711,6 +797,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    militaryProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['militaryAnts'].minimum = requirement;
 
@@ -718,11 +805,11 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Currently set so that you dont need a previous badge to unlock next
                     if (newPopulationCap) {
                         if (effects[0].populationCap > antLimit) {
-                            antLimit = newPopulationCap; // = -> +=
-                            if (currentBackground != background) {
-                                gameBackground.image.src = GAME.ASSETS_PATH + "BG" + background + ".png";
-                                currentBackground = background;
-                            } 
+                            antLimit = newPopulationCap; // = -> += 
+                        }
+                        if (currentBackground != background) {
+                            gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
+                            currentBackground = background;
                         }
                     }
 
@@ -801,6 +888,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    scienceProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['scienceAnts'].minimum = requirement;
 
@@ -867,6 +955,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 if (!failedCheck) {
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
+                    religionProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['religionAnts'].minimum = requirement;
 

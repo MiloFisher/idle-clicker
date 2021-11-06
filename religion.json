@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.1
+                    "sugarPerAnt": 0.15
                 } 
             ]
         }, 
