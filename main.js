@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let currentBackground = 1;
@@ -454,6 +454,7 @@ function checkHeldButtons() {
             if(militaryAntPlus.heldTicks % effectFrequency == 0) {
                 antsPlus('militaryAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    militaryAntPlus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -468,6 +469,7 @@ function checkHeldButtons() {
             if (militaryAntMinus.heldTicks % effectFrequency == 0) {
                 antsMinus('militaryAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    militaryAntMinus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -483,6 +485,7 @@ function checkHeldButtons() {
             if (scienceAntPlus.heldTicks % effectFrequency == 0) {
                 antsPlus('scienceAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    scienceAntPlus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -497,6 +500,7 @@ function checkHeldButtons() {
             if (scienceAntMinus.heldTicks % effectFrequency == 0) {
                 antsMinus('scienceAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    scienceAntMinus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -512,6 +516,7 @@ function checkHeldButtons() {
             if (religionAntPlus.heldTicks % effectFrequency == 0) {
                 antsPlus('religionAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    religionAntPlus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -526,6 +531,7 @@ function checkHeldButtons() {
             if (religionAntMinus.heldTicks % effectFrequency == 0) {
                 antsMinus('religionAnts', effectAmount);
                 if (effectFrequency > 6) {
+                    religionAntMinus.heldTicks = 0;
                     effectFrequency--;
                 }
             }
@@ -533,7 +539,7 @@ function checkHeldButtons() {
     }
     // If no button is held, reset effectFrequency and effectAmount
     if (!buttonHeld) {
-        effectFrequency = 30;
+        effectFrequency = 20;
     }
 }
 
@@ -913,71 +919,79 @@ function simplifyNumber(number) {
     var decimals = 1;
     if (num.length >= scale.DECILLION.length && num >= scale.DECILLION) {
         var x = num.substring(0, num.length - scale.DECILLION.length + decimals + 1);
-        if (decimals > 0) 
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Decillion";
+        if (decimals > 0)
+            return formatNumber(x, decimals) + " Decillion";
         else
             return x + " Decillion";
     } else if (num.length >= scale.NONILLION.length && num >= scale.NONILLION) {
         var x = num.substring(0, num.length - scale.NONILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Nonillion";
+            return formatNumber(x, decimals) + " Nonillion";
         else
             return x + " Nonillion";
     } else if (num.length >= scale.OCTILLION.length && num >= scale.OCTILLION) {
         var x = num.substring(0, num.length - scale.OCTILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Octillion";
+            return formatNumber(x, decimals) + " Octillion";
         else
             return x + " Octillion";
     } else if (num.length >= scale.SEPTILLION.length && num >= scale.SEPTILLION) {
         var x = num.substring(0, num.length - scale.SEPTILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Septillion";
+            return formatNumber(x, decimals) + " Septillion";
         else
             return x + " Septillion";
     } else if (num.length >= scale.SEXTILLION.length && num >= scale.SEXTILLION) {
         var x = num.substring(0, num.length - scale.SEXTILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Sextillion";
+            return formatNumber(x, decimals) + " Sextillion";
         else
             return x + " Sextillion";
     } else if (num.length >= scale.QUINTILLION.length && num >= scale.QUINTILLION) {
         var x = num.substring(0, num.length - scale.QUINTILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + " Quintillion";
+            return formatNumber(x, decimals) + " Quintillion";
         else
             return x + " Quintillion";
     } else if (num.length >= scale.QUADRILLION.length && num >= scale.QUADRILLION) {
         var x = num.substring(0, num.length - scale.QUADRILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "Q";
+            return formatNumber(x, decimals) + "Q";
         else
             return x + "Q";
     } else if (num.length >= scale.TRILLION.length && num >= scale.TRILLION) {
         var x = num.substring(0, num.length - scale.TRILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "T";
+            return formatNumber(x, decimals) + "T";
         else
             return x + "T";
     } else if (num.length >= scale.BILLION.length && num >= scale.BILLION) {
         var x = num.substring(0, num.length - scale.BILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "B";
+            return formatNumber(x, decimals) + "B";
         else
             return x + "B";
     } else if (num.length >= scale.MILLION.length && num >= scale.MILLION) {
         var x = num.substring(0, num.length - scale.MILLION.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "M";
+            return formatNumber(x, decimals) + "M";
         else
             return x + "M";
     } else if (num.length >= scale.THOUSAND.length && num >= scale.THOUSAND) {
         var x = num.substring(0, num.length - scale.THOUSAND.length + decimals + 1);
         if (decimals > 0)
-            return [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('') + "K";
+            return formatNumber(x, decimals) + "K";
         else
             return x + "K";
     } else {
         return num;
     }
+}
+
+function formatNumber(x, decimals) {
+    var str = [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('');
+    if (str.substring(str.length - 2) == ".0") {
+        return str.substring(0, str.length - 2);
+    }
+    return str;
 }
