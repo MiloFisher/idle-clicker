@@ -1,0 +1,194 @@
+{
+    "Upgrades": 
+    [
+        {
+            "Name": "A lil' more mating",
+            "Description": "Ants are more h*rny and b*ng more",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [
+                {
+                    "enablePassiveAntGeneration": true
+                }
+            ]
+        },
+
+        {
+            "Name": "Even more mating",
+            "Description": "Even more ants in heat O.O",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 5
+                } 
+            ]
+        },
+
+        {
+            "Name": "A whole LOT of mating",
+            "Description": "That's a lot of babies!",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0 
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 25
+                } 
+            ]
+        },
+
+        {
+            "Name": "Permanent mating season",
+            "Description": "Ants are now h*rny year round",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 75
+                } 
+            ]
+        },
+
+        {
+            "Name": "Twin reproduction",
+            "Description": "All ants are now born with a twin",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 250
+                } 
+            ]
+        },
+
+        {
+            "Name": "Triplet reproduction",
+            "Description": "As if double trouble wasn't enough",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 625
+                } 
+            ]
+        },
+
+        {
+            "Name": "Quadruplet reproduction",
+            "Description": "Even the twins have twins?!",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 2500
+                } 
+            ]
+        },
+
+        {
+            "Name": "Ant cloning",
+            "Description": "They've learned to clone themselves...",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond" : 5000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Even faster cloning",
+            "Description": "2nd generation cloning for MORE ants!",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 10000
+                } 
+            ]
+        },
+
+        {
+            "Name": "Uncontrollable cloning",
+            "Description": "Oh no... Our machine... It's broken!",
+            "Cost": 0,
+            "UnlockRequirements": [
+                {
+                    "Population": 0,
+                    "Science": 0,
+                    "Religion": 0,
+                    "Military": 0
+                }
+            ],
+            "Effect": [ 
+                {
+                    "passiveAntPerSecond": 25000
+                } 
+            ]
+        }
+    ] 
+}
