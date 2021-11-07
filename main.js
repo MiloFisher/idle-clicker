@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let currentBackground = 1;
@@ -43,6 +43,7 @@ let panelDisplayEffect;
 let panelDisplayDescription;
 let panelDisplayRequirement;
 let panelDisplayCost;
+let panelCost;
 let panelDisplayBuyPrompt;
 let panelDisplayBuyButton;
 let panelDisplaySelectedUpgrade;
@@ -239,6 +240,7 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "20px Gothic", "red", "center", false, -6));
+    panelCost = 0;
     upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "20px Gothic", "black", "center", false, -6));
     upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
@@ -299,6 +301,18 @@ function initializeUIElements() {
     scienceAnts.display = scienceAntsDisplay;
     religionAnts.display = religionAntsDisplay;
 
+    //Declaring all spritesheets then storing them in the spritesheet array
+    let antsheetBG1 = new SpriteSheet("BG1Antsheet.png", 1, 4);
+    let antsheetBG2 = new SpriteSheet("BG2Antsheet.png", 1, 4);
+    let antsheetBG3 = new SpriteSheet("BG3Antsheet.png", 1, 4);
+    let antsheetBG4 = new SpriteSheet("BG4Antsheet.png", 1, 4);
+    let antsheetBG5 = new SpriteSheet("BG5Antsheet.png", 1, 4);
+    let antsheetBG6 = new SpriteSheet("MilitaryAntsheet.png", 1, 4); //BG6 is military victory antsheet
+    let antsheetBG7 = new SpriteSheet("ReligionAntsheet.png", 1, 4); //BG7 is religion victory antsheet
+    antsheetArray = [antsheetBG1, antsheetBG2, antsheetBG3, antsheetBG4, antsheetBG5, antsheetBG6, antsheetBG7];
+    currentAntsheet = new RenderAnimation(antsheetArray[0], 0, 0, GAME.WIDTH, GAME.HEIGHT, 3, true, 97);
+    currentAntsheet.play();
+
     timePlayed = 0;
 }
 
@@ -307,31 +321,6 @@ function start() {
     initializeUIElements();
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
-
-    //Declaring all spritesheets then storing them in the spritesheet array
-    let antsheetBG1 = new SpriteSheet("BG1Antsheet.png", 1, 4); 
-    let antsheetBG2 = new SpriteSheet("BG2Antsheet.png", 1, 4);
-    let antsheetBG3 = new SpriteSheet("BG3Antsheet.png", 1, 4);
-    let antsheetBG4 = new SpriteSheet("BG4Antsheet.png", 1, 4);
-    let antsheetBG5 = new SpriteSheet("BG5Antsheet.png", 1, 4);
-    let antsheetBG6 = new SpriteSheet("MilitaryAntsheet.png", 1, 4); //BG6 is military victory antsheet
-    let antsheetBG7 = new SpriteSheet("ReligionAntsheet.png", 1, 4); //BG7 is religion victory antsheet
-    antsheetArray = [antsheetBG1, antsheetBG2, antsheetBG3, antsheetBG4, antsheetBG5, antsheetBG6, antsheetBG7];
-    currentAntsheet = new RenderAnimation(antsheetArray[0],0,0,GAME.WIDTH,GAME.HEIGHT,3,true,97);
-    currentAntsheet.play();
-
-    // if (cheatMode) {
-    //     sugarGrains = 1000000;
-    //     workerAnts.value = 1000000;
-    //     militaryAnts.value = 1000000;
-    //     scienceAnts.value = 1000000;
-    //     religionAnts.value = 1000000;
-    //     antLimit = 10000000;
-    //     workerAntsDisplay.text = simplifyNumber(workerAnts.value);
-    //     militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
-    //     scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
-    //     religionAntsDisplay.text = simplifyNumber(religionAnts.value);
-    // }
 }
 
 // Called every game tick, 60 ticks in a second
@@ -343,10 +332,22 @@ function update() {
     }
     checkHeldButtons();
     updateInfoValues();
+    updateDisplayPanelBuyColor();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
+}
+
+function updateDisplayPanelBuyColor() {
+    if (panelDisplayCost.text != "Purchased") {
+        if (sugarGrains >= panelCost)
+            panelDisplayCost.color = 'green';
+        else
+            panelDisplayCost.color = 'red';
+    } else {
+        panelDisplayCost.color = 'black';
+    }
 }
 
 function updateInfoValues() {
@@ -780,6 +781,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
     });
     if (alreadyPurchased) {
         panelDisplayBuyPrompt.text = "";
+        panelDisplayCost.color = "black";
         panelDisplayCost.text = "Purchased";
     }
     else {
@@ -791,11 +793,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
     switch (category) {
         case "general":
             if (!alreadyPurchased){
-                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction)));
-                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
-                    panelDisplayCost.color = 'green';
-                else
-                    panelDisplayCost.color = 'red';
+                panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction));
+                panelDisplayCost.text = simplifyNumber(panelCost);
             }
             var type;
             if (effects[0].enablePassiveAntGeneration) {
@@ -853,11 +852,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "military":
             if (!alreadyPurchased){
-                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction)));
-                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
-                    panelDisplayCost.color = 'green';
-                else
-                    panelDisplayCost.color = 'red';
+                panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction));
+                panelDisplayCost.text = simplifyNumber(panelCost);
             }
             var type;
             if (effects[0].militaryWin) {
@@ -933,11 +929,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "science":
             if (!alreadyPurchased){
-                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction)));
-                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
-                    panelDisplayCost.color = 'green';
-                else
-                    panelDisplayCost.color = 'red';
+                panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction));
+                panelDisplayCost.text = simplifyNumber(panelCost);
             }
                 
             var type;
@@ -1036,11 +1029,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             break;
         case "religion":
             if (!alreadyPurchased){
-                panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction)));
-                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
-                    panelDisplayCost.color = 'green';
-                else
-                    panelDisplayCost.color = 'red';
+                panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction));
+                panelDisplayCost.text = simplifyNumber(panelCost);
             }
                 
             var type;
