@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let currentBackground = 1;
@@ -44,6 +44,8 @@ let panelDisplayDescription;
 let panelDisplayRequirement;
 let panelDisplayCost;
 let panelCost;
+let panelReq;
+let panelType;
 let panelDisplayBuyPrompt;
 let panelDisplayBuyButton;
 let panelDisplaySelectedUpgrade;
@@ -249,6 +251,8 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "20px Gothic", "red", "center", false, -6));
     panelCost = 0;
+    panelReq = 0;
+    panelType = '';
     upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "20px Gothic", "black", "center", false, -6));
     upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
@@ -349,7 +353,6 @@ function update() {
     checkHeldButtons();
     updateInfoValues();
     updateDisplayPanelBuyColor();
-    lockUpgrades();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -358,42 +361,19 @@ function update() {
 
 function updateDisplayPanelBuyColor() {
     if (panelDisplayCost.text != "Purchased") {
-        if (sugarGrains >= panelCost)
-            panelDisplayCost.color = 'green';
-        else
-            panelDisplayCost.color = 'red';
+        if(panelType == 'generalAnts') {
+            if (panelType && sugarGrains >= panelCost && totalAnts >= panelReq)
+                panelDisplayCost.color = 'green';
+            else
+                panelDisplayCost.color = 'red';
+        } else {
+            if (panelType && sugarGrains >= panelCost && antTypes[panelType].value >= panelReq)
+                panelDisplayCost.color = 'green';
+            else
+                panelDisplayCost.color = 'red';
+        }
     } else {
         panelDisplayCost.color = 'green';
-    }
-}
-
-function lockUpgrades(){
-    for(var i = 0; i < generalProgress + 1; i++){
-        workerUpgradesLocks[i].defaultVisibility = false;
-        workerUpgradesLocks[i].visible = false;
-        workerUpgradesButtons[i].enabled = true;
-        workerUpgradesButtons[i].defaultEnabled = true;
-    }
-
-    for(var i = 0; i < militaryProgress + 1; i++){
-        militaryUpgradesLocks[i].defaultVisibility = false;
-        militaryUpgradesLocks[i].visible = false;
-        militaryUpgradesButtons[i].enabled = true;
-        militaryUpgradesButtons[i].defaultEnabled = true;
-    }
-
-    for(var i = 0; i < scienceProgress + 1; i++){
-        scienceUpgradesLocks[i].defaultVisibility = false;
-        scienceUpgradesLocks[i].visible = false;
-        scienceUpgradesButtons[i].enabled = true;
-        scienceUpgradesButtons[i].defaultEnabled = true;
-    }
-
-    for(var i = 0; i < religionProgress + 1; i++){
-        religionUpgradesLocks[i].defaultVisibility = false;
-        religionUpgradesLocks[i].visible = false;
-        religionUpgradesButtons[i].enabled = true;
-        religionUpgradesButtons[i].defaultEnabled = true;
     }
 }
 
@@ -761,25 +741,21 @@ function readUpgradesFromJson(category, elementList) {
                 var requirements = data.Upgrades[i].UnlockRequirements;
                 // Push buttons
                 var upgradeButton = new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]);
-                upgradeButton.enabled = false;
-                upgradeButton.defaultEnabled = false;
+                if(i != 0) {
+                    upgradeButton.enabled = false;
+                    upgradeButton.defaultEnabled = false;
+                }
                 elementList.push(upgradeButton);
                 if(elementList == workerUpgradesTabElements){
-                    console.log(upgradeButton);
                     workerUpgradesButtons.push(upgradeButton);
                 }
                 else if(elementList == militaryUpgradesTabElements){
-                    console.log(upgradeButton);
                     militaryUpgradesButtons.push(upgradeButton);
                 }
-
                 else if(elementList == scienceUpgradesTabElements){
-                    console.log(upgradeButton);
                     scienceUpgradesButtons.push(upgradeButton);
                 }
-
                 else if(elementList == religionUpgradesTabElements){
-                    console.log(upgradeButton);
                     religionUpgradesButtons.push(upgradeButton);
                 }
 
@@ -789,20 +765,20 @@ function readUpgradesFromJson(category, elementList) {
                 var lockSprite = new Sprite("/lockIcon.png", 120 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -16);
                 elementList.push(lockSprite);
                 if(elementList == workerUpgradesTabElements){
-                    console.log(lockSprite);
                     workerUpgradesLocks.push(lockSprite);
                 }
                 else if(elementList == militaryUpgradesTabElements){
-                    console.log(lockSprite);
                     militaryUpgradesLocks.push(lockSprite);
                 }
                 else if(elementList == scienceUpgradesTabElements){
-                    console.log(lockSprite);
                     scienceUpgradesLocks.push(lockSprite);
                 }
                 else if(elementList == religionUpgradesTabElements){
-                    console.log(lockSprite);
                     religionUpgradesLocks.push(lockSprite);
+                }
+                if(i == 0) {
+                    lockSprite.visible = false;
+                    lockSprite.defaultVisibility = false;
                 }
             }
             setTabActive(elementList, false);
@@ -882,6 +858,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
     switch (category) {
         case "general":
+            panelType = 'generalAnts';
             if (!alreadyPurchased){
                 panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction));
                 panelDisplayCost.text = simplifyNumber(panelCost);
@@ -896,6 +873,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-Passively Spawn ${simplifyNumber(effects[0].passiveAntPerSecond)} Ant/Second`;
             }
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
+            panelReq = requirements[0].Population;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, type, effects[0].passiveAntPerSecond];
@@ -917,6 +895,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     // Subtract cost from sugar supply
                     sugarGrains -= cost;
                     generalProgress++;
+
+                    // Unlock next upgrade
+                    if (generalProgress < 10) {
+                        for (var i = 0; i < generalProgress + 1; i++) {
+                            workerUpgradesLocks[i].defaultVisibility = false;
+                            workerUpgradesLocks[i].visible = false;
+                            workerUpgradesButtons[i].enabled = true;
+                            workerUpgradesButtons[i].defaultEnabled = true;
+                        }
+                    }
 
                     // Give effect to player
                     if (percentIncrease && percentIncrease > passiveAntRate) {
@@ -941,6 +929,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
+            panelType = 'militaryAnts';
             if (!alreadyPurchased){
                 panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction));
                 panelDisplayCost.text = simplifyNumber(panelCost);
@@ -955,6 +944,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-Population Cap set to ${simplifyNumber(effects[0].populationCap)}`;
             }
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
+            panelReq = requirements[0].Military;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap, effects[0].background];
@@ -978,6 +968,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     militaryProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['militaryAnts'].minimum = requirement;
+
+                    // Unlock next upgrade
+                    if (militaryProgress < 11) {
+                        for (var i = 0; i < militaryProgress + 1; i++) {
+                            militaryUpgradesLocks[i].defaultVisibility = false;
+                            militaryUpgradesLocks[i].visible = false;
+                            militaryUpgradesButtons[i].enabled = true;
+                            militaryUpgradesButtons[i].defaultEnabled = true;
+                        }
+                    }
 
                     // Give effect to player
                     // Currently set so that you dont need a previous badge to unlock next
@@ -1018,11 +1018,11 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
+            panelType = 'scienceAnts';
             if (!alreadyPurchased){
                 panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction));
                 panelDisplayCost.text = simplifyNumber(panelCost);
-            }
-                
+            }    
             var type;
             var value;
             if (effects[0].scienceWin) {
@@ -1061,6 +1061,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-Religion Upgrade Costs -${simplifyNumber(value * 100)}%`;
             }
             panelDisplayRequirement.text = `-Science Requirement: ${simplifyNumber(requirements[0].Science)}`;
+            panelReq = requirements[0].Science;
             panelDisplaySelectedUpgrade.x = scienceUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
@@ -1084,6 +1085,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     scienceProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['scienceAnts'].minimum = requirement;
+
+                    // Unlock next upgrade
+                    if (scienceProgress < 11) {
+                        for (var i = 0; i < scienceProgress + 1; i++) {
+                            scienceUpgradesLocks[i].defaultVisibility = false;
+                            scienceUpgradesLocks[i].visible = false;
+                            scienceUpgradesButtons[i].enabled = true;
+                            scienceUpgradesButtons[i].defaultEnabled = true;
+                        }
+                    }
 
                     // Give effect to player
                     // type will be universal, general, military, science, or religion
@@ -1118,11 +1129,11 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
+            panelType = 'religionAnts';
             if (!alreadyPurchased){
                 panelCost = Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction));
                 panelDisplayCost.text = simplifyNumber(panelCost);
-            }
-                
+            } 
             var type;
             if (effects[0].religionWin) {
                 type = "win";
@@ -1133,6 +1144,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                 panelDisplayEffect.text = `-New Sugar Per Worker of ${simplifyNumber(effects[0].sugarPerAnt)}`;
             }
             panelDisplayRequirement.text = `-Religion Requirement: ${simplifyNumber(requirements[0].Religion)}`;
+            panelReq = requirements[0].Religion;
             panelDisplaySelectedUpgrade.x = religionUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
@@ -1156,6 +1168,16 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     religionProgress++;
                     // Set new minimum value to the required amount for this upgrade
                     antTypes['religionAnts'].minimum = requirement;
+
+                    // Unlock next upgrade
+                    if (religionProgress < 11) {
+                        for (var i = 0; i < religionProgress + 1; i++) {
+                            religionUpgradesLocks[i].defaultVisibility = false;
+                            religionUpgradesLocks[i].visible = false;
+                            religionUpgradesButtons[i].enabled = true;
+                            religionUpgradesButtons[i].defaultEnabled = true;
+                        }
+                    }
 
                     // Give effect to player (I believe this is meant to replace old rate, otherwise we need to phrase differently in upgrade description)
                     if(newAmountPerWorker) {
