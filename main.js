@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let currentBackground = 1;
@@ -785,8 +785,13 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
     switch (category) {
         case "general":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
             var type;
             if (effects[0].enablePassiveAntGeneration) {
                 type = "enable";
@@ -842,8 +847,13 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
             var type;
             if (effects[0].militaryWin) {
                 type = "win";
@@ -917,8 +927,14 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
+                
             var type;
             var value;
             if (effects[0].scienceWin) {
@@ -1014,8 +1030,14 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
+                
             var type;
             if (effects[0].religionWin) {
                 type = "win";
