@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let currentBackground = 1;
@@ -172,6 +172,10 @@ let effectAmount = 1;
 // Variable for leaderboards
 let timePlayed;
 
+let bg;
+// Plane
+let plane;
+
 // Initializes all UI elements
 function initializeUIElements() {
     gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
@@ -333,6 +337,11 @@ function initializeUIElements() {
     currentAntsheet = new RenderAnimation(antsheetArray[0], 0, 0, GAME.WIDTH, GAME.HEIGHT, 3, true, 97);
     currentAntsheet.play();
 
+    bg = 0;
+
+    plane = new Sprite("Plane.png", 700, 50, 130, 60, 96);
+    plane.visible = false;
+
     timePlayed = 0;
 }
 
@@ -354,9 +363,23 @@ function update() {
     updateInfoValues();
     updateDisplayPanelBuyColor();
 
+    // Plane animation
+    planeAnim();
+
     timePlayed++;
     // end game trigger stops timePlayed counter...
     // divide it by 60 at end because game updates at 60 ticks per second
+}
+
+function planeAnim() {
+    var speed = 1;
+    plane.visible = bg == 4;
+    if (plane.visible) {
+        plane.x -= speed;
+        if (plane.x < -plane.width) {
+            plane.x = GAME.WIDTH;
+        }
+    }
 }
 
 function updateDisplayPanelBuyColor() {
@@ -988,6 +1011,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         if (currentBackground != background) {
                             gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
                             currentBackground = background;
+                            bg = background;
 
                             //Plays correct antsheet depending on bg
                             destroy(currentAntsheet);
@@ -1116,7 +1140,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     if (type === "win") {
                         gameBackgroundOverlay.visible = true;
                         gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
-                        gameBackground.image.src = GAME.ASSETS_PATH + "TallBackgroundsScienceW.png";
+                        gameBackground.image.src = GAME.ASSETS_PATH + "tallBG5.png";
                         endGame("SCIENTIFIC VICTORY");
                     }
 
