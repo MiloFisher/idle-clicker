@@ -2,8 +2,8 @@
     "Upgrades": 
     [
         {
-            "Name": "A lil' more mating",
-            "Description": "Ants are more h*rny and b*ng more",
+            "Name": "A Lil' More Mating",
+            "Description": "Ants are more h*rny and b*ng more.",
             "Cost": 0,
             "UnlockRequirements": [
                 {
@@ -21,7 +21,7 @@
         },
 
         {
-            "Name": "Even more mating",
+            "Name": "Even More Mating",
             "Description": "Even more ants in heat O.O",
             "Cost": 0,
             "UnlockRequirements": [
@@ -40,7 +40,7 @@
         },
 
         {
-            "Name": "A whole LOT of mating",
+            "Name": "A Whole LOT of Mating",
             "Description": "That's a lot of babies!",
             "Cost": 0,
             "UnlockRequirements": [
@@ -59,8 +59,8 @@
         },
 
         {
-            "Name": "Permanent mating season",
-            "Description": "Ants are now h*rny year round",
+            "Name": "Permanent Mating Season",
+            "Description": "Ants are now h*rny year round.",
             "Cost": 0,
             "UnlockRequirements": [
                 {
@@ -78,8 +78,8 @@
         },
 
         {
-            "Name": "Twin reproduction",
-            "Description": "All ants are now born with a twin",
+            "Name": "Twin Reproduction",
+            "Description": "All ants are now born with a twin.",
             "Cost": 0,
             "UnlockRequirements": [
                 {
@@ -97,8 +97,8 @@
         },
 
         {
-            "Name": "Triplet reproduction",
-            "Description": "As if double trouble wasn't enough",
+            "Name": "Triplet Reproduction",
+            "Description": "As if double trouble wasn't enough.",
             "Cost": 0,
             "UnlockRequirements": [
                 {
@@ -116,7 +116,7 @@
         },
 
         {
-            "Name": "Quadruplet reproduction",
+            "Name": "Quadruplet Reproduction",
             "Description": "Even the twins have twins?!",
             "Cost": 0,
             "UnlockRequirements": [
@@ -135,7 +135,7 @@
         },
 
         {
-            "Name": "Ant cloning",
+            "Name": "Ant Cloning",
             "Description": "They've learned to clone themselves...",
             "Cost": 0,
             "UnlockRequirements": [
@@ -154,7 +154,7 @@
         },
 
         {
-            "Name": "Even faster cloning",
+            "Name": "Even Faster Cloning",
             "Description": "2nd generation cloning for MORE ants!",
             "Cost": 0,
             "UnlockRequirements": [
@@ -173,7 +173,7 @@
         },
 
         {
-            "Name": "Uncontrollable cloning",
+            "Name": "Uncontrollable Cloning",
             "Description": "Oh no... Our machine... It's broken!",
             "Cost": 0,
             "UnlockRequirements": [

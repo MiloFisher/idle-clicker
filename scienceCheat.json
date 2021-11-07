@@ -19,7 +19,7 @@
         },
 
         {
-            "Name": "Logical reasoning",
+            "Name": "Logical Reasoning",
             "Description": "They're getting even smarter!",
             "Cost": 0,
             "UnlockRequirements": [
@@ -37,7 +37,7 @@
         },
 
         {
-            "Name": "Basic construction",
+            "Name": "Basic Construction",
             "Description": "Ants can build more than just a hill now.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -73,7 +73,7 @@
         },
 
         {
-            "Name": "Organized research",
+            "Name": "Organized Research",
             "Description": "Ants now strive for better technology.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -181,7 +181,7 @@
         },
 
         {
-            "Name": "Lift off",
+            "Name": "Liftoff",
             "Description": "Off to colonize other worlds!",
             "Cost": 0,
             "UnlockRequirements": [

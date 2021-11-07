@@ -19,7 +19,7 @@
         }, 
 
         {
-            "Name": "Weekly prayers",
+            "Name": "Weekly Prayers",
             "Description": "Remember to pray to the queen!",
             "Cost": 0,
             "UnlockRequirements": [
@@ -37,7 +37,7 @@
         },
         
         {
-            "Name": "New rituals and practices",
+            "Name": "New Rituals and Practices",
             "Description": "The queen will be pleased.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -91,7 +91,7 @@
         },
         
         {
-            "Name": "Church schools",
+            "Name": "Church Schools",
             "Description": "Ants are brought up to praise the queen.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -109,7 +109,7 @@
         },
         
         {
-            "Name": "Forced conversions",
+            "Name": "Forced Conversions",
             "Description": "There is no other religion.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -127,7 +127,7 @@
         },
         
         {
-            "Name": "Scare tactics",
+            "Name": "Scare Tactics",
             "Description": "These practices are getting out of hand.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -163,7 +163,7 @@
         },
         
         {
-            "Name": "Ant sacrifice",
+            "Name": "Ant Sacrifice",
             "Description": "Sacrifice ants to prove faith in the queen.",
             "Cost": 0,
             "UnlockRequirements": [
@@ -181,7 +181,7 @@
         },
 
         {
-            "Name": "Perform the ritual",
+            "Name": "Perform the Ritual",
             "Description": "Summon our ant god to judge this world!",
             "Cost": 0,
             "UnlockRequirements": [

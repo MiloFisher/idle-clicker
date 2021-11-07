@@ -21,7 +21,7 @@
         },
 
         {
-            "Name": "Sharpened antenna",
+            "Name": "Sharpened Antenna",
             "Description": "Ants now have a collective conscience!",
             "Cost": 800,
             "UnlockRequirements": [
@@ -40,7 +40,7 @@
         },
 
         {
-            "Name": "House invasion",
+            "Name": "House Invasion",
             "Description": "Take over your human's house.",
             "Cost": 9800,
             "UnlockRequirements": [
@@ -59,7 +59,7 @@
         },
 
         {
-            "Name": "Ant armies",
+            "Name": "Ant Armies",
             "Description": "Organize large armies of ants.",
             "Cost": 121000,
             "UnlockRequirements": [
@@ -78,7 +78,7 @@
         },
 
         {
-            "Name": "Advanced weaponry",
+            "Name": "Advanced Weaponry",
             "Description": "Mini rifles, tanks, and more...",
             "Cost": 2200000,
             "UnlockRequirements": [
@@ -97,7 +97,7 @@
         },
 
         {
-            "Name": "City invasion",
+            "Name": "City Cnvasion",
             "Description": "The infestation cannot be contained.",
             "Cost": 928000000,
             "UnlockRequirements": [
@@ -135,7 +135,7 @@
         },
 
         {
-            "Name": "Domestic invasion",
+            "Name": "Domestic Invasion",
             "Description": "Ants can even overthrow a country.",
             "Cost": 8510000000000,
             "UnlockRequirements": [
@@ -154,7 +154,7 @@
         },
 
         {
-            "Name": "Military hacking",
+            "Name": "Military Hacking",
             "Description": "Ants took over the humans' weapon arsenals.",
             "Cost": 989000000000000,
             "UnlockRequirements": [
@@ -173,7 +173,7 @@
         },
 
         {
-            "Name": "Global invasion",
+            "Name": "Global Invasion",
             "Description": "Ants are Earth's apex predators now.",
             "Cost": 317000000000000000,
             "UnlockRequirements": [
@@ -192,7 +192,7 @@
         },
 
         {
-            "Name": "Execute plan Alpha November Tango",
+            "Name": "Execute Plan: Alpha November Tango",
             "Description": "The entire world will become our ant hill!",
             "Cost": 69420694206942069420,
             "UnlockRequirements": [
