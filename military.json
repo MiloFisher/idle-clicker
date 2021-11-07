@@ -4,7 +4,7 @@
         {
             "Name": "Scouts",
             "Description": "Organize basic patrol groups.",
-            "Cost": 50,
+            "Cost": 100,
             "UnlockRequirements": [
                 {
                 "Population": 50,
@@ -24,7 +24,7 @@
         {
             "Name": "Sharpened antenna",
             "Description": "Ants now have a collective conscience!",
-            "Cost": 250,
+            "Cost": 800,
             "UnlockRequirements": [
                 {
                     "Population": 0,
@@ -44,7 +44,7 @@
         {
             "Name": "House invasion",
             "Description": "Take over your human's house.",
-            "Cost": 1000,
+            "Cost": 9800,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -54,7 +54,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 3000,
+                    "populationCap": 4500,
                     "background": 2
                 } 
             ]
@@ -63,7 +63,7 @@
         {
             "Name": "Ant armies",
             "Description": "Organize large armies of ants.",
-            "Cost": 5000,
+            "Cost": 121000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -73,7 +73,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 10000,
+                    "populationCap": 60000,
                     "background": 2
                 } 
             ]
@@ -82,7 +82,7 @@
         {
             "Name": "Advanced weaponry",
             "Description": "Mini rifles, tanks, and more...",
-            "Cost": 15000,
+            "Cost": 2200000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -92,7 +92,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 55000,
+                    "populationCap": 899000,
                     "background": 2
                 } 
             ]
@@ -101,7 +101,7 @@
         {
             "Name": "City invasion",
             "Description": "The infestation cannot be contained.",
-            "Cost": 50000,
+            "Cost": 928000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -111,7 +111,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 100000,
+                    "populationCap": 7100000,
                     "background": 3
                 } 
             ]
@@ -120,7 +120,7 @@
         {
             "Name": "Ant AI",
             "Description": "Killer ant robots, oh boy!",
-            "Cost": 100000,
+            "Cost": 3200000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -130,7 +130,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 500000,
+                    "populationCap": 28000000,
                     "background": 3
                 } 
             ]
@@ -139,7 +139,7 @@
         {
             "Name": "Domestic invasion",
             "Description": "Ants can even overthrow a country.",
-            "Cost": 250000,
+            "Cost": 851000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -149,7 +149,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1000000,
+                    "populationCap": 894000000,
                     "background": 4
                 } 
             ]
@@ -158,7 +158,7 @@
         {
             "Name": "Military hacking",
             "Description": "Ants took over the humans' weapon arsenals.",
-            "Cost": 500000,
+            "Cost": 989000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -168,7 +168,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 2500000,
+                    "populationCap": 6500000000,
                     "background": 4
                 } 
             ]
@@ -177,7 +177,7 @@
         {
             "Name": "Global invasion",
             "Description": "Ants are Earth's apex predators now.",
-            "Cost": 1000000,
+            "Cost": 317000000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -187,7 +187,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 10000000,
+                    "populationCap": 10000000000,
                     "background": 5
                 } 
             ]
@@ -196,7 +196,7 @@
         {
             "Name": "Execute plan Alpha November Tango",
             "Description": "The entire world will become our ant hill!",
-            "Cost": 2000000,
+            "Cost": 69420694206942069420,
             "UnlockRequirements": [
                 {
                     "Science": 0,

@@ -3,7 +3,7 @@
         {
             "Name": "Holy Tree",
             "Description": "She's more than just a queen.",
-            "Cost": 50,
+            "Cost": 75,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -21,7 +21,7 @@
         {
             "Name": "Weekly prayers",
             "Description": "Remember to pray to the queen!",
-            "Cost": 250,
+            "Cost": 600,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -39,7 +39,7 @@
         {
             "Name": "New rituals and practices",
             "Description": "The queen will be pleased.",
-            "Cost": 1000,
+            "Cost": 8800,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -57,7 +57,7 @@
         {
             "Name": "Chapels",
             "Description": "A place for group worship.",
-            "Cost": 5000,
+            "Cost": 232000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -75,7 +75,7 @@
         {
             "Name": "Cathedrals",
             "Description": "The holiest of places for worship.",
-            "Cost": 15000,
+            "Cost": 1300000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -93,7 +93,7 @@
         {
             "Name": "Church schools",
             "Description": "Ants are brought up to praise the queen.",
-            "Cost": 50000,
+            "Cost": 459000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -111,7 +111,7 @@
         {
             "Name": "Forced conversions",
             "Description": "There is no other religion.",
-            "Cost": 100000,
+            "Cost": 63000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -129,7 +129,7 @@
         {
             "Name": "Scare tactics",
             "Description": "These practices are getting out of hand.",
-            "Cost": 250000,
+            "Cost": 862000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -147,7 +147,7 @@
         {
             "Name": "Punishment",
             "Description": "Unfaithful ants will be punished.",
-            "Cost": 500000,
+            "Cost": 69300000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -165,7 +165,7 @@
         {
             "Name": "Ant sacrifice",
             "Description": "Sacrifice ants to prove faith in the queen.",
-            "Cost": 1000000,
+            "Cost": 85300000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -181,9 +181,9 @@
         },
 
         {
-            "Name": "Perform the ritual",
+            "Name": "Perform the final ritual",
             "Description": "Summon our ant god to judge this world!",
-            "Cost": 2000000,
+            "Cost": 89800000000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,

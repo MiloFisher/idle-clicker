@@ -42,7 +42,7 @@
         {
             "Name": "A whole LOT of mating",
             "Description": "That's a lot of babies!",
-            "Cost": 1000,
+            "Cost": 4000,
             "UnlockRequirements": [
                 {
                     "Population": 500,
@@ -61,7 +61,7 @@
         {
             "Name": "Permanent mating season",
             "Description": "Ants are now h*rny year round",
-            "Cost": 5000,
+            "Cost": 65000,
             "UnlockRequirements": [
                 {
                     "Population": 1500,
@@ -72,7 +72,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 75
+                    "passiveAntPerSecond": 110
                 } 
             ]
         },
@@ -80,7 +80,7 @@
         {
             "Name": "Twin reproduction",
             "Description": "All ants are now born with a twin",
-            "Cost": 15000,
+            "Cost": 1000000,
             "UnlockRequirements": [
                 {
                     "Population": 5000,
@@ -91,7 +91,7 @@
             ],
             "Effect": [ 
                 {
-                    "passiveAntPerSecond": 250
+                    "passiveAntPerSecond": 725
                 } 
             ]
         },
@@ -99,7 +99,7 @@
         {
             "Name": "Triplet reproduction",
             "Description": "As if double trouble wasn't enough",
-            "Cost": 50000,
+            "Cost": 55700000,
             "UnlockRequirements": [
                 {
                     "Population": 12500,
@@ -118,7 +118,7 @@
         {
             "Name": "Quadruplet reproduction",
             "Description": "Even the twins have twins?!",
-            "Cost": 100000,
+            "Cost": 46000000000,
             "UnlockRequirements": [
                 {
                     "Population": 50000,
@@ -137,7 +137,7 @@
         {
             "Name": "Ant cloning",
             "Description": "They've learned to clone themselves...",
-            "Cost": 250000,
+            "Cost": 72500000000000,
             "UnlockRequirements": [
                 {
                     "Population": 100000,
@@ -156,7 +156,7 @@
         {
             "Name": "Even faster cloning",
             "Description": "2nd generation cloning for MORE ants!",
-            "Cost": 500000,
+            "Cost": 39100000000000000,
             "UnlockRequirements": [
                 {
                     "Population": 200000,
@@ -175,7 +175,7 @@
         {
             "Name": "Uncontrollable cloning",
             "Description": "Oh no... Our machine... It's broken!",
-            "Cost": 1000000,
+            "Cost": 67200000000000000000,
             "UnlockRequirements": [
                 {
                     "Population": 500000,

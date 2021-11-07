@@ -3,7 +3,7 @@
         {
             "Name": "Math",
             "Description": "Ants found a use for pythagorean theorem.",
-            "Cost": 50,
+            "Cost": 75,
             "UnlockRequirements": [
                 {
                     "Science": 10,
@@ -21,7 +21,7 @@
         {
             "Name": "Logical reasoning",
             "Description": "They're getting even smarter!",
-            "Cost": 250,
+            "Cost": 560,
             "UnlockRequirements": [
                 {
                     "Science": 50,
@@ -39,7 +39,7 @@
         {
             "Name": "Basic construction",
             "Description": "Ants can build more than just a hill now.",
-            "Cost": 1000,
+            "Cost": 6700,
             "UnlockRequirements": [
                 {
                     "Science": 150,
@@ -57,7 +57,7 @@
         {
             "Name": "Computing",
             "Description": "Harness the power of technology.",
-            "Cost": 5000,
+            "Cost": 340000,
             "UnlockRequirements": [
                 {
                     "Science": 500,
@@ -67,7 +67,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.075
                 } 
             ]
         },
@@ -75,7 +75,7 @@
         {
             "Name": "Organized research",
             "Description": "Ants now strive for better technology.",
-            "Cost": 20000,
+            "Cost": 3300000,
             "UnlockRequirements": [
                 {
                     "Science": 1000,
@@ -85,7 +85,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.01
                 } 
             ]
         },
@@ -93,7 +93,7 @@
         {
             "Name": "Bug School of Engineering",
             "Description": "BSOE, but with ants!",
-            "Cost": 50000,
+            "Cost": 111000000000,
             "UnlockRequirements": [
                 {
                     "Science": 5000,
@@ -111,7 +111,7 @@
         {
             "Name": "AIT",
             "Description": "Ant Institute of Technology.",
-            "Cost": 100000,
+            "Cost": 4700000000000,
             "UnlockRequirements": [
                 {
                     "Science": 10000,
@@ -129,7 +129,7 @@
         {
             "Name": "Aeronautics",
             "Description": "Awesome, flying ants.",
-            "Cost": 250000,
+            "Cost": 250000000000,
             "UnlockRequirements": [
                 {
                     "Science": 25000,
@@ -147,7 +147,7 @@
         {
             "Name": "Space Research",
             "Description": "To the stars!",
-            "Cost": 500000,
+            "Cost": 32900000000000,
             "UnlockRequirements": [
                 {
                     "Science": 50000,
@@ -165,7 +165,7 @@
         {
             "Name": "Astronomical Capabilities",
             "Description": "Space travel, migration, and more.",
-            "Cost": 1000000,
+            "Cost": 92000000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 100000,
@@ -183,7 +183,7 @@
         {
             "Name": "Lift off",
             "Description": "Off to colonize other worlds!",
-            "Cost": 2000000,
+            "Cost": 71000000000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 500000,
