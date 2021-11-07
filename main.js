@@ -1,8 +1,10 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let currentBackground = 1;
 let gameBackground;          // Game Background sprite
+let antsheetArray;           // Array of ant spritesheets
+let currentAntsheet;          // Current spritesheet of ants runnin around
 let gameBackgroundOverlay;   // Game Background sprite overlay
 let clickArea;               // Main button for clicking to get Ants
 let gameWon;
@@ -306,6 +308,18 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
+    //Declaring all spritesheets then storing them in the spritesheet array
+    let antsheetBG1 = new SpriteSheet("BG1Antsheet.png", 1, 4); 
+    let antsheetBG2 = new SpriteSheet("BG2Antsheet.png", 1, 4);
+    let antsheetBG3 = new SpriteSheet("BG3Antsheet.png", 1, 4);
+    let antsheetBG4 = new SpriteSheet("BG4Antsheet.png", 1, 4);
+    let antsheetBG5 = new SpriteSheet("BG5Antsheet.png", 1, 4);
+    let antsheetBG6 = new SpriteSheet("MilitaryAntsheet.png", 1, 4); //BG6 is military victory antsheet
+    let antsheetBG7 = new SpriteSheet("ReligionAntsheet.png", 1, 4); //BG7 is religion victory antsheet
+    antsheetArray = [antsheetBG1, antsheetBG2, antsheetBG3, antsheetBG4, antsheetBG5, antsheetBG6, antsheetBG7];
+    currentAntsheet = new RenderAnimation(antsheetArray[0],0,0,GAME.WIDTH,GAME.HEIGHT,3,true,25);
+    currentAntsheet.play();
+
     // if (cheatMode) {
     //     sugarGrains = 1000000;
     //     workerAnts.value = 1000000;
@@ -362,6 +376,19 @@ function endGame(winType) {
     gameWon.visible = true;
     gameContinuedButton.enabled = true;
     //gameContinuedText.visible = true;
+
+    //display correct antsheet based on victory type
+    destroy(currentAntsheet);
+    let winAntsheet;
+    if(winType == "MARTIAL VICTORY") {
+        winAntsheet = antsheetArray[5];
+    } else if(winType == "RIGHTEOUS VICTORY") {
+        winAntsheet = antsheetArray[6];
+    } else { //Science victory has same antsheet as BG5
+        winAntsheet = antsheetArray[4];
+    }
+    currentAntsheet = new RenderAnimation(winAntsheet,0,0,GAME.WIDTH,GAME.HEIGHT,6,true,25);
+    currentAntsheet.play()
 }
 
 function continueGame() {
@@ -763,8 +790,13 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
     switch (category) {
         case "general":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - generalCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
             var type;
             if (effects[0].enablePassiveAntGeneration) {
                 type = "enable";
@@ -820,8 +852,13 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "military":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - militaryCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
             var type;
             if (effects[0].militaryWin) {
                 type = "win";
@@ -865,6 +902,12 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         if (currentBackground != background) {
                             gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
                             currentBackground = background;
+
+                            //Plays correct antsheet depending on bg
+                            destroy(currentAntsheet);
+                            currentAntsheet = new RenderAnimation(antsheetArray[background-1],0,0,GAME.WIDTH,GAME.HEIGHT,6,true,25);
+                            currentAntsheet.play();
+
                             if (background == 5) {
                                 gameBackgroundOverlay.visible = true;
                                 gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
@@ -889,8 +932,14 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "science":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - scienceCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
+                
             var type;
             var value;
             if (effects[0].scienceWin) {
@@ -986,8 +1035,14 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             };
             break;
         case "religion":
-            if (!alreadyPurchased)
+            if (!alreadyPurchased){
                 panelDisplayCost.text = simplifyNumber(Math.trunc(cost * (1 - universalCostReduction) * (1 - religionCostReduction)));
+                if(sugarGrains > (cost * (1 - universalCostReduction) * (1 - generalCostReduction)))
+                    panelDisplayCost.color = 'green';
+                else
+                    panelDisplayCost.color = 'red';
+            }
+                
             var type;
             if (effects[0].religionWin) {
                 type = "win";
