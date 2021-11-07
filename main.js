@@ -1099,15 +1099,15 @@ function simplifyNumber(number) {
     } else if (num.length >= scale.QUINTILLION.length && num >= scale.QUINTILLION) {
         var x = num.substring(0, num.length - scale.QUINTILLION.length + decimals + 1);
         if (decimals > 0)
-            return formatNumber(x, decimals) + " Quintillion";
+            return formatNumber(x, decimals) + "Qi";
         else
-            return x + " Quintillion";
+            return x + "Qi";
     } else if (num.length >= scale.QUADRILLION.length && num >= scale.QUADRILLION) {
         var x = num.substring(0, num.length - scale.QUADRILLION.length + decimals + 1);
         if (decimals > 0)
-            return formatNumber(x, decimals) + "Q";
+            return formatNumber(x, decimals) + "Qa";
         else
-            return x + "Q";
+            return x + "Qa";
     } else if (num.length >= scale.TRILLION.length && num >= scale.TRILLION) {
         var x = num.substring(0, num.length - scale.TRILLION.length + decimals + 1);
         if (decimals > 0)
