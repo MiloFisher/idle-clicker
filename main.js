@@ -1,8 +1,9 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let currentBackground = 1;
 let gameBackground;          // Game Background sprite
+let gameBackgroundOverlay;   // Game Background sprite overlay
 let clickArea;               // Main button for clicking to get Ants
 let gameWon;
 let gameContinuedButton;
@@ -161,18 +162,21 @@ let timePlayed;
 // Initializes all UI elements
 function initializeUIElements() {
     gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
-    gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
+    gameBackgroundOverlay = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 95);
+    gameBackgroundOverlay.visible = false;
+    gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5, GAME.HEIGHT * 0.5 - 25, "55px Gothic", "yellow", "center", false, 0);
     gameWon.visible = false;
-    gameContinuedButton = new Button("white.png", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 80, 250, 40, -110, continueGame);
+    gameContinuedButton = new Button("white.png", 0, 0, 600, 720, -150, continueGame);
     gameContinuedButton.sprite.visible = false;
-    gameContinuedText = new RenderText("CLICK TO CONTINUE", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 50, "25px Comic Sans", "black", "left", false, -120);
-    gameContinuedText.visible = false;
+    gameContinuedButton.enabled = false;
+    // gameContinuedText = new RenderText("CLICK TO CONTINUE", GAME.WIDTH * 0.5, GAME.HEIGHT * 0.5 - 25, "25px Gothic", "cyan", "center", false, -120);
+    // gameContinuedText.visible = false;
     clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
     purchasedList = [];
 
     // Text displays for game resources
-    resourcesBack1 = new Sprite("resourcesback1.png", 2, 2, 140, 260, 20);
+    resourcesBack1 = new Sprite("antssugar_boxTexture.png", 0, 0, 600, 720, 20);
     workerAntsIconDisplay = new Sprite("workerant.png", 5, 10, 50, 50, 0);
     workerAntsDisplay = new RenderText("0", 60, 40, "24px Gothic", "#2b3664", "left", false, 0);
     militaryAntsIconDisplay = new Sprite("militaryant.png", 5, 60, 50, 50, 0);
@@ -184,7 +188,7 @@ function initializeUIElements() {
     sugarGrainsIconDisplay = new Sprite("SugarGrain.png", 0, 205, 60, 60, 0);
     sugarGrainsDisplay = new RenderText("0", 60, 240, "24px Gothic", "white", "left", false, 0);
 
-    resourcesBack2 = new Sprite("resourcesback2.png", GAME.WIDTH - 182, 2, 180, 80, 20);
+    resourcesBack2 = new Sprite("populationBoxTexture.png", 0, 0, 600, 720, 20);
     populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "24px Gothic", "black", "center", false, 0);
     antLimitDisplay = new RenderText("0/100", GAME.WIDTH - 91, 65, "24px Gothic", "black", "center", false, 0);
 
@@ -224,7 +228,7 @@ function initializeUIElements() {
     upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 0, 0, 600, 720, 80));
 
     upgradesInfoPanelElements = [];
-    upgradesInfoPanelElements.push(upgradesInfoPanel = new Sprite("upgradeinfopanel.png", 115, 570, 410, 120, 0));
+    upgradesInfoPanelElements.push(upgradesInfoPanel = new Sprite("upgradesDescriptionTexture.png", 0, 0, 600, 720, 0));
     upgradesInfoPanelElements.push(panelDisplaySelectedUpgrade = new Sprite("selectedupgrade.png", 0, 0, 66, 66, -5));
     xOffset = -(panelDisplaySelectedUpgrade.width - 60) * 0.5;
     yOffset = -(panelDisplaySelectedUpgrade.height - 60) * 0.5;
@@ -234,7 +238,7 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "20px Gothic", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "20px Gothic", "red", "center", false, -6));
     upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "20px Gothic", "black", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("white.png", 425, 647, 90, 35, -5));
+    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
     workerUpgradesTabElements = [];
     militaryUpgradesTabElements = [];
@@ -256,17 +260,17 @@ function initializeUIElements() {
     upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 52, 645, 40, 40, 0));
 
     workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 0, 0, 600, 720, 70));
-    workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
-    workerUpgradesPageButton.sprite.defaultVisibility = false;
+    // workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
+    // workerUpgradesPageButton.sprite.defaultVisibility = false;
     militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 0, 0, 600, 720, 70));
-    militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
-    militaryUpgradesPageButton.sprite.defaultVisibility = false;
+    // militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
+    // militaryUpgradesPageButton.sprite.defaultVisibility = false;
     scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 0, 0, 600, 720, 70));
-    scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
-    scienceUpgradesPageButton.sprite.defaultVisibility = false;
+    // scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
+    // scienceUpgradesPageButton.sprite.defaultVisibility = false;
     religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 0, 0, 600, 720, 70));
-    religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
-    religionUpgradesPageButton.sprite.defaultVisibility = false;
+    // religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
+    // religionUpgradesPageButton.sprite.defaultVisibility = false;
 
     /**
      * Allocation objects here:
@@ -356,14 +360,14 @@ function updateInfoValues() {
 function endGame(winType) {
     gameWon.text = `${winType}`;
     gameWon.visible = true;
-    gameContinuedButton.sprite.visible = true;
-    gameContinuedText.visible = true;
+    gameContinuedButton.enabled = true;
+    //gameContinuedText.visible = true;
 }
 
 function continueGame() {
     gameWon.visible = false;
-    gameContinuedButton.sprite.visible = false;
-    gameContinuedText.visible = false;
+    gameContinuedButton.enabled = false;
+    //gameContinuedText.visible = false;
 }
 
 // This function gives ants based on a random chance
@@ -463,6 +467,7 @@ function showWorkerTab() {
     setTabActive(scienceUpgradesTabElements, false);
     setTabActive(religionUpgradesTabElements, false);
     setTabActive(upgradesInfoPanelElements, false);
+    highlightUpgrade("general");
 }
 
 function showMilitaryTab() {
@@ -471,6 +476,7 @@ function showMilitaryTab() {
     setTabActive(scienceUpgradesTabElements, false);
     setTabActive(religionUpgradesTabElements, false);
     setTabActive(upgradesInfoPanelElements, false);
+    highlightUpgrade("military");
 }
 
 function showScienceTab() {
@@ -479,6 +485,7 @@ function showScienceTab() {
     setTabActive(scienceUpgradesTabElements, true);
     setTabActive(religionUpgradesTabElements, false);
     setTabActive(upgradesInfoPanelElements, false);
+    highlightUpgrade("science");
 }
 
 function showReligionTab() {
@@ -487,6 +494,7 @@ function showReligionTab() {
     setTabActive(scienceUpgradesTabElements, false);
     setTabActive(religionUpgradesTabElements, true);
     setTabActive(upgradesInfoPanelElements, false);
+    highlightUpgrade("religion");
 }
 
 function setTabActive(tab, active) {
@@ -680,6 +688,48 @@ function readUpgradesFromJson(category, elementList) {
     rawFile.send(null);
 }
 
+function highlightUpgrade(category) {
+    var elementList;
+    switch(category) {
+        case "general":
+            elementList = workerUpgradesTabElements;
+            break;
+        case "military":
+            elementList = militaryUpgradesTabElements;
+            break;
+        case "science":
+            elementList = scienceUpgradesTabElements;
+            break;
+        case "religion":
+            elementList = religionUpgradesTabElements;
+            break;
+    }
+    var assignedValue = false
+    for (var i = 0; i < elementList.length; i++) {
+        if (elementList[i] instanceof Button) {
+            var alreadyPurchased = false;
+            purchasedList.forEach(e => {
+                if (e.category == elementList[i].parameters[0] && e.id == elementList[i].parameters[1]) {
+                    alreadyPurchased = true;
+                }
+            });
+            if (!alreadyPurchased) {
+                displayUpgrade(...elementList[i].parameters);
+                assignedValue = true;
+                break;
+            }
+        }
+    }
+    if (!assignedValue) {
+        for (var i = elementList.length - 1; i >= 0; i--) {
+            if (elementList[i] instanceof Button) {
+                displayUpgrade(...elementList[i].parameters);
+                break;
+            }
+        }
+    }
+}
+
 /**
  * @param {string} category
  * @param {string} name
@@ -810,13 +860,19 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         if (currentBackground != background) {
                             gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
                             currentBackground = background;
+                            if (background == 5) {
+                                gameBackgroundOverlay.visible = true;
+                                gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
+                            }
                         }
                     }
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
-                        gameBackground.image.src = GAME.ASSETS_PATH + "militaryVictorywithflag.png";
-                        endGame("Martial Victory");
+                        gameBackgroundOverlay.visible = true;
+                        gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
+                        gameBackground.image.src = GAME.ASSETS_PATH + "TallBackgroundsMilitaryW.png";
+                        endGame("MARTIAL VICTORY");
                     }
 
                     // Update icon to that of purchased one and add to purchased list
@@ -910,8 +966,10 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                     }
 
                     if (type === "win") {
-                        gameBackground.image.src = GAME.ASSETS_PATH + "scienceVictory.png";
-                        endGame("Scientific Victory");
+                        gameBackgroundOverlay.visible = true;
+                        gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
+                        gameBackground.image.src = GAME.ASSETS_PATH + "TallBackgroundsScienceW.png";
+                        endGame("SCIENTIFIC VICTORY");
                     }
 
                     // Update icon to that of purchased one and add to purchased list
@@ -966,8 +1024,10 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
                     // if type is "win", have a game over function (maybe have a parameter so we know what type of victory we get: military, science, or religion)
                     if (type === "win") {
-                        gameBackground.image.src = GAME.ASSETS_PATH + "religionVictoryfacepaint.png";
-                        endGame("Holy Victory");
+                        gameBackgroundOverlay.visible = true;
+                        gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "ReligionVictoryClouds.png";
+                        gameBackground.image.src = GAME.ASSETS_PATH + "TallBackgroundsReligionW.png";
+                        endGame("RIGHTEOUS VICTORY");
                     }
 
                     // Update icon to that of purchased one and add to purchased list
