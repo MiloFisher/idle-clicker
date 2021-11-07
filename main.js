@@ -346,7 +346,7 @@ function updateDisplayPanelBuyColor() {
         else
             panelDisplayCost.color = 'red';
     } else {
-        panelDisplayCost.color = 'black';
+        panelDisplayCost.color = 'green';
     }
 }
 
@@ -530,7 +530,7 @@ function setTabActive(tab, active) {
         if (e instanceof Button) {
             if (active) {
                 e.sprite.visible = e.sprite.defaultVisibility;
-                e.enabled = active;
+                e.enabled = e.defaultEnabled;
             }
             else {
                 e.sprite.visible = active;
