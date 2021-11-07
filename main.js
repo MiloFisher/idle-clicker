@@ -173,8 +173,9 @@ let effectAmount = 1;
 let timePlayed;
 
 let bg;
-// Plane
+
 let plane;
+let rocket;
 
 // Initializes all UI elements
 function initializeUIElements() {
@@ -342,6 +343,9 @@ function initializeUIElements() {
     plane = new Sprite("Plane.png", 700, 50, 130, 60, 96);
     plane.visible = false;
 
+    rocket = new Sprite("RocketShip.png", -140, 420, 140, 100, 91);
+    rocket.visible = false;
+
     timePlayed = 0;
 }
 
@@ -363,8 +367,8 @@ function update() {
     updateInfoValues();
     updateDisplayPanelBuyColor();
 
-    // Plane animation
     planeAnim();
+    rocketAnim();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -378,6 +382,20 @@ function planeAnim() {
         plane.x -= speed;
         if (plane.x < -plane.width) {
             plane.x = GAME.WIDTH;
+        }
+    }
+}
+
+function rocketAnim() {
+    var xSpeed = 1;
+    var ySpeed = .7;
+    rocket.visible = bg == 6;
+    if (rocket.visible) {
+        rocket.x += xSpeed;
+        rocket.y -= ySpeed;
+        if (rocket.x > GAME.WIDTH) {
+            rocket.x = -140;
+            rocket.y = 420;
         }
     }
 }
@@ -1141,6 +1159,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         gameBackgroundOverlay.visible = true;
                         gameBackgroundOverlay.image.src = GAME.ASSETS_PATH + "TallBackgroundsClouds.png";
                         gameBackground.image.src = GAME.ASSETS_PATH + "tallBG5.png";
+                        bg = 6;
                         endGame("SCIENTIFIC VICTORY");
                     }
 
