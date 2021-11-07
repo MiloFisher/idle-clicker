@@ -7,7 +7,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 50,
+                    "Religion": 25,
                     "Military": 0
                 }
             ],
@@ -39,11 +39,11 @@
         {
             "Name": "New rituals and practices",
             "Description": "The queen will be pleased.",
-            "Cost": 8800,
+            "Cost": 5800,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 200,
+                    "Religion": 2000,
                     "Military": 0
                 }
             ],
@@ -57,11 +57,11 @@
         {
             "Name": "Chapels",
             "Description": "A place for group worship.",
-            "Cost": 232000,
+            "Cost": 82000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 500,
+                    "Religion": 55000,
                     "Military": 0
                 }
             ],
@@ -79,7 +79,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 1500,
+                    "Religion": 312000,
                     "Military": 0
                 }
             ],
@@ -97,7 +97,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 5000,
+                    "Religion": 1400000,
                     "Military": 0
                 }
             ],
@@ -111,11 +111,11 @@
         {
             "Name": "Forced conversions",
             "Description": "There is no other religion.",
-            "Cost": 63000000000,
+            "Cost": 1300000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 15000,
+                    "Religion": 15000000,
                     "Military": 0
                 }
             ],
@@ -129,11 +129,11 @@
         {
             "Name": "Scare tactics",
             "Description": "These practices are getting out of hand.",
-            "Cost": 862000000000,
+            "Cost": 4620000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 50000,
+                    "Religion": 120000000,
                     "Military": 0
                 }
             ],
@@ -151,7 +151,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 100000,
+                    "Religion": 2500000000,
                     "Military": 0
                 }
             ],
@@ -169,7 +169,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 250000,
+                    "Religion": 20100000000,
                     "Military": 0
                 }
             ],
@@ -187,7 +187,7 @@
             "UnlockRequirements": [
                 {
                     "Science": 0,
-                    "Religion": 500000,
+                    "Religion": 500000000000,
                     "Military": 0
                 }
             ],

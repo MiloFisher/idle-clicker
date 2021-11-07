@@ -7,15 +7,14 @@
             "Cost": 100,
             "UnlockRequirements": [
                 {
-                "Population": 50,
                 "Science": 0,
                 "Religion": 0,
-                "Military": 50
+                "Military": 20
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 250,
+                    "populationCap": 100,
                     "background": 1
                 } 
             ]
@@ -27,15 +26,14 @@
             "Cost": 800,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 100
+                    "Military": 150
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap":  500,
+                    "populationCap": 1000,
                     "background": 1
                 } 
             ]
@@ -49,12 +47,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 150
+                    "Military": 3500
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 4500,
+                    "populationCap": 20000,
                     "background": 2
                 } 
             ]
@@ -68,12 +66,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 1000
+                    "Military": 70000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 60000,
+                    "populationCap": 425000,
                     "background": 2
                 } 
             ]
@@ -87,12 +85,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 3000
+                    "Military": 625000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 899000,
+                    "populationCap": 3750000,
                     "background": 2
                 } 
             ]
@@ -106,12 +104,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 10000
+                    "Military": 2830000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 7100000,
+                    "populationCap": 17000000,
                     "background": 3
                 } 
             ]
@@ -125,12 +123,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 25000
+                    "Military": 33800000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 28000000,
+                    "populationCap": 203000000,
                     "background": 3
                 } 
             ]
@@ -139,17 +137,17 @@
         {
             "Name": "Domestic invasion",
             "Description": "Ants can even overthrow a country.",
-            "Cost": 851000000000,
+            "Cost": 8510000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 100000
+                    "Military": 200000000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 894000000,
+                    "populationCap": 1200000000,
                     "background": 4
                 } 
             ]
@@ -163,12 +161,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 250000
+                    "Military": 5591000000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 6500000000,
+                    "populationCap": 33550000000,
                     "background": 4
                 } 
             ]
@@ -182,12 +180,12 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 500000
+                    "Military": 41910000000
                 }
             ],
             "Effect": [ 
                 {
-                    "populationCap": 10000000000,
+                    "populationCap": 251500000000,
                     "background": 5
                 } 
             ]
@@ -201,7 +199,7 @@
                 {
                     "Science": 0,
                     "Religion": 0,
-                    "Military": 1000000
+                    "Military": 100000000000
                 }
             ],
             "Effect": [ 
