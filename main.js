@@ -306,18 +306,18 @@ function start() {
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
 
-    if (cheatMode) {
-        sugarGrains = 1000000;
-        workerAnts.value = 1000000;
-        militaryAnts.value = 1000000;
-        scienceAnts.value = 1000000;
-        religionAnts.value = 1000000;
-        antLimit = 10000000;
-        workerAntsDisplay.text = simplifyNumber(workerAnts.value);
-        militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
-        scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
-        religionAntsDisplay.text = simplifyNumber(religionAnts.value);
-    }
+    // if (cheatMode) {
+    //     sugarGrains = 1000000;
+    //     workerAnts.value = 1000000;
+    //     militaryAnts.value = 1000000;
+    //     scienceAnts.value = 1000000;
+    //     religionAnts.value = 1000000;
+    //     antLimit = 10000000;
+    //     workerAntsDisplay.text = simplifyNumber(workerAnts.value);
+    //     militaryAntsDisplay.text = simplifyNumber(militaryAnts.value);
+    //     scienceAntsDisplay.text = simplifyNumber(scienceAnts.value);
+    //     religionAntsDisplay.text = simplifyNumber(religionAnts.value);
+    // }
 }
 
 // Called every game tick, 60 ticks in a second
@@ -665,7 +665,12 @@ function importUpgradesFromJson() {
 }
 
 function readUpgradesFromJson(category, elementList) {
-    var filePath = category + ".json";
+    var filePath;
+    if (cheatMode) {
+        filePath = category + "Cheat.json";
+    } else {
+        filePath = category + ".json";
+    }
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", filePath, true);
