@@ -1026,7 +1026,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                         if (effects[0].populationCap > antLimit) {
                             antLimit = newPopulationCap; // = -> += 
                         }
-                        if (currentBackground != background) {
+                        if (currentBackground != background && background > bg) {
                             gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
                             currentBackground = background;
                             bg = background;
