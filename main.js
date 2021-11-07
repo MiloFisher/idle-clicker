@@ -310,16 +310,16 @@ function initializeUIElements() {
 
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 0, 0, 600, 720, 80));
-    allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['militaryAnts']));
-    allocationTabElements.push(militaryAntIcon = new Sprite("militaryant.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 475, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['militaryAnts']));
-    allocationTabElements.push(scienceAntPlus = new Button("uparrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['scienceAnts']));
-    allocationTabElements.push(scienceAntIcon = new Sprite("scienceant.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(scienceAntMinus = new Button("downarrow.png", GAME.WIDTH - 325, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['scienceAnts']));
-    allocationTabElements.push(religionAntPlus = new Button("uparrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 100, 50, 50, -50, incrementAnts, ['religionAnts']));
-    allocationTabElements.push(religionAntIcon = new Sprite("religionant.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 150, 50, 50, 0));
-    allocationTabElements.push(religionAntMinus = new Button("downarrow.png", GAME.WIDTH - 175, GAME.HEIGHT * 0.5 + 200, 50, 50, -50, decrementAnts, ['religionAnts']));
-
+    allocationTabElements.push(militaryAntPlus = new Button("uparrow.png", GAME.WIDTH - 500, GAME.HEIGHT * 0.5 + 50, 100, 100, -50, incrementAnts, ['militaryAnts']));
+    allocationTabElements.push(militaryAntIcon = new Sprite("militaryant.png", GAME.WIDTH - 496, GAME.HEIGHT * 0.5 + 160, 100, 100, 0));
+    allocationTabElements.push(militaryAntMinus = new Button("downarrow.png", GAME.WIDTH - 500, GAME.HEIGHT * 0.5 + 250, 100, 100, -50, decrementAnts, ['militaryAnts']));
+    allocationTabElements.push(scienceAntPlus = new Button("uparrow.png", GAME.WIDTH - 350, GAME.HEIGHT * 0.5 + 50, 100, 100, -50, incrementAnts, ['scienceAnts']));
+    allocationTabElements.push(scienceAntIcon = new Sprite("scienceant.png", GAME.WIDTH - 346, GAME.HEIGHT * 0.5 + 160, 100, 100, 0));
+    allocationTabElements.push(scienceAntMinus = new Button("downarrow.png", GAME.WIDTH - 350, GAME.HEIGHT * 0.5 + 250, 100, 100, -50, decrementAnts, ['scienceAnts']));
+    allocationTabElements.push(religionAntPlus = new Button("uparrow.png", GAME.WIDTH - 200, GAME.HEIGHT * 0.5 + 50, 100, 100, -50, incrementAnts, ['religionAnts']));
+    allocationTabElements.push(religionAntIcon = new Sprite("religionant.png", GAME.WIDTH - 196, GAME.HEIGHT * 0.5 + 150, 100, 100, 0));
+    allocationTabElements.push(religionAntMinus = new Button("downarrow.png", GAME.WIDTH - 200, GAME.HEIGHT * 0.5 + 250, 100, 100, -50, decrementAnts, ['religionAnts']));
+    
     // Setting the display values of the different types of ants
     workerAnts.display = workerAntsDisplay;
     militaryAnts.display = militaryAntsDisplay;
