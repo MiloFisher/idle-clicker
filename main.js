@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let currentBackground = 1;
@@ -317,7 +317,7 @@ function start() {
     let antsheetBG6 = new SpriteSheet("MilitaryAntsheet.png", 1, 4); //BG6 is military victory antsheet
     let antsheetBG7 = new SpriteSheet("ReligionAntsheet.png", 1, 4); //BG7 is religion victory antsheet
     antsheetArray = [antsheetBG1, antsheetBG2, antsheetBG3, antsheetBG4, antsheetBG5, antsheetBG6, antsheetBG7];
-    currentAntsheet = new RenderAnimation(antsheetArray[0],0,0,GAME.WIDTH,GAME.HEIGHT,3,true,25);
+    currentAntsheet = new RenderAnimation(antsheetArray[0],0,0,GAME.WIDTH,GAME.HEIGHT,3,true,97);
     currentAntsheet.play();
 
     // if (cheatMode) {
@@ -387,7 +387,7 @@ function endGame(winType) {
     } else { //Science victory has same antsheet as BG5
         winAntsheet = antsheetArray[4];
     }
-    currentAntsheet = new RenderAnimation(winAntsheet,0,0,GAME.WIDTH,GAME.HEIGHT,6,true,25);
+    currentAntsheet = new RenderAnimation(winAntsheet,0,0,GAME.WIDTH,GAME.HEIGHT,6,true,97);
     currentAntsheet.play()
 }
 
@@ -905,7 +905,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
 
                             //Plays correct antsheet depending on bg
                             destroy(currentAntsheet);
-                            currentAntsheet = new RenderAnimation(antsheetArray[background-1],0,0,GAME.WIDTH,GAME.HEIGHT,6,true,25);
+                            currentAntsheet = new RenderAnimation(antsheetArray[background-1],0,0,GAME.WIDTH,GAME.HEIGHT,6,true,97);
                             currentAntsheet.play();
 
                             if (background == 5) {
