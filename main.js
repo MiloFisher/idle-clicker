@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let currentBackground = 1;
@@ -49,12 +49,20 @@ let panelDisplayBuyButton;
 let panelDisplaySelectedUpgrade;
 
 let workerUpgradesTabElements;          // Array holding worker upgrades tab UI elements
+let workerUpgradesLocks;                // Array holding worker upgrade locks
+let workerUpgradesButtons;              // Array holding worker upgrade buttons
 let workerUpgradesTabBackground;        // Worker upgrades tab background
 let militaryUpgradesTabElements;        // Array holding military upgrades tab UI elements
+let militaryUpgradesLocks;              // Array holding military upgrade locks
+let militaryUpgradesButtons;            // Array holding military upgrade buttons
 let militaryUpgradesTabBackground;      // Military upgrades tab background
 let scienceUpgradesTabElements;         // Array holding science upgrades tab UI elements
+let scienceUpgradesLocks;               // Array holding science upgrade locks
+let scienceUpgradesButtons;             // Array holding science upgrade buttons
 let scienceUpgradesTabBackground;       // Science upgrades tab background
 let religionUpgradesTabElements;        // Array holding religion upgrades tab UI elements
+let religionUpgradesLocks;              // Array holding worker upgrade locks
+let religionUpgradesButtons;            // Array holding worker upgrade buttons
 let religionUpgradesTabBackground;      // Religion upgrades tab background
 
 let workerUpgradesTabButton;            // Worker upgrades tab button
@@ -112,7 +120,7 @@ let xOffset = 0;
 let yOffset = 0;
 
 // Types of ants and their info
-let antLimit = 100;
+let antLimit = 50;
 let totalAnts = 0;
 let workerAnts = {
     name: 'Worker Ants',
@@ -245,9 +253,17 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
     workerUpgradesTabElements = [];
+    workerUpgradesLocks = [];
+    workerUpgradesButtons = [];
     militaryUpgradesTabElements = [];
+    militaryUpgradesLocks = [];
+    militaryUpgradesButtons = [];
     scienceUpgradesTabElements = [];
+    scienceUpgradesLocks = [];
+    scienceUpgradesButtons = [];
     religionUpgradesTabElements = [];
+    religionUpgradesLocks = [];
+    religionUpgradesButtons = [];
 
     upgradesTabElements.push(workerUpgradesTabButton = new Button("black.png", 50, 420, 40, 70, 0, showWorkerTab));
     workerUpgradesTabButton.sprite.defaultVisibility = false;
@@ -333,6 +349,7 @@ function update() {
     checkHeldButtons();
     updateInfoValues();
     updateDisplayPanelBuyColor();
+    lockUpgrades();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -347,6 +364,36 @@ function updateDisplayPanelBuyColor() {
             panelDisplayCost.color = 'red';
     } else {
         panelDisplayCost.color = 'green';
+    }
+}
+
+function lockUpgrades(){
+    for(var i = 0; i < generalProgress + 1; i++){
+        workerUpgradesLocks[i].defaultVisibility = false;
+        workerUpgradesLocks[i].visible = false;
+        workerUpgradesButtons[i].enabled = true;
+        workerUpgradesButtons[i].defaultEnabled = true;
+    }
+
+    for(var i = 0; i < militaryProgress + 1; i++){
+        militaryUpgradesLocks[i].defaultVisibility = false;
+        militaryUpgradesLocks[i].visible = false;
+        militaryUpgradesButtons[i].enabled = true;
+        militaryUpgradesButtons[i].defaultEnabled = true;
+    }
+
+    for(var i = 0; i < scienceProgress + 1; i++){
+        scienceUpgradesLocks[i].defaultVisibility = false;
+        scienceUpgradesLocks[i].visible = false;
+        scienceUpgradesButtons[i].enabled = true;
+        scienceUpgradesButtons[i].defaultEnabled = true;
+    }
+
+    for(var i = 0; i < religionProgress + 1; i++){
+        religionUpgradesLocks[i].defaultVisibility = false;
+        religionUpgradesLocks[i].visible = false;
+        religionUpgradesButtons[i].enabled = true;
+        religionUpgradesButtons[i].defaultEnabled = true;
     }
 }
 
@@ -712,8 +759,51 @@ function readUpgradesFromJson(category, elementList) {
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
-                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
+                // Push buttons
+                var upgradeButton = new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]);
+                upgradeButton.enabled = false;
+                upgradeButton.defaultEnabled = false;
+                elementList.push(upgradeButton);
+                if(elementList == workerUpgradesTabElements){
+                    console.log(upgradeButton);
+                    workerUpgradesButtons.push(upgradeButton);
+                }
+                else if(elementList == militaryUpgradesTabElements){
+                    console.log(upgradeButton);
+                    militaryUpgradesButtons.push(upgradeButton);
+                }
+
+                else if(elementList == scienceUpgradesTabElements){
+                    console.log(upgradeButton);
+                    scienceUpgradesButtons.push(upgradeButton);
+                }
+
+                else if(elementList == religionUpgradesTabElements){
+                    console.log(upgradeButton);
+                    religionUpgradesButtons.push(upgradeButton);
+                }
+
+                // Push icons
                 elementList.push(new Sprite("/" + category + "" + (i + 1) + ".png", 121 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -15));
+                // Push locks
+                var lockSprite = new Sprite("/lockIcon.png", 120 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -16);
+                elementList.push(lockSprite);
+                if(elementList == workerUpgradesTabElements){
+                    console.log(lockSprite);
+                    workerUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == militaryUpgradesTabElements){
+                    console.log(lockSprite);
+                    militaryUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == scienceUpgradesTabElements){
+                    console.log(lockSprite);
+                    scienceUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == religionUpgradesTabElements){
+                    console.log(lockSprite);
+                    religionUpgradesLocks.push(lockSprite);
+                }
             }
             setTabActive(elementList, false);
         }
