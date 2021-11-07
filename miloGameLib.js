@@ -328,6 +328,7 @@ function Sprite(src, x, y, width, height, layer) {
 function Button(src, x, y, width, height, layer, functionCall = () => { }, parameters = []) {
     this.sprite = new Sprite(src, x, y, width, height, layer);
     this.enabled = true;
+    this.defaultEnabled = true;
     this.heldDown = false;
     this.heldTicks = 0;
     this.functionCall = functionCall;
