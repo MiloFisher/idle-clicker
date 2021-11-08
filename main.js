@@ -1,6 +1,11 @@
 let cheatMode = false;
 
+let instructions = true;
+
 // UI Objects
+let howToPlay;
+let instructionStep = 0;
+
 let titleScreenBG;
 let titleText;
 let clickToPlay;
@@ -369,6 +374,11 @@ function initializeUIElements() {
     clickSound = new Audio(GAME.ASSETS_PATH + "clickSound.mp3");
     clickSound.volume = .5;
 
+    if (instructions) {
+        instructionStep = 1;
+        howToPlay = new RenderText("Click to start making ants!", GAME.WIDTH * 0.5, 340, "12px 'Press Start 2P'", "#6c6c6c", "center", false, -1);
+    }
+
     timePlayed = 0;
 }
 
@@ -564,6 +574,11 @@ function showAllocationTab() {
     setTabActive(militaryUpgradesTabElements, false);
     setTabActive(scienceUpgradesTabElements, false);
     setTabActive(religionUpgradesTabElements, false);
+
+    if (instructions && instructionStep >= 2) {
+        howToPlay.text = "Here you can specialize your basic ants";
+        instructionStep = 2;
+    }
 }
 
 // Shows all upgrade tab elements
@@ -574,6 +589,11 @@ function showUpgradesTab() {
     setTabActive(infoTabElements, false);
     // Sub Tabs
     showWorkerTab();
+
+    if (instructions && instructionStep >= 1) {
+        howToPlay.text = "Upgrades have a sugar cost and ant requirement";
+        instructionStep = 2;
+    }
 }
 
 // Shows all info tab elements
@@ -588,6 +608,11 @@ function showInfoTab() {
     setTabActive(militaryUpgradesTabElements, false);
     setTabActive(scienceUpgradesTabElements, false);
     setTabActive(religionUpgradesTabElements, false);
+
+    if (instructions && instructionStep >= 1) {
+        howToPlay.text = "Here is your production information";
+        instructionStep = 2;
+    }
 }
 
 function showWorkerTab() {
@@ -1080,6 +1105,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
                             antLimit = newPopulationCap; // = -> += 
                         }
                         if (currentBackground != background && background > bg) {
+                            instructions = false;
+                            destroy(howToPlay);
                             gameBackground.image.src = GAME.ASSETS_PATH + "tallBG" + background + ".png";
                             currentBackground = background;
                             bg = background;
