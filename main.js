@@ -341,6 +341,12 @@ function initializeUIElements() {
     rocket = new Sprite("RocketShip.png", -140, 420, 140, 100, 91);
     rocket.visible = false;
 
+    music = new Audio(GAME.ASSETS_PATH + "AntGame.mp3"); // buffers automatically when created
+    music.volume = .4;
+
+    clickSound = new Audio(GAME.ASSETS_PATH + "clickSound.mp3");
+    clickSound.volume = .5;
+
     timePlayed = 0;
 }
 
