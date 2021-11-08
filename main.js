@@ -761,12 +761,7 @@ function importUpgradesFromJson() {
 }
 
 function readUpgradesFromJson(category, elementList) {
-    var filePath;
-    if (cheatMode) {
-        filePath = category + "Cheat.json";
-    } else {
-        filePath = category + ".json";
-    }
+    var filePath = category + ".json";
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", filePath, true);
@@ -780,6 +775,24 @@ function readUpgradesFromJson(category, elementList) {
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
+                // Cheat mode
+                if (cheatMode) {
+                    cost = 0;
+                    if (category == "general") {
+                        requirements = [{
+                            Population: 0,
+                            Science: 0,
+                            Religion: 0,
+                            Military: 0,
+                        }];
+                    } else {
+                        requirements = [{
+                            Science: 0,
+                            Religion: 0,
+                            Military: 0,
+                        }];
+                    }
+                }
                 // Push buttons
                 var upgradeButton = new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]);
                 if(i != 0) {
