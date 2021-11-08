@@ -199,18 +199,18 @@ function initializeUIElements() {
     // Text displays for game resources
     resourcesBack1 = new Sprite("antssugar_boxTexture.png", 0, 0, 600, 720, 20);
     workerAntsIconDisplay = new Sprite("workerant.png", 5, 10, 50, 50, 0);
-    workerAntsDisplay = new RenderText("0", 60, 45, "24px 'Press Start 2P'", "#2b3664", "left", false, 0);
+    workerAntsDisplay = new RenderText("0", 60, 45, "14px 'Press Start 2P'", "#2b3664", "left", false, 0);
     militaryAntsIconDisplay = new Sprite("militaryant.png", 5, 60, 50, 50, 0);
-    militaryAntsDisplay = new RenderText("0", 60, 95, "24px 'Press Start 2P'", "#2e402a", "left", false, 0);
+    militaryAntsDisplay = new RenderText("0", 60, 95, "14px 'Press Start 2P'", "#2e402a", "left", false, 0);
     scienceAntsIconDisplay = new Sprite("scienceant.png", 5, 110, 50, 50, 0);
-    scienceAntsDisplay = new RenderText("0", 60, 145, "24px 'Press Start 2P'", "#6b471c", "left", false, 0);
+    scienceAntsDisplay = new RenderText("0", 60, 145, "14px 'Press Start 2P'", "#6b471c", "left", false, 0);
     religionAntsIconDisplay = new Sprite("religionant.png", 5, 160, 50, 50, 0);
-    religionAntsDisplay = new RenderText("0", 60, 195, "24px 'Press Start 2P'", "#662160", "left", false, 0);
+    religionAntsDisplay = new RenderText("0", 60, 195, "14px 'Press Start 2P'", "#662160", "left", false, 0);
     sugarGrainsIconDisplay = new Sprite("SugarGrain.png", 0, 205, 60, 60, 0);
-    sugarGrainsDisplay = new RenderText("0", 60, 245, "24px 'Press Start 2P'", "white", "left", false, 0);
+    sugarGrainsDisplay = new RenderText("0", 60, 245, "14px 'Press Start 2P'", "white", "left", false, 0);
 
     resourcesBack2 = new Sprite("populationBoxTexture.png", 0, 0, 600, 720, 20);
-    populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "14px 'Press Start 2P'", "black", "center", false, 0);
+    populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "bold 14px 'Press Start 2P'", "black", "center", false, 0);
     antLimitDisplay = new RenderText("0/50", GAME.WIDTH - 91, 65, "14px 'Press Start 2P'", "black", "center", false, 0);
 
     /**
@@ -218,33 +218,33 @@ function initializeUIElements() {
      */
     infoTabButton = new Button("black.png", 390, 360, 180, 40, 0, showInfoTab);
     infoTabButton.sprite.visible = false;
-    infoTabText = new RenderText("Info", 455, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
+    infoTabText = new RenderText("Info", 455, 392, "bold 12px 'Press Start 2P'", "black", "left", false, -1);
     infoTabElements = [];
     infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 0, 0, 600, 720, 80));
 
     var gap = 32;
     var startHeight = 432;
-    infoTabElements.push(infoPopulationCap = new RenderText("Test", 50, startHeight + gap * 0, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoAntsPerClick = new RenderText("Test", 50, startHeight + gap * 1, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoAntsPerSecond = new RenderText("Test", 50, startHeight + gap * 2, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoSugarPerWorker = new RenderText("Test", 50, startHeight + gap * 3, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoCostReduction = new RenderText("Test", 50, startHeight + gap * 4, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoGeneralCostReduction = new RenderText("Test", 50, startHeight + gap * 5, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoMilitaryCostReduction = new RenderText("Test", 50, startHeight + gap * 6, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoScienceCostReduction = new RenderText("Test", 50, startHeight + gap * 7, "8px 'Press Start 2P'", "black", "left", false, 0));
-    infoTabElements.push(infoReligionCostReduction = new RenderText("Test", 50, startHeight + gap * 8, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoPopulationCap = new RenderText("Test", 50, startHeight + gap * 0, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerClick = new RenderText("Test", 50, startHeight + gap * 1, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerSecond = new RenderText("Test", 50, startHeight + gap * 2, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoSugarPerWorker = new RenderText("Test", 50, startHeight + gap * 3, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoCostReduction = new RenderText("Test", 50, startHeight + gap * 4, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoGeneralCostReduction = new RenderText("Test", 50, startHeight + gap * 5, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoMilitaryCostReduction = new RenderText("Test", 50, startHeight + gap * 6, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoScienceCostReduction = new RenderText("Test", 50, startHeight + gap * 7, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoReligionCostReduction = new RenderText("Test", 50, startHeight + gap * 8, "bold 8px 'Press Start 2P'", "black", "left", false, 0));
 
-    infoTabElements.push(infoGeneralProgress = new RenderText("Test", 340, startHeight + gap * 0, "8px 'Press Start 2P'", "#2b3664", "left", false, 0));
-    infoTabElements.push(infoMilitaryProgress = new RenderText("Test", 340, startHeight + gap * 1, "8px 'Press Start 2P'", "#2e402a", "left", false, 0));
-    infoTabElements.push(infoScienceProgress = new RenderText("Test", 340, startHeight + gap * 2, "8px 'Press Start 2P'", "#6b471c", "left", false, 0));
-    infoTabElements.push(infoReligionProgress = new RenderText("Test", 340, startHeight + gap * 3, "8px 'Press Start 2P'", "#662160", "left", false, 0));
+    infoTabElements.push(infoGeneralProgress = new RenderText("Test", 340, startHeight + gap * 0, "bold 8px 'Press Start 2P'", "#2b3664", "left", false, 0));
+    infoTabElements.push(infoMilitaryProgress = new RenderText("Test", 340, startHeight + gap * 1, "bold 8px 'Press Start 2P'", "#2e402a", "left", false, 0));
+    infoTabElements.push(infoScienceProgress = new RenderText("Test", 340, startHeight + gap * 2, "bold 8px 'Press Start 2P'", "#6b471c", "left", false, 0));
+    infoTabElements.push(infoReligionProgress = new RenderText("Test", 340, startHeight + gap * 3, "bold 8px 'Press Start 2P'", "#662160", "left", false, 0));
 
     /**
      * Upgrades objects here:
      */
     upgradesTabButton = new Button("black.png", 210, 360, 180, 40, 0, showUpgradesTab);
     upgradesTabButton.sprite.visible = false;
-    upgradesTabText = new RenderText("Upgrades", 250, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
+    upgradesTabText = new RenderText("Upgrades", 250, 392, "bold 12px 'Press Start 2P'", "black", "left", false, -1);
     upgradesTabElements = [];
     upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 0, 0, 600, 720, 80));
 
@@ -254,14 +254,14 @@ function initializeUIElements() {
     xOffset = -(panelDisplaySelectedUpgrade.width - 60) * 0.5;
     yOffset = -(panelDisplaySelectedUpgrade.height - 60) * 0.5;
     upgradesInfoPanelElements.push(panelDisplayName = new RenderText("Name", 130, 595, "14px 'Press Start 2P'", "black", "left", true, -5));
-    upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "8px 'Press Start 2P'", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "8px 'Press Start 2P'", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "8px 'Press Start 2P'", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "12px 'Press Start 2P'", "red", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "bold 10px 'Press Start 2P'", "red", "center", false, -6));
     panelCost = 0;
     panelReq = 0;
     panelType = '';
-    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "10px 'Press Start 2P'", "black", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "bold 10px 'Press Start 2P'", "black", "center", false, -6));
     upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
     workerUpgradesTabElements = [];
@@ -301,7 +301,7 @@ function initializeUIElements() {
      */
     allocationTabButton = new Button("black.png", 30, 360, 180, 40, 0, showAllocationTab);
     allocationTabButton.sprite.visible = false;
-    allocationTabText = new RenderText("Allocation", 65, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
+    allocationTabText = new RenderText("Allocation", 65, 392, "bold 12px 'Press Start 2P'", "black", "left", false, -1);
 
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 0, 0, 600, 720, 80));
