@@ -180,6 +180,8 @@ let rocket;
 let music;
 let startedMusic = false;
 
+let clickSound;
+
 // Initializes all UI elements
 function initializeUIElements() {
     gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
@@ -292,17 +294,9 @@ function initializeUIElements() {
     upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 52, 645, 40, 40, 0));
 
     workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 0, 0, 600, 720, 70));
-    // workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
-    // workerUpgradesPageButton.sprite.defaultVisibility = false;
     militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 0, 0, 600, 720, 70));
-    // militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
-    // militaryUpgradesPageButton.sprite.defaultVisibility = false;
     scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 0, 0, 600, 720, 70));
-    // scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
-    // scienceUpgradesPageButton.sprite.defaultVisibility = false;
     religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 0, 0, 600, 720, 70));
-    // religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
-    // religionUpgradesPageButton.sprite.defaultVisibility = false;
 
     /**
      * Allocation objects here:
@@ -350,7 +344,10 @@ function initializeUIElements() {
     rocket.visible = false;
 
     music = new Audio(GAME.ASSETS_PATH + "AntGame.mp3"); // buffers automatically when created
-    music.volume = .5;
+    music.volume = .4;
+
+    clickSound = new Audio(GAME.ASSETS_PATH + "clickSound.mp3");
+    clickSound.volume = .5;
 
     timePlayed = 0;
 }
@@ -623,6 +620,9 @@ function setTabActive(tab, active) {
             }
         }
     });
+    if (active) {
+        clickSound.play();
+    }
 }
 
 function checkHeldButtons() {
@@ -732,6 +732,7 @@ function checkHeldButtons() {
 }
 
 function incrementAnts(a) {
+    clickSound.play();
     countdownUntilHold = 20;
     antsPlus(a, effectAmount);
 }
@@ -749,6 +750,7 @@ function antsPlus(a, amount) {
 }
 
 function decrementAnts(a) {
+    clickSound.play();
     countdownUntilHold = 20;
     antsMinus(a, effectAmount);
 }
@@ -942,6 +944,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, type, effects[0].passiveAntPerSecond];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentIncrease) => {
+                clickSound.play();
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - generalCostReduction);
 
@@ -1013,6 +1016,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap, effects[0].background];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap, background) => {
+                clickSound.play();
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - militaryCostReduction);
 
@@ -1131,6 +1135,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = scienceUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [scienceUpgradesTabElements, id, requirements[0].Science, cost, type, value];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentReduced) => {
+                clickSound.play();
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - scienceCostReduction);
 
@@ -1215,6 +1220,7 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplaySelectedUpgrade.y = religionUpgradesTabElements[id].sprite.y + yOffset;
             panelDisplayBuyButton.parameters = [religionUpgradesTabElements, id, requirements[0].Religion, cost, type, effects[0].sugarPerAnt];
             panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newAmountPerWorker) => {
+                clickSound.play();
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction) * (1 - religionCostReduction);
 
