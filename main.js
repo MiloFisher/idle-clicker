@@ -361,7 +361,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntGeneration) {
+    if (passiveAntRate > 1) {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
@@ -374,21 +374,6 @@ function update() {
     if (!startedMusic) {
         music.play();
     }
-}
-
-// Called every game tick, 60 ticks in a second
-function update() {
-    showAntCap();
-    gainSugarGrains();
-    if (passiveAntRate > 1) {
-        gainWorkerAntsPassively();
-    }
-    checkHeldButtons();
-    updateInfoValues();
-    updateDisplayPanelBuyColor();
-
-    planeAnim();
-    rocketAnim();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
