@@ -7,7 +7,6 @@
             "Cost": 0,
             "UnlockRequirements": [
                 {
-                "Population": 0,
                 "Science": 0,
                 "Religion": 0,
                 "Military": 0
@@ -15,7 +14,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 250,
+                    "populationCap": 500,
                     "background": 1
                 } 
             ]
@@ -27,7 +26,6 @@
             "Cost": 0,
             "UnlockRequirements": [
                 {
-                    "Population": 0,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -35,7 +33,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap":  500,
+                    "populationCap": 10000,
                     "background": 1
                 } 
             ]
@@ -54,7 +52,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 3000,
+                    "populationCap": 425000,
                     "background": 2
                 } 
             ]
@@ -73,7 +71,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 10000,
+                    "populationCap": 3750000,
                     "background": 2
                 } 
             ]
@@ -92,7 +90,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 55000,
+                    "populationCap": 17000000,
                     "background": 2
                 } 
             ]
@@ -111,7 +109,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 100000,
+                    "populationCap": 203000000,
                     "background": 3
                 } 
             ]
@@ -130,7 +128,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 500000,
+                    "populationCap": 1200000000,
                     "background": 3
                 } 
             ]
@@ -149,7 +147,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1000000,
+                    "populationCap": 33550000000,
                     "background": 4
                 } 
             ]
@@ -168,7 +166,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 2500000,
+                    "populationCap": 251500000000,
                     "background": 4
                 } 
             ]
@@ -187,7 +185,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 10000000,
+                    "populationCap": 3772000000000,
                     "background": 5
                 } 
             ]

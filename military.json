@@ -14,7 +14,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 100,
+                    "populationCap": 500,
                     "background": 1
                 } 
             ]
@@ -33,7 +33,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1000,
+                    "populationCap": 10000,
                     "background": 1
                 } 
             ]
@@ -52,7 +52,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 20000,
+                    "populationCap": 425000,
                     "background": 2
                 } 
             ]
@@ -71,7 +71,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 425000,
+                    "populationCap": 3750000,
                     "background": 2
                 } 
             ]
@@ -90,14 +90,14 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 3750000,
+                    "populationCap": 17000000,
                     "background": 2
                 } 
             ]
         },
 
         {
-            "Name": "City Cnvasion",
+            "Name": "City Invasion",
             "Description": "The infestation cannot be contained.",
             "Cost": 928000000,
             "UnlockRequirements": [
@@ -109,7 +109,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 17000000,
+                    "populationCap": 203000000,
                     "background": 3
                 } 
             ]
@@ -128,7 +128,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 203000000,
+                    "populationCap": 1200000000,
                     "background": 3
                 } 
             ]
@@ -147,7 +147,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 1200000000,
+                    "populationCap": 33550000000,
                     "background": 4
                 } 
             ]
@@ -166,7 +166,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 33550000000,
+                    "populationCap": 251500000000,
                     "background": 4
                 } 
             ]
@@ -185,7 +185,7 @@
             ],
             "Effect": [ 
                 {
-                    "populationCap": 251500000000,
+                    "populationCap": 3772000000000,
                     "background": 5
                 } 
             ]

@@ -67,7 +67,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.075
                 } 
             ]
         },
@@ -85,7 +85,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.1
                 } 
             ]
         },
