@@ -1,6 +1,14 @@
 let cheatMode = false;
 
 // UI Objects
+let titleScreenBG;
+let titleText;
+let clickToPlay;
+let titleSheetHolder1;
+let titleAntsheetMiddle;
+let titleSheetHolder2;
+let titleAntsheetBottom;
+
 let currentBackground = 1;
 let gameBackground;          // Game Background sprite
 let antsheetArray;           // Array of ant spritesheets
@@ -184,6 +192,21 @@ let clickSound;
 
 // Initializes all UI elements
 function initializeUIElements() {
+    //Title Screen Stuff
+    titleScreenBG = new Button("titleScreenBG.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, -296, clearIntro);
+    titleText = new Sprite("titleText.png",0,0,GAME.WIDTH,GAME.HEIGHT/2,-297);
+    clickToPlay = new Sprite("clickToPlayText.png",0,0,GAME.WIDTH,GAME.HEIGHT,-5000);
+    titleSheetHolder1 = new SpriteSheet("titleScreenAntsheet.png",1,2);
+    titleAntsheetMiddle = new RenderAnimation(titleSheetHolder1,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-299);
+    titleSheetHolder2 = new SpriteSheet("bottomAntsheet.png",1,2);
+    titleAntsheetBottom = new RenderAnimation(titleSheetHolder2,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-300);
+    titleScreenBG.visible = true;
+    titleText.visible = true;
+    titleText.rotation = -3.75;
+    clickToPlay.visible = true;
+    titleAntsheetMiddle.play();
+    titleAntsheetBottom.play();
+
     gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
     gameBackgroundOverlay = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 95);
     gameBackgroundOverlay.visible = false;
@@ -355,6 +378,7 @@ function start() {
     initializeUIElements();
     importUpgradesFromJson(); // Must be after UI element initialization
     showAllocationTab(); // Start out with upgrades tab open
+    // displayTitleScreen();
 }
 
 // Called every game tick, 60 ticks in a second
@@ -373,6 +397,15 @@ function update() {
 
     if (!startedMusic) {
         music.play();
+    }
+
+    //Rotate Title Text and clickToPlay Text
+    if(titleScreenBG) {
+        GAME.TICKS % 200 < 100 ? titleText.rotation += 0.1 : titleText.rotation -= 0.1;
+        GAME.TICKS % 200 < 100 ? clickToPlay.x -= 0.5 : clickToPlay.x += 0.5;
+        GAME.TICKS % 200 < 100 ? clickToPlay.y -= 0.5 : clickToPlay.y += 0.5;
+        GAME.TICKS % 200 < 100 ? clickToPlay.width += 1 : clickToPlay.width -= 1;
+        GAME.TICKS % 200 < 100 ? clickToPlay.height += 1 : clickToPlay.height -= 1;
     }
 
     timePlayed++;
@@ -1376,6 +1409,31 @@ function formatNumber(x, decimals) {
     }
     return str;
 }
+
+//Show the title screen, contains nested function destroyTitle() to get rid of the title screen when it is clicked
+// function displayTitleScreen(){
+//     let titleScreenBG = new Sprite("titleScreenBG.png",0,0,GAME.WIDTH,GAME.HEIGHT,-296);
+//     let titleText = new Sprite("titleText.png",0,0,600,720,-297);
+//     let clickToPlay = new Sprite("clickToPlayText.png",0,0,GAME.WIDTH,GAME.HEIGHT,-298);
+//     let titleSheetHolder1 = new SpriteSheet("titleScreenAntsheet.png",1,2);
+//     let titleAntsheetMiddle = new RenderAnimation(titleSheetHolder1,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-299);
+//     let titleSheetHolder2 = new SpriteSheet("titleSheetHolder2.png",1,2);
+//     let titleAntsheetBottom = new RenderAnimation(titleSheetHolder2,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-300);
+//     titleScreenBG.visible = true;
+//     titleText.visible = true;
+//     clickToPlay.visible = true;
+//     titleAntsheetMiddle.play();
+//     titleAntsheetBottom.play();
+// }
+
+function clearIntro() {
+    destroy(titleScreenBG);
+    destroy(titleText);
+    destroy(clickToPlay);
+    destroy(titleAntsheetMiddle);
+    destroy(titleAntsheetBottom);
+    // destroy other stuff
+  }
 
 music.addEventListener('ended', function () {
     this.currentTime = 0;
