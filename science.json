@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.02
+                    "upgradecostreduction": 0.05
                 } 
             ]
         },
@@ -31,7 +31,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.03
+                    "upgradecostreduction": 0.1
                 } 
             ]
         },
@@ -49,7 +49,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.05
+                    "upgradecostreduction": 0.15
                 } 
             ]
         },
@@ -103,7 +103,7 @@
             ],
             "Effect": [ 
                 {
-                    "scienceupgradecostreduction": 0.1
+                    "scienceupgradecostreduction": 0.3
                 } 
             ]
         },
@@ -121,7 +121,7 @@
             ],
             "Effect": [ 
                 {
-                    "religionupgradecostreduction": 0.1
+                    "religionupgradecostreduction": 0.3
                 } 
             ]
         },
@@ -139,7 +139,7 @@
             ],
             "Effect": [ 
                 {
-                    "militaryupgradecostreduction": 0.1
+                    "militaryupgradecostreduction": 0.3
                 } 
             ]
         },
@@ -157,7 +157,7 @@
             ],
             "Effect": [ 
                 {
-                    "generalupgradecostreduction": 0.1
+                    "generalupgradecostreduction": 0.4
                 } 
             ]
         },
@@ -175,7 +175,7 @@
             ],
             "Effect": [ 
                 {
-                    "upgradecostreduction": 0.2
+                    "upgradecostreduction": 0.5
                 } 
             ]
         },
