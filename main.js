@@ -130,16 +130,23 @@ let religionCostReduction = 0;
 // Variable for leaderboards
 let timePlayed;
 
+let bg;
+
+let plane;
+let rocket;
+
 // Initializes all UI elements
 function initializeUIElements() {
-    gameBackground = new Sprite("BG2.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, 100);
-    lowerBackground = new Sprite("BG1.png", 0, GAME.HEIGHT * 0.5, GAME.WIDTH, GAME.HEIGHT * 0.5, 90);
-    gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 100, "50px Comic Sans", "black", "left", false, 0);
+    gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
+    gameBackgroundOverlay = new Sprite("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 95);
+    gameBackgroundOverlay.visible = false;
+    gameWon = new RenderText("Victory!", GAME.WIDTH * 0.5, GAME.HEIGHT * 0.5 - 25, "30px 'Press Start 2P'", "yellow", "center", false, 0);
     gameWon.visible = false;
     gameContinuedButton = new Button("white.png", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 80, 250, 40, -110, continueGame);
     gameContinuedButton.sprite.visible = false;
-    gameContinuedText = new RenderText("CLICK TO CONTINUE", GAME.WIDTH * 0.5 - 150, GAME.HEIGHT * 0.5 - 50, "25px Comic Sans", "black", "left", false, -120);
-    gameContinuedText.visible = false;
+    gameContinuedButton.enabled = false;
+    // gameContinuedText = new RenderText("CLICK TO CONTINUE", GAME.WIDTH * 0.5, GAME.HEIGHT * 0.5 - 25, "25px 'Press Start 2P'", "cyan", "center", false, -120);
+    // gameContinuedText.visible = false;
     clickArea = new Button("white.png", 0, 0, GAME.WIDTH, GAME.HEIGHT * 0.5, -100, chanceGainWorkerAnts, [1]);
     clickArea.sprite.visible = false; // Make click area a invisible
     purchasedList = [];
@@ -147,35 +154,52 @@ function initializeUIElements() {
     // Text displays for game resources
     resourcesBack1 = new Sprite("resourcesback1.png", 2, 2, 140, 260, 20);
     workerAntsIconDisplay = new Sprite("workerant.png", 5, 10, 50, 50, 0);
-    workerAntsDisplay = new RenderText("0", 60, 40, "24px Gothic", "#2b3664", "left", false, 0);
+    workerAntsDisplay = new RenderText("0", 60, 45, "24px 'Press Start 2P'", "#2b3664", "left", false, 0);
     militaryAntsIconDisplay = new Sprite("militaryant.png", 5, 60, 50, 50, 0);
-    militaryAntsDisplay = new RenderText("0", 60, 90, "24px Gothic", "#2e402a", "left", false, 0);
+    militaryAntsDisplay = new RenderText("0", 60, 95, "24px 'Press Start 2P'", "#2e402a", "left", false, 0);
     scienceAntsIconDisplay = new Sprite("scienceant.png", 5, 110, 50, 50, 0);
-    scienceAntsDisplay = new RenderText("0", 60, 140, "24px Gothic", "#6b471c", "left", false, 0);
+    scienceAntsDisplay = new RenderText("0", 60, 145, "24px 'Press Start 2P'", "#6b471c", "left", false, 0);
     religionAntsIconDisplay = new Sprite("religionant.png", 5, 160, 50, 50, 0);
-    religionAntsDisplay = new RenderText("0", 60, 190, "24px Gothic", "#662160", "left", false, 0);
+    religionAntsDisplay = new RenderText("0", 60, 195, "24px 'Press Start 2P'", "#662160", "left", false, 0);
     sugarGrainsIconDisplay = new Sprite("SugarGrain.png", 0, 205, 60, 60, 0);
-    sugarGrainsDisplay = new RenderText("0", 60, 240, "24px Gothic", "white", "left", false, 0);
+    sugarGrainsDisplay = new RenderText("0", 60, 245, "24px 'Press Start 2P'", "white", "left", false, 0);
 
-    resourcesBack2 = new Sprite("resourcesback2.png", GAME.WIDTH - 182, 2, 180, 80, 20);
-    populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "24px Gothic", "black", "center", false, 0);
-    antLimitDisplay = new RenderText("0/100", GAME.WIDTH - 91, 65, "24px Gothic", "black", "center", false, 0);
+    resourcesBack2 = new Sprite("populationBoxTexture.png", 0, 0, 600, 720, 20);
+    populationDisplayPrompt = new RenderText("Population:", GAME.WIDTH - 91, 35, "14px 'Press Start 2P'", "black", "center", false, 0);
+    antLimitDisplay = new RenderText("0/50", GAME.WIDTH - 91, 65, "14px 'Press Start 2P'", "black", "center", false, 0);
 
     /**
      * Info objects here:
      */
     infoTabButton = new Button("black.png", 390, 360, 180, 40, 0, showInfoTab);
     infoTabButton.sprite.visible = false;
-    infoTabText = new RenderText("Info", 455, 390, "26px Gothic", "black", "left", false, -1);
+    infoTabText = new RenderText("Info", 455, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
     infoTabElements = [];
-    infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 30, 360, 540, 360, 80));
+    infoTabElements.push(infoTabBackground = new Sprite("infobackground.png", 0, 0, 600, 720, 80));
+
+    var gap = 32;
+    var startHeight = 432;
+    infoTabElements.push(infoPopulationCap = new RenderText("Test", 50, startHeight + gap * 0, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerClick = new RenderText("Test", 50, startHeight + gap * 1, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoAntsPerSecond = new RenderText("Test", 50, startHeight + gap * 2, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoSugarPerWorker = new RenderText("Test", 50, startHeight + gap * 3, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoCostReduction = new RenderText("Test", 50, startHeight + gap * 4, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoGeneralCostReduction = new RenderText("Test", 50, startHeight + gap * 5, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoMilitaryCostReduction = new RenderText("Test", 50, startHeight + gap * 6, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoScienceCostReduction = new RenderText("Test", 50, startHeight + gap * 7, "8px 'Press Start 2P'", "black", "left", false, 0));
+    infoTabElements.push(infoReligionCostReduction = new RenderText("Test", 50, startHeight + gap * 8, "8px 'Press Start 2P'", "black", "left", false, 0));
+
+    infoTabElements.push(infoGeneralProgress = new RenderText("Test", 340, startHeight + gap * 0, "8px 'Press Start 2P'", "#2b3664", "left", false, 0));
+    infoTabElements.push(infoMilitaryProgress = new RenderText("Test", 340, startHeight + gap * 1, "8px 'Press Start 2P'", "#2e402a", "left", false, 0));
+    infoTabElements.push(infoScienceProgress = new RenderText("Test", 340, startHeight + gap * 2, "8px 'Press Start 2P'", "#6b471c", "left", false, 0));
+    infoTabElements.push(infoReligionProgress = new RenderText("Test", 340, startHeight + gap * 3, "8px 'Press Start 2P'", "#662160", "left", false, 0));
 
     /**
      * Upgrades objects here:
      */
     upgradesTabButton = new Button("black.png", 210, 360, 180, 40, 0, showUpgradesTab);
     upgradesTabButton.sprite.visible = false;
-    upgradesTabText = new RenderText("Upgrades", 250, 390, "26px Gothic", "black", "left", false, -1);
+    upgradesTabText = new RenderText("Upgrades", 250, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
     upgradesTabElements = [];
     upgradesTabElements.push(upgradesTabBackground = new Sprite("upgradesbackground.png", 30, 360, 540, 360, 80));
 
@@ -184,13 +208,16 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplaySelectedUpgrade = new Sprite("selectedupgrade.png", 0, 0, 66, 66, -5));
     xOffset = -(panelDisplaySelectedUpgrade.width - 60) * 0.5;
     yOffset = -(panelDisplaySelectedUpgrade.height - 60) * 0.5;
-    upgradesInfoPanelElements.push(panelDisplayName = new RenderText("Name", 130, 595, "24px Gothic", "black", "left", true, -5));
-    upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "20px Gothic", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "20px Gothic", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "20px Gothic", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "20px Gothic", "red", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "20px Gothic", "black", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("white.png", 425, 647, 90, 35, -5));
+    upgradesInfoPanelElements.push(panelDisplayName = new RenderText("Name", 130, 595, "14px 'Press Start 2P'", "black", "left", true, -5));
+    upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "8px 'Press Start 2P'", "black", "left", false, -5));
+    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "12px 'Press Start 2P'", "red", "center", false, -6));
+    panelCost = 0;
+    panelReq = 0;
+    panelType = '';
+    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "10px 'Press Start 2P'", "black", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
 
     workerUpgradesTabElements = [];
     militaryUpgradesTabElements = [];
@@ -206,30 +233,30 @@ function initializeUIElements() {
     upgradesTabElements.push(religionUpgradesTabButton = new Button("white.png", 50, 630, 40, 70, 0, showReligionTab));
     religionUpgradesTabButton.sprite.defaultVisibility = false;
 
-    upgradesTabElements.push(workerUpgradesTabIcon = new Sprite("workerant.png", 50, 440, 40, 40, 0));
-    upgradesTabElements.push(militaryUpgradesTabIcon = new Sprite("militaryant.png", 50, 510, 40, 40, 0));
-    upgradesTabElements.push(scienceUpgradesTabIcon = new Sprite("scienceant.png", 50, 580, 40, 40, 0));
-    upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 50, 645, 40, 40, 0));
+    upgradesTabElements.push(workerUpgradesTabIcon = new Sprite("workerant.png", 52, 440, 40, 40, 0));
+    upgradesTabElements.push(militaryUpgradesTabIcon = new Sprite("militaryant.png", 52, 510, 40, 40, 0));
+    upgradesTabElements.push(scienceUpgradesTabIcon = new Sprite("scienceant.png", 52, 580, 40, 40, 0));
+    upgradesTabElements.push(religionUpgradesTabIcon = new Sprite("religionant.png", 52, 645, 40, 40, 0));
 
-    workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 50, 420, 500, 280, 70));
-    workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
-    workerUpgradesPageButton.sprite.defaultVisibility = false;
-    militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 50, 420, 500, 280, 70));
-    militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
-    militaryUpgradesPageButton.sprite.defaultVisibility = false;
-    scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 50, 420, 500, 280, 70));
-    scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
-    scienceUpgradesPageButton.sprite.defaultVisibility = false;
-    religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 50, 420, 500, 280, 70));
-    religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
-    religionUpgradesPageButton.sprite.defaultVisibility = false;
+    workerUpgradesTabElements.push(workerUpgradesTabBackground = new Sprite("workerupgradebackground.png", 0, 0, 600, 720, 70));
+    // workerUpgradesTabElements.push(workerUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showWorkerTab));
+    // workerUpgradesPageButton.sprite.defaultVisibility = false;
+    militaryUpgradesTabElements.push(militaryUpgradesTabBackground = new Sprite("militaryupgradebackground.png", 0, 0, 600, 720, 70));
+    // militaryUpgradesTabElements.push(militaryUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showMilitaryTab));
+    // militaryUpgradesPageButton.sprite.defaultVisibility = false;
+    scienceUpgradesTabElements.push(scienceUpgradesTabBackground = new Sprite("scienceupgradebackground.png", 0, 0, 600, 720, 70));
+    // scienceUpgradesTabElements.push(scienceUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showScienceTab));
+    // scienceUpgradesPageButton.sprite.defaultVisibility = false;
+    religionUpgradesTabElements.push(religionUpgradesTabBackground = new Sprite("religionupgradebackground.png", 0, 0, 600, 720, 70));
+    // religionUpgradesTabElements.push(religionUpgradesPageButton = new Button("black.png", 90, 420, 460, 280, 0, showReligionTab));
+    // religionUpgradesPageButton.sprite.defaultVisibility = false;
 
     /**
      * Allocation objects here:
      */
     allocationTabButton = new Button("black.png", 30, 360, 180, 40, 0, showAllocationTab);
     allocationTabButton.sprite.visible = false;
-    allocationTabText = new RenderText("Allocation", 65, 390, "26px Gothic", "black", "left", false, -1);
+    allocationTabText = new RenderText("Allocation", 65, 392, "12px 'Press Start 2P'", "black", "left", false, -1);
 
     allocationTabElements = [];
     allocationTabElements.push(allocationTabBackground = new Sprite("allocationbackground.png", 30, 360, 540, 360, 80));
@@ -248,6 +275,26 @@ function initializeUIElements() {
     militaryAnts.display = militaryAntsDisplay;
     scienceAnts.display = scienceAntsDisplay;
     religionAnts.display = religionAntsDisplay;
+
+    //Declaring all spritesheets then storing them in the spritesheet array
+    let antsheetBG1 = new SpriteSheet("BG1Antsheet.png", 1, 4);
+    let antsheetBG2 = new SpriteSheet("BG2Antsheet.png", 1, 4);
+    let antsheetBG3 = new SpriteSheet("BG3Antsheet.png", 1, 4);
+    let antsheetBG4 = new SpriteSheet("BG4Antsheet.png", 1, 4);
+    let antsheetBG5 = new SpriteSheet("BG5Antsheet.png", 1, 4);
+    let antsheetBG6 = new SpriteSheet("MilitaryAntsheet.png", 1, 4); //BG6 is military victory antsheet
+    let antsheetBG7 = new SpriteSheet("ReligionAntsheet.png", 1, 4); //BG7 is religion victory antsheet
+    antsheetArray = [antsheetBG1, antsheetBG2, antsheetBG3, antsheetBG4, antsheetBG5, antsheetBG6, antsheetBG7];
+    currentAntsheet = new RenderAnimation(antsheetArray[0], 0, 0, GAME.WIDTH, GAME.HEIGHT, 3, true, 97);
+    currentAntsheet.play();
+
+    bg = 0;
+
+    plane = new Sprite("Plane.png", 700, 50, 130, 60, 96);
+    plane.visible = false;
+
+    rocket = new Sprite("RocketShip.png", -140, 420, 140, 100, 91);
+    rocket.visible = false;
 
     timePlayed = 0;
 }
@@ -279,6 +326,12 @@ function update() {
     if (passiveAntRate > 1) {
         gainWorkerAntsPassively();
     }
+    checkHeldButtons();
+    updateInfoValues();
+    updateDisplayPanelBuyColor();
+
+    planeAnim();
+    rocketAnim();
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -439,9 +492,118 @@ function setTabActive(tab, active) {
     });
 }
 
-// Adds 1 to certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker or implement via hold button
-function antsPlus(a) {
+function checkHeldButtons() {
+    effectAmount = Math.floor(antLimit / 1000); // Single unit for now is 1/1000th of the population cap
+    if(effectAmount < 1) {
+        effectAmount = 1;
+    }
+    var buttonHeld = false;
+
+    // Military Ant allocation buttons
+    if (militaryAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if(militaryAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('militaryAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    militaryAntPlus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (militaryAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (militaryAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('militaryAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    militaryAntMinus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // Science Ant allocation buttons
+    if (scienceAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (scienceAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('scienceAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    scienceAntPlus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (scienceAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (scienceAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('scienceAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    scienceAntMinus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // Religion Ant allocation buttons
+    if (religionAntPlus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (religionAntPlus.heldTicks % effectFrequency == 0) {
+                antsPlus('religionAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    religionAntPlus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    if (religionAntMinus.heldDown) {
+        if (countdownUntilHold > 0) {
+            countdownUntilHold--;
+        } else {
+            // Holding down effect
+            buttonHeld = true;
+            if (religionAntMinus.heldTicks % effectFrequency == 0) {
+                antsMinus('religionAnts', effectAmount);
+                if (effectFrequency > 6) {
+                    religionAntMinus.heldTicks = 0;
+                    effectFrequency--;
+                }
+            }
+        }
+    }
+    // If no button is held, reset effectFrequency and effectAmount
+    if (!buttonHeld) {
+        effectFrequency = 12;
+    }
+}
+
+function incrementAnts(a) {
+    countdownUntilHold = 20;
+    antsPlus(a, effectAmount);
+}
+
+function antsPlus(a, amount) {
     totalAnts = Math.floor(totalAnts);
     if (totalAnts < antLimit && workerAnts.value !== 0) {
         antsMinus('workerAnts');
@@ -450,11 +612,14 @@ function antsPlus(a) {
     }
 }
 
-// Subtracts 1 from certain ant type on respective button press
-// Maybe make value scalable as game goes on or add a x10 setting x100... like cookie clicker
-function antsMinus(a) {
-    if (antTypes[a].value > 0) {
-        antTypes[a].value--;
+function decrementAnts(a) {
+    countdownUntilHold = 20;
+    antsMinus(a, effectAmount);
+}
+
+function antsMinus(a, amount) {
+    if (amount >= 1 && antTypes[a].value - amount >= antTypes[a].minimum) {
+        antTypes[a].value -= amount;
         antTypes[a].display.text = simplifyNumber(Math.trunc(antTypes[a].value));
     }
 }
@@ -467,7 +632,12 @@ function importUpgradesFromJson() {
 }
 
 function readUpgradesFromJson(category, elementList) {
-    var filePath = category + ".json";
+    var filePath;
+    if (cheatMode) {
+        filePath = category + "Cheat.json";
+    } else {
+        filePath = category + ".json";
+    }
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", filePath, true);
@@ -481,7 +651,47 @@ function readUpgradesFromJson(category, elementList) {
                 var description = data.Upgrades[i].Description;
                 var effects = data.Upgrades[i].Effect;
                 var requirements = data.Upgrades[i].UnlockRequirements;
-                elementList.push(new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]));
+                // Push buttons
+                var upgradeButton = new Button("unpurchased" + category + ".png", 115 + (i % 6) * 70, 430 + ~~(i / 6) * 70, 60, 60, -10, displayUpgrade, [category, id, name, cost, description, requirements, effects]);
+                if(i != 0) {
+                    upgradeButton.enabled = false;
+                    upgradeButton.defaultEnabled = false;
+                }
+                elementList.push(upgradeButton);
+                if(elementList == workerUpgradesTabElements){
+                    workerUpgradesButtons.push(upgradeButton);
+                }
+                else if(elementList == militaryUpgradesTabElements){
+                    militaryUpgradesButtons.push(upgradeButton);
+                }
+                else if(elementList == scienceUpgradesTabElements){
+                    scienceUpgradesButtons.push(upgradeButton);
+                }
+                else if(elementList == religionUpgradesTabElements){
+                    religionUpgradesButtons.push(upgradeButton);
+                }
+
+                // Push icons
+                elementList.push(new Sprite("/" + category + "" + (i + 1) + ".png", 121 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -15));
+                // Push locks
+                var lockSprite = new Sprite("/lockIcon.png", 120 + (i % 6) * 70, 436 + ~~(i / 6) * 70, 48, 48, -16);
+                elementList.push(lockSprite);
+                if(elementList == workerUpgradesTabElements){
+                    workerUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == militaryUpgradesTabElements){
+                    militaryUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == scienceUpgradesTabElements){
+                    scienceUpgradesLocks.push(lockSprite);
+                }
+                else if(elementList == religionUpgradesTabElements){
+                    religionUpgradesLocks.push(lockSprite);
+                }
+                if(i == 0) {
+                    lockSprite.visible = false;
+                    lockSprite.defaultVisibility = false;
+                }
             }
             setTabActive(elementList, false);
         }
@@ -522,8 +732,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayRequirement.text = `-Population Requirement: ${simplifyNumber(requirements[0].Population)}`;
             panelDisplaySelectedUpgrade.x = workerUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = workerUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, effects[0].passiveAntPerSecond];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, percentIncrease) => {
+            panelDisplayBuyButton.parameters = [workerUpgradesTabElements, id, requirements[0].Population, cost, type, effects[0].passiveAntPerSecond];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, percentIncrease) => {
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction - generalCostReduction);
 
@@ -568,8 +778,8 @@ function displayUpgrade(category, id, name, cost, description, requirements, eff
             panelDisplayRequirement.text = `-Military Requirement: ${simplifyNumber(requirements[0].Military)}`;
             panelDisplaySelectedUpgrade.x = militaryUpgradesTabElements[id].sprite.x + xOffset;
             panelDisplaySelectedUpgrade.y = militaryUpgradesTabElements[id].sprite.y + yOffset;
-            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap];
-            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap) => {
+            panelDisplayBuyButton.parameters = [militaryUpgradesTabElements, id, requirements[0].Military, cost, type, effects[0].populationCap, effects[0].background];
+            panelDisplayBuyButton.functionCall = (elementList, id, requirement, cost, type, newPopulationCap, background) => {
                 // Cost update based on modifiers
                 cost *= (1 - universalCostReduction - militaryCostReduction);
 
@@ -844,4 +1054,12 @@ function simplifyNumber(number) {
     } else {
         return num;
     }
+}
+
+function formatNumber(x, decimals) {
+    var str = [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('');
+    if (str.substring(str.length - 2) == ".0") {
+        return str.substring(0, str.length - 2);
+    }
+    return str;
 }
