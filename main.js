@@ -1,4 +1,4 @@
-let cheatMode = false;
+let cheatMode = true;
 
 // UI Objects
 let titleScreenBG;

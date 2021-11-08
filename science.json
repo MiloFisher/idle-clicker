@@ -93,7 +93,7 @@
         {
             "Name": "Bug School of Engineering",
             "Description": "BSOE, but with ants!",
-            "Cost": 111000000000,
+            "Cost": 1110000000,
             "UnlockRequirements": [
                 {
                     "Science": 1300000,
