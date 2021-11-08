@@ -186,7 +186,6 @@ let plane;
 let rocket;
 
 let music;
-let startedMusic = false;
 
 let clickSound;
 
@@ -394,10 +393,6 @@ function update() {
 
     planeAnim();
     rocketAnim();
-
-    if (!startedMusic) {
-        music.play();
-    }
 
     //Rotate Title Text and clickToPlay Text
     if(titleScreenBG) {
@@ -1410,36 +1405,16 @@ function formatNumber(x, decimals) {
     return str;
 }
 
-//Show the title screen, contains nested function destroyTitle() to get rid of the title screen when it is clicked
-// function displayTitleScreen(){
-//     let titleScreenBG = new Sprite("titleScreenBG.png",0,0,GAME.WIDTH,GAME.HEIGHT,-296);
-//     let titleText = new Sprite("titleText.png",0,0,600,720,-297);
-//     let clickToPlay = new Sprite("clickToPlayText.png",0,0,GAME.WIDTH,GAME.HEIGHT,-298);
-//     let titleSheetHolder1 = new SpriteSheet("titleScreenAntsheet.png",1,2);
-//     let titleAntsheetMiddle = new RenderAnimation(titleSheetHolder1,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-299);
-//     let titleSheetHolder2 = new SpriteSheet("titleSheetHolder2.png",1,2);
-//     let titleAntsheetBottom = new RenderAnimation(titleSheetHolder2,0,0,GAME.WIDTH,GAME.HEIGHT,2,true,-300);
-//     titleScreenBG.visible = true;
-//     titleText.visible = true;
-//     clickToPlay.visible = true;
-//     titleAntsheetMiddle.play();
-//     titleAntsheetBottom.play();
-// }
-
 function clearIntro() {
     destroy(titleScreenBG);
     destroy(titleText);
     destroy(clickToPlay);
     destroy(titleAntsheetMiddle);
     destroy(titleAntsheetBottom);
-    // destroy other stuff
+    music.play();
   }
 
 music.addEventListener('ended', function () {
     this.currentTime = 0;
     this.play();
-}, false);
-
-music.addEventListener('started', function () {
-    startedMusic = true;
 }, false);
