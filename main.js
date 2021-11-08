@@ -680,7 +680,7 @@ function setTabActive(tab, active) {
             }
         }
     });
-    if (active) {
+    if (active && clickSound) {
         clickSound.play();
     }
 }
