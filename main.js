@@ -1,4 +1,4 @@
-let cheatMode = true;
+let cheatMode = false;
 
 // UI Objects
 let titleScreenBG;
@@ -280,12 +280,12 @@ function initializeUIElements() {
     upgradesInfoPanelElements.push(panelDisplayDescription = new RenderText("-Description", 135, 620, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayEffect = new RenderText("-Effect", 135, 645, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
     upgradesInfoPanelElements.push(panelDisplayRequirement = new RenderText("-Requirement", 135, 670, "bold 8px 'Press Start 2P'", "black", "left", false, -5));
-    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 470, 672, "bold 10px 'Press Start 2P'", "red", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayCost = new RenderText("-Cost", 462, 672, "bold 10px 'Press Start 2P'", "red", "center", false, -6));
     panelCost = 0;
     panelReq = 0;
     panelType = '';
-    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 470, 640, "bold 10px 'Press Start 2P'", "black", "center", false, -6));
-    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 425, 647, 90, 35, -5));
+    upgradesInfoPanelElements.push(panelDisplayBuyPrompt = new RenderText("Buy For:", 462, 640, "bold 10px 'Press Start 2P'", "black", "center", false, -6));
+    upgradesInfoPanelElements.push(panelDisplayBuyButton = new Button("upgradesPriceTexture.png", 409, 647, 106, 35, -5));
 
     workerUpgradesTabElements = [];
     workerUpgradesLocks = [];
