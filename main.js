@@ -177,6 +177,9 @@ let bg;
 let plane;
 let rocket;
 
+let music;
+let startedMusic = false;
+
 // Initializes all UI elements
 function initializeUIElements() {
     gameBackground = new Sprite("tallBG1.png", 0, 0, GAME.WIDTH, GAME.HEIGHT, 100);
@@ -346,6 +349,9 @@ function initializeUIElements() {
     rocket = new Sprite("RocketShip.png", -140, 420, 140, 100, 91);
     rocket.visible = false;
 
+    music = new Audio(GAME.ASSETS_PATH + "AntGame.mp3"); // buffers automatically when created
+    music.volume = .5;
+
     timePlayed = 0;
 }
 
@@ -369,6 +375,10 @@ function update() {
 
     planeAnim();
     rocketAnim();
+
+    if (!startedMusic) {
+        music.play();
+    }
 
     timePlayed++;
     // end game trigger stops timePlayed counter...
@@ -1362,3 +1372,12 @@ function formatNumber(x, decimals) {
     }
     return str;
 }
+
+music.addEventListener('ended', function () {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+music.addEventListener('started', function () {
+    startedMusic = true;
+}, false);
