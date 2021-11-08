@@ -117,21 +117,30 @@ function updateRenderObjects() {
         // Draw Sprites
         if(e instanceof Sprite) {
             if (e.visible) {
+                ctx.save();
+                ctx.translate(e.x + e.width/2, e.y + e.height/2);
+                ctx.rotate(e.rotation * Math.PI / 180);
+                ctx.translate(-(e.x + e.width / 2), -(e.y + e.height / 2));
                 ctx.drawImage(e.image, e.x, e.y, e.width, e.height);
+                ctx.restore();
             }
         }
         // Draw Render Texts
         else if (e instanceof RenderText) {
             if (e.visible) {
+                ctx.save();
+                ctx.translate(e.x, e.y);
+                ctx.rotate(e.rotation * Math.PI / 180);
                 ctx.font = e.font;
                 ctx.fillStyle = e.color;
                 ctx.textAlign = e.align;
                 if(e.noFill) {
-                    ctx.strokeText(e.text, e.x, e.y);
+                    ctx.strokeText(e.text, 0, 0);
                 }
                 else {
-                    ctx.fillText(e.text, e.x, e.y);
+                    ctx.fillText(e.text, 0, 0);
                 }
+                ctx.restore();
             }
         }
         // Draw Render Animations
@@ -271,6 +280,7 @@ function RenderText(text, x, y, font, color, align, noFill, layer) {
     this.align = align;
     this.noFill = noFill;
     this.layer = layer;
+    this.rotation = 0;
     this.defaultVisibility = true;
     this.visible = true;
     this.id = GAME.RENDER_IDS++;
@@ -301,6 +311,7 @@ function Sprite(src, x, y, width, height, layer) {
     this.width = width;
     this.height = height;
     this.layer = layer;
+    this.rotation = 0;
     this.defaultVisibility = true;
     this.visible = true;
     this.id = GAME.RENDER_IDS++;
