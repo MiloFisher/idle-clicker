@@ -5,6 +5,7 @@ let instructions = true;
 // UI Objects
 let howToPlay;
 let instructionStep = 0;
+let startedGame = false;
 
 let titleScreenBG;
 let titleText;
@@ -680,7 +681,7 @@ function setTabActive(tab, active) {
             }
         }
     });
-    if (active && clickSound) {
+    if (active && startedGame) {
         clickSound.play();
     }
 }
@@ -1447,5 +1448,6 @@ function clearIntro() {
     destroy(clickToPlay);
     destroy(titleAntsheetMiddle);
     destroy(titleAntsheetBottom);
+    startedGame = true;
     music.play();
 }
