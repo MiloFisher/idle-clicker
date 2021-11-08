@@ -361,7 +361,7 @@ function start() {
 function update() {
     showAntCap();
     gainSugarGrains();
-    if (passiveAntRate > 1) {
+    if (passiveAntGeneration) {
         gainWorkerAntsPassively();
     }
     checkHeldButtons();
