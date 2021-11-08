@@ -173,7 +173,7 @@
         },
 
         {
-            "Name": "Uncontrollable cloning",
+            "Name": "Uncontrollable Cloning",
             "Description": "Oh no... Our machine... It's broken!",
             "Cost": 67200000000000000,
             "UnlockRequirements": [
