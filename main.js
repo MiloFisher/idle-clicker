@@ -191,6 +191,7 @@ let plane;
 let rocket;
 
 let music;
+let musicLoaded = false;
 
 let clickSound;
 
@@ -411,6 +412,14 @@ function update() {
         GAME.TICKS % 200 < 100 ? clickToPlay.y -= 0.5 : clickToPlay.y += 0.5;
         GAME.TICKS % 200 < 100 ? clickToPlay.width += 1 : clickToPlay.width -= 1;
         GAME.TICKS % 200 < 100 ? clickToPlay.height += 1 : clickToPlay.height -= 1;
+    }
+
+    if (!musicLoaded && music) {
+        musicLoaded = true;
+        music.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
     }
 
     timePlayed++;
@@ -1426,7 +1435,7 @@ function simplifyNumber(number) {
 
 function formatNumber(x, decimals) {
     var str = [x.slice(0, x.length - decimals), ".", x.slice(x.length - decimals)].join('');
-    if (str.substring(str.length - 2) == ".0") {
+    if (str.substring(str.length - 2) == ".0" || str.length == 5) {
         return str.substring(0, str.length - 2);
     }
     return str;
@@ -1439,9 +1448,4 @@ function clearIntro() {
     destroy(titleAntsheetMiddle);
     destroy(titleAntsheetBottom);
     music.play();
-  }
-
-music.addEventListener('ended', function () {
-    this.currentTime = 0;
-    this.play();
-}, false);
+}
