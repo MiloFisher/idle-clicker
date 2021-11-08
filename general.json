@@ -26,7 +26,7 @@
             "Cost": 250,
             "UnlockRequirements": [
                 {
-                    "Population": 100,
+                    "Population": 110,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -45,7 +45,7 @@
             "Cost": 4000,
             "UnlockRequirements": [
                 {
-                    "Population": 500,
+                    "Population": 1800,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0 
@@ -64,7 +64,7 @@
             "Cost": 65000,
             "UnlockRequirements": [
                 {
-                    "Population": 1500,
+                    "Population": 47000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -83,7 +83,7 @@
             "Cost": 1000000,
             "UnlockRequirements": [
                 {
-                    "Population": 5000,
+                    "Population": 275000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -102,7 +102,7 @@
             "Cost": 55700000,
             "UnlockRequirements": [
                 {
-                    "Population": 12500,
+                    "Population": 990000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -121,7 +121,7 @@
             "Cost": 46000000000,
             "UnlockRequirements": [
                 {
-                    "Population": 50000,
+                    "Population": 10000000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -137,10 +137,10 @@
         {
             "Name": "Ant Cloning",
             "Description": "They've learned to clone themselves...",
-            "Cost": 72500000000000,
+            "Cost": 7250000000000,
             "UnlockRequirements": [
                 {
-                    "Population": 100000,
+                    "Population": 105000000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -156,10 +156,10 @@
         {
             "Name": "Even Faster Cloning",
             "Description": "2nd generation cloning for MORE ants!",
-            "Cost": 39100000000000000,
+            "Cost": 391000000000000,
             "UnlockRequirements": [
                 {
-                    "Population": 200000,
+                    "Population": 1250000000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0
@@ -175,10 +175,10 @@
         {
             "Name": "Uncontrollable cloning",
             "Description": "Oh no... Our machine... It's broken!",
-            "Cost": 67200000000000000000,
+            "Cost": 67200000000000000,
             "UnlockRequirements": [
                 {
-                    "Population": 500000,
+                    "Population": 13000000000,
                     "Science": 0,
                     "Religion": 0,
                     "Military": 0

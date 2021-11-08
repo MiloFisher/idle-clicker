@@ -132,7 +132,7 @@
             "Cost": 250000000000,
             "UnlockRequirements": [
                 {
-                    "Science": 25000,
+                    "Science": 250000000,
                     "Religion": 0,
                     "Military": 0
                 }
@@ -147,7 +147,7 @@
         {
             "Name": "Space Research",
             "Description": "To the stars!",
-            "Cost": 32900000000000,
+            "Cost": 3290000000000,
             "UnlockRequirements": [
                 {
                     "Science": 110000000,
@@ -165,7 +165,7 @@
         {
             "Name": "Astronomical Capabilities",
             "Description": "Space travel, migration, and more.",
-            "Cost": 92000000000000000,
+            "Cost": 920000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 2350000000,
@@ -183,7 +183,7 @@
         {
             "Name": "Liftoff",
             "Description": "Off to colonize other worlds!",
-            "Cost": 71000000000000000000,
+            "Cost": 71000000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 10100000000,

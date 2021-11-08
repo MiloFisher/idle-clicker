@@ -13,7 +13,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.15
+                    "sugarPerAnt": 0.25
                 } 
             ]
         }, 
@@ -31,7 +31,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.2
+                    "sugarPerAnt": 0.5
                 }
             ]
         },
@@ -49,7 +49,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.3
+                    "sugarPerAnt": 1
                 } 
             ]
         },
@@ -67,7 +67,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.4
+                    "sugarPerAnt": 2
                 } 
             ]
         },
@@ -85,7 +85,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.5
+                    "sugarPerAnt": 5
                 } 
             ]
         },
@@ -103,7 +103,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.7
+                    "sugarPerAnt": 10
                 } 
             ]
         },
@@ -121,7 +121,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 0.9
+                    "sugarPerAnt": 15
                 } 
             ]
         },
@@ -139,7 +139,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 1.15
+                    "sugarPerAnt": 25
                 } 
             ]
         },
@@ -147,7 +147,7 @@
         {
             "Name": "Punishment",
             "Description": "Unfaithful ants will be punished.",
-            "Cost": 69300000000000,
+            "Cost": 6930000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -157,7 +157,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 1.5
+                    "sugarPerAnt": 50
                 } 
             ]
         },
@@ -165,7 +165,7 @@
         {
             "Name": "Ant Sacrifice",
             "Description": "Sacrifice ants to prove faith in the queen.",
-            "Cost": 85300000000000000,
+            "Cost": 853000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -175,7 +175,7 @@
             ],
             "Effect": [ 
                 {
-                    "sugarPerAnt": 2
+                    "sugarPerAnt": 100
                 } 
             ]
         },
@@ -183,7 +183,7 @@
         {
             "Name": "Perform the Final Ritual",
             "Description": "Summon our ant god to judge this world!",
-            "Cost": 89800000000000000000,
+            "Cost": 89800000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,

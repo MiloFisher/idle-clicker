@@ -156,7 +156,7 @@
         {
             "Name": "Military Hacking",
             "Description": "Ants took over the humans' weapon arsenals.",
-            "Cost": 989000000000000,
+            "Cost": 98900000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -175,7 +175,7 @@
         {
             "Name": "Global Invasion",
             "Description": "Ants are Earth's apex predators now.",
-            "Cost": 317000000000000000,
+            "Cost": 3170000000000000,
             "UnlockRequirements": [
                 {
                     "Science": 0,
@@ -194,7 +194,7 @@
         {
             "Name": "Execute Plan: Alpha November Tango",
             "Description": "The entire world will become our ant hill!",
-            "Cost": 69420694206942069420,
+            "Cost": 69420694206942069,
             "UnlockRequirements": [
                 {
                     "Science": 0,
